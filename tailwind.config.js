@@ -2,8 +2,14 @@
 
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  important: true,
   theme: {
     extend: {
+      fontSize: {
+        'size-title': '1.5rem',
+        'size-body': '1rem',
+        'size-subbody': '0.75rem',
+      },
       colors: {
         // 메인컬러 오렌지색
         'main-color': '#ff5e2e',
