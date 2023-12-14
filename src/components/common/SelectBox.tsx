@@ -1,5 +1,3 @@
 export default function SelectBox() {
-  return <div>
-    SelectBox
-  </div>;
+  return <div>SelectBox</div>
 }

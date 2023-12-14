@@ -1,5 +1,3 @@
 export default function RecruitsEdit() {
-  return <div>
-    RecruitsEdit
-  </div>;
+  return <div>RecruitsEdit</div>
 }

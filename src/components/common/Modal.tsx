@@ -1,5 +1,3 @@
 export default function Modal() {
-  return <div>
-    Modal
-  </div>;
+  return <div>Modal</div>
 }

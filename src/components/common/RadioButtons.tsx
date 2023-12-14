@@ -1,5 +1,3 @@
 export default function RadioButtons() {
-  return <div>
-    RadioButtons
-  </div>;
+  return <div>RadioButtons</div>
 }
