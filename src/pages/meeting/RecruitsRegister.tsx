@@ -1,5 +1,3 @@
 export default function RecruitsRegister() {
-  return <div>
-    RecruitsRegister
-  </div>;
+  return <div>RecruitsRegister</div>
 }
