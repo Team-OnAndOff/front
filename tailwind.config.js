@@ -12,17 +12,17 @@ export default {
         'size-subbody': '0.75rem',
       },
       // rounded
-      //  TODO: rem으로
       borderRadius: {
-        'button-radius': '12px',
-        'big-radius': '16px',
-        'small-radius': '6px',
-        'image-radius': '10px',
+        'button-radius': '0.75rem',
+        'big-radius': '1rem',
+        'small-radius': '0.375rem',
+        'image-radius': '0.625rem',
       },
       // w
       spacing: {
         'big-button': '10rem',
         'small-button': '5rem',
+        'common-screen-width': '1120px',
       },
       // bg, text...
       colors: {
