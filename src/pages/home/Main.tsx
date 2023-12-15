@@ -2,7 +2,7 @@ import ButtonSample from '@/sample/ButtonSample'
 import CardSample from '@/sample/CardSample'
 import InputSample from '@/sample/InputSample'
 import TagSample from '@/sample/TagSample'
-import TextAreaSample from '@/sample/TextAreaSample'
+import TextAreaSample from '@/sample/TextArea'
 import ModalSample from '@/sample/ModalSample'
 
 export default function Main() {
