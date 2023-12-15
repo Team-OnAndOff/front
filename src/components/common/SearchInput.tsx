@@ -39,7 +39,7 @@ export default function SearchInput({ handleChange }:SearchValue) {
           ref={inputRef}
           type="search"
           id="default-search"
-          className="block w-full p-4 text-sm border-2 h-9 rounded-xl text-black-color border-main-color ps-10 focus:outline-none"
+          className="block w-full p-4 text-sm border-2 h-9 rounded-xl text-black-color border-dark-gray-color ps-10 focus:border-main-color focus:outline-none"
           placeholder="모임 검색"
           onChange={handleChange}
         />
