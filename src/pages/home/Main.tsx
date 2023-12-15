@@ -4,6 +4,8 @@ import InputSample from '@/sample/InputSample'
 import TagSample from '@/sample/TagSample'
 import TextAreaSample from '@/sample/TextArea'
 import ModalSample from '@/sample/ModalSample'
+import RadioButton from '@/components/sample/RadioButton'
+import SearchInputSample from '@/components/sample/SearchInputSample'
 
 export default function Main() {
   return (
@@ -26,6 +28,12 @@ export default function Main() {
 
       {/* Modal 사용 예시입니다. */}
       <ModalSample />
+
+      {/* 라디오 버튼 사용 예시 */}
+      <RadioButton/>
+
+      {/* 서치 인풋 사용 예시 */}
+      <SearchInputSample/>
     </div>
   )
 }
