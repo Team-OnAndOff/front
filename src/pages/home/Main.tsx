@@ -6,6 +6,8 @@ import TextAreaSample from '@/sample/TextArea'
 import ModalSample from '@/sample/ModalSample'
 import RadioButton from '@/components/sample/RadioButton'
 import SearchInputSample from '@/components/sample/SearchInputSample'
+import CheckBoxSample from '@/sample/CheckBoxSample'
+import SelectBoxSample from '@/sample/SelectBoxSample'
 
 export default function Main() {
   return (
@@ -34,6 +36,12 @@ export default function Main() {
 
       {/* 서치 인풋 사용 예시 */}
       <SearchInputSample/>
+
+      {/* 체크박스 사용 예시 */}
+      <CheckBoxSample />
+
+      {/* 셀렉트박스 사용 예시 */}
+      <SelectBoxSample />
     </div>
   )
 }
