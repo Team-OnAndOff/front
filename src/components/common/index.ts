@@ -28,5 +28,4 @@ export {
   Tag,
   TextArea,
   SearchInput,
-  
 }

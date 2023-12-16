@@ -24,8 +24,8 @@ export default function Header() {
   ]
 
   return (
-    <nav className='sticky top-0 z-50 bg-white border-b shadow-sm'>
-      <div className='relative z-50 max-w-6xl px-4 mx-auto bg-transparent'>
+    <nav className='w-full sticky top-0 z-[999] bg-white border-b shadow-sm'>
+      <div className='relative z-[999]  w-8/12 max-w-screen-xl mx-auto bg-transparent'>
         <div className='flex justify-between'>
           <div className='flex space-x-4'>
             <div>
@@ -57,7 +57,7 @@ export default function Header() {
           </div>
 
           {/* mobile */}
-          <div className='flex items-center md:hidden'>
+          <div className='flex items-center tablet:hidden'>
             <button
               onClick={() => setMenuToggle(!menuToggle)}
               className={`transition-transform duration-500 ease-in-out focus:outline-none ${

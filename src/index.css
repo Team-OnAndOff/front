@@ -62,6 +62,9 @@
       format('opentype');
 }
 * {
-  font-family: 'Apple SD Gothic Neo';
-  /* font-size: 60px; */
+  font-family:
+    'Apple SD Gothic Neo',
+    Trebuchet MS,
+    sans-serif;
+  color: #111;
 }

@@ -19,6 +19,8 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Layout />}>
+            {/* 공통컴포넌트 샘플 */}
+            {/* <Route path='/' element={<Example />} /> */}
             <Route path='/' element={<Main />} />
             <Route path='/crews/:categoryId' element={<Crew />} />
             <Route path='/challenges/:categoryId' element={<Challenge />} />

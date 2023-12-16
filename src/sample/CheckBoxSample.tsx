@@ -1,4 +1,4 @@
-import CheckBoxList from '@/components/common/CheckBoxList'
+import { CheckBoxList } from '@/components/common'
 import { useState } from 'react'
 
 export default function CheckBoxSample() {

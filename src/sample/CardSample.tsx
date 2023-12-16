@@ -1,39 +1,24 @@
-import Card from '@/components/common/Card'
+import { Card } from '@/components/common'
+import { data } from '@/data/post'
+import { useState } from 'react'
 
 export default function CardSample() {
-  const cardData = [
-    {
-      imageUrl:
-        'https://media.bunjang.co.kr/product/233471258_1_1692280086_w%7Bres%7D.jpg',
-      title:
-        '여기는 제목여기는 제목여기는 제목여기는 제목여기는 제목여기는 제목여기는 제목제목여기는제목여기는제목여기는제목여기는',
-      startDate: '2023-12-14',
-      endDate: '2023-12-31',
-    },
-    {
-      imageUrl: 'https://picsum.photos/360/360',
-      title: '여기는 제목',
-      startDate: '2023-12-14',
-      endDate: '2023-12-31',
-    },
-    {
-      imageUrl: 'https://picsum.photos/360/360',
-      title: '여기는 제목',
-      startDate: '2023-12-14',
-      endDate: '2023-12-31',
-    },
-  ]
-
+  const [items] = useState(data)
   return (
-    <div className='w-[1120px] grid grid-cols-3 gap-4'>
-      {cardData.map((card, index) => (
+    <div className='grid grid-cols-3 gap-4'>
+      {items.map((item, index) => (
         <Card
           key={index}
-          imageUrl={card.imageUrl}
-          title={card.title}
-          startDate={card.startDate}
-          endDate={card.endDate}
-          // path={card.url}
+          postImageUrl={item.postImageUrl}
+          title={item.title}
+          startDate={item.startDate}
+          endDate={item.endDate}
+          category={item.category}
+          leaderName={item.leaderName}
+          leaderImageUrl={item.leaderImageUrl}
+          createDate={item.createDate}
+          detailCategory={item.detailCategory}
+          // path={item.url}
         />
       ))}
     </div>
