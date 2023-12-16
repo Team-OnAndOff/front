@@ -32,10 +32,10 @@ export default function Main() {
       <ModalSample />
 
       {/* 라디오 버튼 사용 예시 */}
-      <RadioButton/>
+      <RadioButton />
 
       {/* 서치 인풋 사용 예시 */}
-      <SearchInputSample/>
+      <SearchInputSample />
 
       {/* 체크박스 사용 예시 */}
       <CheckBoxSample />
