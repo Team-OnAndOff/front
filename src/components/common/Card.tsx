@@ -63,6 +63,12 @@ export default function Card({
     }
   }, [])
 
+  const options = [
+    { meetup: 'crew', tagName: '태그1' },
+    { meetup: 'challenge', tagName: '태그2' },
+    { meetup: 'crew', tagName: '태그3' },
+  ]
+
   return (
     <>
       <div
@@ -120,7 +126,7 @@ export default function Card({
 
           {/* 태그 */}
           <div className='flex flex-row gap-x-3'>
-            <Tag />
+            <Tag options={options} />
           </div>
 
           <div>
