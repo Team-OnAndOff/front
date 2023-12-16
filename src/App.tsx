@@ -23,7 +23,7 @@ export default function App() {
             <Route path='/crews/:categoryId' element={<Crew />} />
             <Route path='/challenges/:categoryId' element={<Challenge />} />
             <Route path='/details/:postId' element={<Detail />} />
-            <Route path='/mypage' element={<MyPage />} />
+            <Route path='/userinfo/:userId' element={<MyPage />} />
             <Route path='/recruits-create' element={<RecruitsCreate />} />
             <Route path='/recruits-edit' element={<RecruitsEdit />} />
             <Route

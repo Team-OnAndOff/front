@@ -1,4 +1,4 @@
-import CheckBox from '@/components/common/CheckBox'
+import CheckBoxList from '@/components/common/CheckBoxList'
 import { useState } from 'react'
 
 export default function CheckBoxSample() {
@@ -15,7 +15,7 @@ export default function CheckBoxSample() {
   ]
   return (
     <>
-      <CheckBox
+      <CheckBoxList
         textSize='size-body'
         options={options}
         onChange={handleCheckboxChange}
