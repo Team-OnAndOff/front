@@ -1,21 +1,20 @@
 import { Link } from 'react-router-dom'
 
-export default function Tag() {
-  const tags = [
-    { tagId: 1, tagName: '해시' },
-    { tagId: 2, tagName: '태그' },
-    { tagId: 3, tagName: '기타등등' },
-  ]
+interface Tagprops {
+  options: { meetup: string; tagName: string }[]
+}
 
+export default function Tag({ options }: Tagprops) {
   return (
     <>
+      {/* 카테고리는 all로 가도록 설정 (추후에 all에 해당되는 카테고리 id로 바꾸면 됨) */}
       <div className='flex gap-3'>
-        {tags.map((tag) => (
+        {options.map((option, index) => (
           <Link
-            to={`/${tag.tagName}`}
-            key={tag.tagId}
+            to={`/${option.meetup}/0?query=${option.tagName}`}
+            key={index}
             className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-subbody text-black-color'
-          >{`#${tag.tagName}`}</Link>
+          >{`#${option.tagName}`}</Link>
         ))}
       </div>
     </>

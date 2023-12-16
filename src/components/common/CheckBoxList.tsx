@@ -6,7 +6,7 @@ interface CheckboxProps {
   textSize: 'size-body' | 'size-title' | 'size-subbody'
 }
 
-export default function CheckBox({
+export default function CheckBoxList({
   options,
   onChange,
   textSize,
