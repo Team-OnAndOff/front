@@ -1,19 +1,21 @@
-import { useState } from 'react'
+import { ChangeEvent } from 'react'
+import { UseFormRegisterReturn } from 'react-hook-form'
+
 interface TextAreaProps {
   placeholder?: string
   width?: string
   height?: string
+  register: UseFormRegisterReturn
 }
 
 export default function TextArea({
   placeholder,
   width = 'w-input-small',
   height = 'h-60',
+  register,
 }: TextAreaProps) {
-  const [value, setValue] = useState('')
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value)
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    register.onChange(e)
   }
 
   return (
@@ -24,7 +26,7 @@ export default function TextArea({
         <textarea
           className='w-full h-full resize-none text-size-body text-black-color focus:outline-none'
           placeholder={placeholder}
-          value={value}
+          {...register}
           onChange={handleChange}
         />
       </div>
