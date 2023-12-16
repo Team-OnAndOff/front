@@ -5,10 +5,7 @@ import ScrollToTop from '@/components/common/ScrollToTop'
 import FloatingButton from '@/components/common/FloatingButton'
 import Inputs from '@/components/common/Inputs'
 import Modal from '@/components/common/Modal'
-import {
-  RadioButtonsGroup,
-  RadioButtonsOne,
-} from '@/components/common/RadioButtons'
+import RadioButtons from '@/components/common/RadioButtons'
 import SelectBox from '@/components/common/SelectBox'
 import Tag from '@/components/common/Tag'
 import TextArea from '@/components/common/TextArea'
@@ -22,8 +19,7 @@ export {
   FloatingButton,
   Inputs,
   Modal,
-  RadioButtonsGroup,
-  RadioButtonsOne,
+  RadioButtons,
   SelectBox,
   Tag,
   TextArea,

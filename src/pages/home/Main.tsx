@@ -1,10 +1,10 @@
 import ButtonSample from '@/sample/ButtonSample'
 import CardSample from '@/sample/CardSample'
-import InputSample from '@/sample/InputSample'
+// import InputSample from '@/sample/InputSample'
 import TagSample from '@/sample/TagSample'
 import TextAreaSample from '@/sample/TextArea'
 import ModalSample from '@/sample/ModalSample'
-import RadioButton from '@/components/sample/RadioButton'
+// import RadioButtonSample from '@/components/sample/RadioButtonSample'
 import SearchInputSample from '@/components/sample/SearchInputSample'
 import CheckBoxSample from '@/sample/CheckBoxSample'
 import SelectBoxSample from '@/sample/SelectBoxSample'
@@ -20,7 +20,7 @@ export default function Main() {
       <CardSample />
 
       {/* Input 사용 예시입니다. */}
-      <InputSample />
+      {/* <InputSample /> */}
 
       {/* Tag 사용 예시입니다. */}
       <TagSample />
@@ -32,7 +32,7 @@ export default function Main() {
       <ModalSample />
 
       {/* 라디오 버튼 사용 예시 */}
-      <RadioButton />
+      {/* <RadioButton /> */}
 
       {/* 서치 인풋 사용 예시 */}
       <SearchInputSample />

@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { ChangeEvent, KeyboardEvent } from 'react'
+import { UseFormRegisterReturn } from 'react-hook-form'
 
 interface InputsProps {
   placeholder?: string
   width?: string
   useMust?: boolean
   onEnter?: (value: string) => void
+  register: UseFormRegisterReturn
 }
 
 export default function Inputs({
@@ -12,29 +14,29 @@ export default function Inputs({
   width = 'w-80',
   useMust = false,
   onEnter,
+  register,
 }: InputsProps) {
-  const [value, setValue] = useState('')
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value)
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    register.onChange(e)
+    onEnter && onEnter(e.target.value)
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && onEnter) {
-      onEnter(value)
-      setValue('')
+      onEnter(e.currentTarget.value)
     }
   }
+
   return (
     <>
       <div
-        className={`p-1 pl-3 border-b-2 ${width} border-light-gray-color focus-within:border-main-color`}
+        className={`pt-4 pb-1 flex flex-col pl-3 border-b-2 ${width} border-light-gray-color focus-within:border-main-color`}
       >
         <input
           className='w-full text-size-body text-black-color focus:outline-none'
           type='text'
           placeholder={placeholder}
-          value={value}
+          {...register}
           onChange={handleChange}
           onKeyDown={handleKeyPress}
         />
