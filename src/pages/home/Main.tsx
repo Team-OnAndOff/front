@@ -1,47 +1,36 @@
-import ButtonSample from '@/sample/ButtonSample'
-import CardSample from '@/sample/CardSample'
-// import InputSample from '@/sample/InputSample'
-import TagSample from '@/sample/TagSample'
-import TextAreaSample from '@/sample/TextArea'
-import ModalSample from '@/sample/ModalSample'
-// import RadioButtonSample from '@/components/sample/RadioButtonSample'
-import SearchInputSample from '@/components/sample/SearchInputSample'
-import CheckBoxSample from '@/sample/CheckBoxSample'
-import SelectBoxSample from '@/sample/SelectBoxSample'
+import { ImageSlide, HotPostsSection } from '@/components'
+import { data } from '@/data/post'
 
 export default function Main() {
+  const allData = data
+
+  const crewData = data.filter((item) => item.category === 'Crew')
+
+  const challengeData = data.filter((item) => item.category === 'Challenge')
+
   return (
-    <div className='flex flex-col flex-1'>
-      <p>Main</p>
-      {/* 버튼 사용 예시입니다. */}
-      <ButtonSample />
+    <main className='flex flex-col py-16 gap-y-16'>
+      <ImageSlide />
+      <article className='flex flex-col gap-y-16'>
+        <HotPostsSection
+          title='🔥 HOT! 금주의 가장 인기있는 모임!'
+          data={allData}
+          isSlide={false}
+        />
+        <HotPostsSection
+          title='👯 나와 맞는 Crew를 찾아보세요!'
+          data={crewData}
+          isSlide={true}
+          categoryType='Crew'
+        />
 
-      {/* 카드 사용 예시입니다. */}
-      <CardSample />
-
-      {/* Input 사용 예시입니다. */}
-      {/* <InputSample /> */}
-
-      {/* Tag 사용 예시입니다. */}
-      <TagSample />
-
-      {/* TextArea 사용 예시입니다. */}
-      <TextAreaSample />
-
-      {/* Modal 사용 예시입니다. */}
-      <ModalSample />
-
-      {/* 라디오 버튼 사용 예시 */}
-      {/* <RadioButton /> */}
-
-      {/* 서치 인풋 사용 예시 */}
-      <SearchInputSample />
-
-      {/* 체크박스 사용 예시 */}
-      <CheckBoxSample />
-
-      {/* 셀렉트박스 사용 예시 */}
-      <SelectBoxSample />
-    </div>
+        <HotPostsSection
+          title='💯 Challenge로 하루하루 도장깨기!'
+          data={challengeData}
+          isSlide={true}
+          categoryType='Challenge'
+        />
+      </article>
+    </main>
   )
 }

@@ -1,4 +1,4 @@
-import Tag from '@/components/common/Tag'
+import { Tag } from '@/components/common'
 
 const TagSample = () => {
   const options = [

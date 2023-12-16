@@ -40,16 +40,14 @@ export default function Button({
   }
 
   return (
-    <div>
-      <button
-        type={type}
-        onClick={handleClick}
-        className={`py-2 px-2 rounded-button-radius ${width} transition-all duration-300 ${
-          isClicked && 'transform scale-90'
-        } ${getButtonStyle(fill)}`}
-      >
-        {children}
-      </button>
-    </div>
+    <button
+      type={type}
+      onClick={handleClick}
+      className={`py-2 px-2 rounded-button-radius ${width} transition-all duration-300 ${
+        isClicked && 'transform scale-90'
+      } ${getButtonStyle(fill)}`}
+    >
+      {children}
+    </button>
   )
 }

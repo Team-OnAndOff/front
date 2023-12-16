@@ -7,9 +7,9 @@ export default {
     extend: {
       // text
       fontSize: {
-        'size-title': '1.5rem',
-        'size-body': '1rem',
-        'size-subbody': '0.75rem',
+        'size-title': ['1.5rem', '2rem'],
+        'size-body': ['1rem', '1.5rem'],
+        'size-subbody': ['0.75rem', '1rem'],
       },
       // rounded
       borderRadius: {
@@ -22,7 +22,8 @@ export default {
       spacing: {
         'big-button': '10rem',
         'small-button': '5rem',
-        'common-screen-width': '1120px',
+        // 'common-screen-width': '1120px',
+        'common-screen-width': '1160px',
       },
       // bg, text...
       colors: {
@@ -37,6 +38,13 @@ export default {
         'black-color': '#111111',
         'light-gray-color': '#f2efef',
         'dark-gray-color': '#999999',
+      },
+
+      screens: {
+        tablet: '768px',
+        // => @media (min-width: 768px)
+        desktop: '1120px',
+        // => @media (min-width: 1120px)
       },
     },
   },
