@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Navigation } from 'swiper/modules'
 import { useState, useRef } from 'react'
 import SwiperCore from 'swiper/core'
+import { IoIosArrowBack } from 'react-icons/io'
 
 import 'swiper/css'
 import 'swiper/css/effect-fade'
@@ -39,6 +40,7 @@ export default function HotPostsSection({
   categoryType,
 }: HotPostsSectionProps) {
   const navigate = useNavigate()
+  const [swiper, setSwiper] = useState<SwiperClass>()
 
   const filteredData = data.filter((item) => item.category === categoryType)
 
@@ -53,16 +55,29 @@ export default function HotPostsSection({
 
   const swiperRef = useRef(null)
 
+  // 호버 시, 슬라이드 정지
   const onInit = (swiper) => {
     swiperRef.current = swiper
   }
 
   const handleMouseEnter = () => {
-    if (swiperRef.current) swiperRef.current.autoplay.stop()
+    if (swiperRef.current) {
+      swiperRef.current.autoplay.stop()
+    }
   }
 
   const handleMouseLeave = () => {
-    if (swiperRef.current) swiperRef.current.autoplay.stop()
+    if (swiperRef.current) {
+      swiperRef.current.autoplay.start()
+    }
+  }
+
+  // 이전, 다음 버튼 이벤트핸들러
+  const handlePrev = () => {
+    swiper?.slidePrev()
+  }
+  const handleNext = () => {
+    swiper?.slideNext()
   }
 
   return (
@@ -70,47 +85,78 @@ export default function HotPostsSection({
       <h2 className='font-bold text-size-title break-keep'>{title}</h2>
       {isSlide ? (
         <>
-          <div
-            className='relative'
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <Swiper
-              loop={true}
-              slidesPerView={2}
-              spaceBetween={10}
-              navigation={true}
-              centeredSlides={true}
-              autoplay={{
-                delay: 1000,
-                disableOnInteraction: false,
-              }}
-              breakpoints={{
-                768: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-              }}
-              onInit={onInit}
-              modules={[Autoplay, Navigation]}
+          <div id='post-slide' className='relative'>
+            <div
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
-              {items.map((item) => (
-                <SwiperSlide key={item.title}>
-                  <Card
-                    postImageUrl={item.postImageUrl}
-                    title={item.title}
-                    startDate={item.startDate}
-                    endDate={item.endDate}
-                    category={item.category}
-                    leaderName={item.leaderName}
-                    leaderImageUrl={item.leaderImageUrl}
-                    createDate={item.createDate}
-                    detailCategory={item.detailCategory}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+              <Swiper
+                className='pt-1'
+                loop={items.length > 1}
+                speed={2000}
+                slideToClickedSlide={true}
+                loopedSlides={2}
+                slidesPerView={3}
+                spaceBetween={30}
+                watchOverflow={true}
+                slidesOffsetBefore={0}
+                autoplay={{
+                  delay: 1000,
+                  disableOnInteraction: false,
+                }}
+                breakpoints={{
+                  768: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                  },
+                }}
+                navigation={{
+                  prevEl: '#prev_slide',
+                  nextEl: '#next_slide',
+                }}
+                onInit={onInit}
+                modules={[Autoplay, Navigation]}
+                onSwiper={(e) => {
+                  setSwiper(e)
+                }}
+              >
+                {items.map((item) => (
+                  <SwiperSlide key={item.title}>
+                    <Card
+                      postImageUrl={item.postImageUrl}
+                      title={item.title}
+                      startDate={item.startDate}
+                      endDate={item.endDate}
+                      category={item.category}
+                      leaderName={item.leaderName}
+                      leaderImageUrl={item.leaderImageUrl}
+                      createDate={item.createDate}
+                      detailCategory={item.detailCategory}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+
+            {/* 이전, 다음 버튼 커스텀 */}
+            <button
+              className='absolute top-1/2 -left-[50px]'
+              onClick={handlePrev}
+            >
+              <i className='text-size-title tablet:text-[2rem] text-black-color'>
+                <IoIosArrowBack />
+              </i>
+            </button>
+            <button
+              className='absolute top-1/2 -right-[50px]'
+              onClick={handleNext}
+            >
+              <i className='text-size-title tablet:text-[2rem] text-black-color'>
+                <IoIosArrowBack className='rotate-180' />
+              </i>
+            </button>
           </div>
+
           <div className='pt-2 text-right text-size-subbody'>
             <Button fill='border' onClick={handleClickCrew}>
               전체보기
@@ -118,6 +164,7 @@ export default function HotPostsSection({
           </div>
         </>
       ) : (
+        // 슬라이드 없이 top3만 보여주기
         <div className='grid grid-cols-3 gap-4'>
           {topPosts.map((item) => (
             <Card
@@ -135,22 +182,6 @@ export default function HotPostsSection({
           ))}
         </div>
       )}
-
-      <style>
-        {`
-          .swiper-button-prev::after,
-          .swiper-button-next::after {
-            color: #fff;
-          }
-
-          .swiper-pagination-bullet {
-            background-color: #fff;
-          }
-          .swiper-pagination-bullet-active {
-            background-color: #ff5e2e;
-          }
-        `}
-      </style>
     </section>
   )
 }

@@ -22,8 +22,7 @@ export default {
       spacing: {
         'big-button': '10rem',
         'small-button': '5rem',
-        // 'common-screen-width': '1120px',
-        'common-screen-width': '1160px',
+        'common-screen-width': '1120px',
       },
       // bg, text...
       colors: {
@@ -45,6 +44,18 @@ export default {
         // => @media (min-width: 768px)
         desktop: '1120px',
         // => @media (min-width: 1120px)
+      },
+
+      // animation
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-10deg)' },
+          '50%': { transform: 'rotate(10deg)' },
+        },
+      },
+
+      animation: {
+        wiggle: 'wiggle 2s ease-in-out infinite',
       },
     },
   },

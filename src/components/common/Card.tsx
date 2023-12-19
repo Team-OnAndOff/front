@@ -16,7 +16,7 @@ interface CardProps {
   leaderImageUrl: string
   createDate: string
   detailCategory: string
-  // postId: number
+  postId: number
 }
 
 export default function Card({
@@ -85,16 +85,15 @@ export default function Card({
         {/* 이미지 영역 */}
         <div className='hover:-translate-y-1 hover:transition-all aspect-w-1 aspect-h-1 hover:drop-shadow-xl'>
           <div className='w-full h-96'>
-            {/* 누르면 crews/challenges 인지에 따라 postId 받고 이동 */}
             {/* 모든 path를 props로 한번에 받아오기 */}
-            {/* <Link to={`${categoryId}/${postId}`}> */}
-            <img
-              src={postImageUrl}
-              alt={title}
-              className='object-cover w-full h-full cursor-pointer rounded-image-radius max-w-[360px] max-h-[360px]'
-              loading='lazy'
-            />
-            {/* </Link> */}
+            <Link to={'/details/:postId'}>
+              <img
+                src={postImageUrl}
+                alt={title}
+                className='object-cover w-full h-full cursor-pointer rounded-image-radius max-w-[360px] max-h-[360px]'
+                loading='lazy'
+              />
+            </Link>
           </div>
           {/* 방장 프로필 이미지 */}
           <div className='relative group'>
@@ -106,7 +105,7 @@ export default function Card({
                 loading='lazy'
               />
             </div>
-            <span className='absolute px-2 py-1 text-sm font-medium transition-opacity bg-gray-900 rounded shadow opacity-0 pointer-events-none right-5 bottom-12 w-max text-light-gray-color group-hover:opacity-100'>
+            <span className='absolute px-2 py-1 font-medium transition-opacity rounded shadow opacity-0 pointer-events-none bg-black-color text-size-subbody right-5 bottom-12 w-max text-light-gray-color group-hover:opacity-100'>
               {leaderName}
             </span>
           </div>
@@ -114,7 +113,9 @@ export default function Card({
         {/* 텍스트 영역 */}
         <div className='flex flex-col justify-between px-3 -mt-5 gap-y-3'>
           <div className='text-[0.6rem] text-dark-gray-color tablet:text-size-subbody'>
-            <span>{detailCategory}</span> &#124; <span>{createDate}</span>
+            {detailCategory}
+            &nbsp; &#124; &nbsp;
+            {createDate}
           </div>
           <div className='h-14'>
             <Link to={'crews/dd'}>
