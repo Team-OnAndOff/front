@@ -17,24 +17,24 @@
   }
    */
 .swiper {
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
 }
 
 .swiper-slide {
-  text-align: center;
+  /* text-align: center;
   font-size: 18px;
-  background: #fff;
+  background: #fff; */
 
   /* Center slide text vertically */
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .swiper-slide img {
-  display: block;
+  /* display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; */
 }

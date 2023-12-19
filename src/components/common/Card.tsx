@@ -84,14 +84,17 @@ export default function Card({ data }: CardProps) {
           </div>
           {/* 방장 프로필 이미지 */}
           <div className='relative group'>
-            <div className='absolute w-1/3 bg-white rounded-full max-h-[46px] max-w-[46px] drop-shadow-xl h-1/3 bottom-12 right-5 cursor-pointer'>
+            <Link
+              to={`/userInfo/${user.id}`}
+              className='absolute w-1/3 bg-white rounded-full max-h-[46px] max-w-[46px] drop-shadow-xl h-1/3 bottom-12 right-5 cursor-pointer'
+            >
               <img
                 src={user.image.uploadPath}
                 className='rounded-full'
                 alt={user.username}
                 loading='lazy'
               />
-            </div>
+            </Link>
             {/* TODO: 이름이 있을 경우에만 ToolTip이 보여지도록 */}
             <span className='absolute px-2 py-1 text-sm font-medium transition-opacity bg-gray-900 rounded shadow opacity-0 pointer-events-none right-5 bottom-12 w-max text-light-gray-color group-hover:opacity-100'>
               {user.username}
@@ -99,7 +102,7 @@ export default function Card({ data }: CardProps) {
           </div>
         </div>
         {/* 텍스트 영역 */}
-        <div className='flex flex-col justify-between px-3 -mt-5 gap-y-3'>
+        <div className='flex flex-col justify-between px-3 -mt-5 text-left gap-y-3'>
           <div className='text-[0.6rem] text-dark-gray-color tablet:text-size-subbody'>
             {category.name}
             &nbsp; &#124; &nbsp;
@@ -121,15 +124,15 @@ export default function Card({ data }: CardProps) {
           <div>
             {/* 크루/챌린지스 */}
             <Link
-              to={`/${category.parentId.name}s/0`}
+              to={`/meetup-lists/${category.id}`}
               className='font-light text-main-color text-size-body'
             >
               {category.parentId.name}
             </Link>
-            <div className='flex items-center justify-between h-6 font-bold text-size-subbody'>
+            <div className='flex items-center justify-between w-full h-6 font-bold text-size-subbody'>
               {challengeStartDate} &#126; {challengeEndDate}
+              {/* 호버시 보이는 영역 */}
               <div>
-                {/* 호버시 보이는 영역 */}
                 {/* Pop-up menu */}
                 {isKebabVisible && (
                   <div>

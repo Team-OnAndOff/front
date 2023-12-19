@@ -8,9 +8,7 @@ import { fetchGetEvents } from '@/api/event'
 
 export default function MeetupList() {
   const [categories, setCategories] = useState<Category[]>([])
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
-    '0',
-  )
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number[]>([])
   const [postData, setPostData] = useState<CardData[]>([])
   const navigate = useNavigate()
   const location = useLocation()
@@ -40,25 +38,25 @@ export default function MeetupList() {
     }
   }
 
-  const handleTabClick = () => {
-    setSelectedCategoryId(categoryId)
+  useEffect(() => {
+    fetchEventData(selectedCategoryId)
+    fetchCategoryData(categoryId)
+  }, [categoryId, selectedCategoryId])
+
+  const handleTabClick = (subCategoryId?: number) => {
+    setSelectedCategoryId(subCategoryId)
 
     if (!categoryId) {
       const fetchAllEventData = async () => {
-        const allEventData = await fetchGetEvents(categoryId)
+        const allEventData = await fetchGetEvents(categoryId, subCategoryId)
         setPostData(allEventData)
       }
       fetchAllEventData()
     } else {
-      navigate(`/meetup-lists/${categoryId}?subcategories=${categoryId}`)
+      navigate(`/meetup-lists/${categoryId}?subcategories=${subCategoryId}`)
       fetchCategoryData()
     }
   }
-
-  useEffect(() => {
-    fetchEventData(categoryId)
-    fetchCategoryData(categoryId)
-  }, [categoryId])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.value)

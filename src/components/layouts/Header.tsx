@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { FaUserCircle, FaTimes, FaBars } from 'react-icons/fa'
 import Logo from '@/assets/images/Logo.svg'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { Category } from '@/types'
 import { fetchGetCategories } from '@/api/category'
 
@@ -53,31 +53,30 @@ export default function Header() {
       <div className='relative z-[999] w-8/12 max-w-screen-xl mx-auto bg-transparent'>
         <div className='flex justify-between'>
           <div className='flex space-x-4'>
-            <div>
-              <Link
-                to='/'
-                className={generateClassName(
-                  'flex items-center px-2 py-5 text-gray-700',
-                  true,
-                )}
-              >
-                <img src={Logo} alt='Logo' />
-              </Link>
-            </div>
+            <Link
+              to='/'
+              className={generateClassName(
+                'flex items-center px-2 py-5 text-gray-700',
+                true,
+              )}
+            >
+              <img src={Logo} alt='Logo' />
+            </Link>
           </div>
 
-          <div className={`hidden md:flex items-center space-x-1`}>
+          <div className={'hidden md:flex items-center space-x-1'}>
             {menuItems.map((item, index) => (
-              <Link
+              <NavLink
                 key={index}
                 to={item.to}
-                className={generateClassName(
-                  'py-5 px-3 text-gray-700 hover:font-bold',
-                  true,
-                )}
+                className={({ isActive }) =>
+                  `min-w-[4rem] px-3 py-5 text-gray-600 hover:text-black-color font-light ${
+                    isActive && 'font-semibold text-black-color'
+                  }`
+                }
               >
                 {item.text}
-              </Link>
+              </NavLink>
             ))}
             <Link
               to='/userInfo/:userId'
@@ -114,14 +113,14 @@ export default function Header() {
         )}
       >
         {menuItems.map((item, index) => (
-          <Link
+          <NavLink
             key={index}
             to={item.to}
             className='block px-4 py-2 text-sm hover:bg-main-light-color'
             onClick={closeMobileMenu}
           >
             {item.text}
-          </Link>
+          </NavLink>
         ))}
       </div>
     </nav>
