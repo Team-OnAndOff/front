@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react'
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules'
 import { IoIosArrowBack } from 'react-icons/io'
 
@@ -9,7 +9,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 export default function ImageSlide() {
-  const [swiper, setSwiper] = useState<SwiperClass>()
+  const [swiper, setSwiper] = useState<SwiperClass | null>(null)
 
   const images = [
     {
@@ -72,7 +72,6 @@ export default function ImageSlide() {
               className='object-cover w-full h-[400px] select-none'
               src={image.src}
               alt={`배너 대표이미지 ${index + 1}`}
-              loading='lazy'
             />
             <div className='swiper-lazy-preloader swiper-lazy-preloader-white'></div>
           </SwiperSlide>

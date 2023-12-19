@@ -24,7 +24,8 @@ export default function MainPosts({ title, data, isSlide }: MainPostsProps) {
   const navigate = useNavigate()
   const [swiper, setSwiper] = useState<SwiperClass | null>(null)
 
-  const items = isSlide ? data : data.slice(0, 3)
+  // const items = isSlide ? data : data.slice(0, 3)
+  const items = data
 
   const handleClickCrew = (categoryId: number | undefined) => {
     if (categoryId !== undefined) {

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { FaEllipsisVertical } from 'react-icons/fa6'
 import { FaTimes } from 'react-icons/fa'
 import { Tag } from '@/components/common'
+import LazyImage from '@/utils/LazyImage'
 
 export default function Card({ data }: CardProps) {
   const {
@@ -57,6 +58,13 @@ export default function Card({ data }: CardProps) {
     }
   }, [])
 
+  // 이미지 로더
+  const [isUserImageLoaded, setIsUserImageLoaded] = useState(false)
+
+  const handleUserImageLazyLoad = () => {
+    setIsUserImageLoaded(true)
+  }
+
   return (
     <>
       <div
@@ -74,11 +82,12 @@ export default function Card({ data }: CardProps) {
         <div className='hover:-translate-y-1 hover:transition-all aspect-w-1 aspect-h-1 hover:drop-shadow-xl'>
           <div className='w-full h-96'>
             <Link to={`/details/${data.id}`}>
-              <img
+              <LazyImage
                 src={image.uploadPath}
                 alt={title}
                 className='object-cover w-full h-full cursor-pointer rounded-image-radius max-w-[360px] max-h-[360px]'
                 loading='lazy'
+                onLazyLoad={handleUserImageLazyLoad}
               />
             </Link>
           </div>
@@ -88,9 +97,8 @@ export default function Card({ data }: CardProps) {
               to={`/userInfo/${user.id}`}
               className='absolute w-1/3 bg-white rounded-full max-h-[46px] max-w-[46px] drop-shadow-xl h-1/3 bottom-12 right-5 cursor-pointer'
             >
-              <img
+              <LazyImage
                 src={user.image.uploadPath}
-                className='rounded-full'
                 alt={user.username}
                 loading='lazy'
               />
@@ -179,6 +187,7 @@ export default function Card({ data }: CardProps) {
               </div>
             </div>
           </div>
+          {!isUserImageLoaded && <div>Loading...</div>}
         </div>
       </div>
     </>
