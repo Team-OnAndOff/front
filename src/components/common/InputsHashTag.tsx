@@ -1,8 +1,8 @@
 import {
   useForm,
-  SubmitHandler,
-  useFieldArray,
   UseFormRegister,
+  UseFormSetValue,
+  useFieldArray,
 } from 'react-hook-form'
 import Inputs from '@/components/common/Inputs'
 
@@ -13,14 +13,11 @@ interface Tag {
 
 interface InputsHashTagProps {
   register: UseFormRegister<{ tags: Tag[] }>
+  setValue: UseFormSetValue<{ tags: Tag[] }>
 }
 
-interface TagForm {
-  tags: Tag[]
-}
-
-export default function InputsHashTag({ register }: InputsHashTagProps) {
-  const { control, handleSubmit, reset } = useForm<TagForm>({
+const useInputsHashTag = ({ register, setValue }: InputsHashTagProps) => {
+  const { control } = useForm<{ tags: Tag[] }>({
     defaultValues: { tags: [] },
   })
 
@@ -29,22 +26,43 @@ export default function InputsHashTag({ register }: InputsHashTagProps) {
     name: 'tags',
   })
 
-  const handleTagEnter: SubmitHandler<TagForm> = ({ tags }) => {
-    append({ id: Date.now().toString(), value: tags[tags.length - 1].value })
-    reset({ tags: [] })
-  }
-
   const handleDeleteTag = (index: number) => {
     remove(index)
+    setValue(
+      'tags',
+      fields.map((field) => ({ id: field.id, value: field.value })),
+    )
   }
 
+  const handleTagEnter = (value: string) => {
+    if (value.trim()) {
+      append({ id: Date.now().toString(), value: value.trim() })
+      setValue(
+        'tags',
+        fields.map((field) => ({ id: field.id, value: field.value })),
+      )
+    }
+  }
+
+  return {
+    registerTags: register('tags', { required: true }),
+    handleTagEnter,
+    fields,
+    handleDeleteTag,
+  }
+}
+
+export default function InputsHashTag(props: InputsHashTagProps) {
+  const { registerTags, handleTagEnter, fields, handleDeleteTag } =
+    useInputsHashTag(props)
+
   return (
-    <form onSubmit={handleSubmit(handleTagEnter)}>
+    <div>
       <Inputs
         placeholder='해시태그를 입력해주세요.'
         width='w-80'
-        register={register('tags', { required: true })} // 수정된 부분
-        onEnter={() => {}} // onChange에서 실행할 동작이 필요한 경우 여기에 추가
+        register={registerTags}
+        onEnter={handleTagEnter}
       />
       <div className='my-3 w-fit rounded-xl bg-light-gray-color'>
         {fields.map((field, index) => (
@@ -62,6 +80,6 @@ export default function InputsHashTag({ register }: InputsHashTagProps) {
           </div>
         ))}
       </div>
-    </form>
+    </div>
   )
 }
