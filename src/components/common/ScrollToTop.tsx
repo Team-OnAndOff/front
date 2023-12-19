@@ -36,9 +36,9 @@ export default function ScrollToTop() {
           onClick={backToTop}
           className={` ${
             showButton ? `inline-block` : `hidden`
-          } fixed bottom-[40px] right-[40px] rounded-full shadow-md hover:shadow-xl focus:shadow-xl focus:outline-none focus:ring-0 active:shadow-xl transition duration-150 ease-in-out cursor-pointer`}
+          } fixed bottom-[95px] right-[40px] w-[30px] h-[30px] bg-white rounded-full drop-shadow-xl hover:drop-shadow-2xl`}
         >
-          <FaArrowAltCircleUp fill='#3a823f' size={30} />
+          <FaArrowAltCircleUp fill='#111' size={30} />
         </button>
       )}
     </>

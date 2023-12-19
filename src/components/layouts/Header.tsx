@@ -51,7 +51,10 @@ export default function Header() {
                 {item.text}
               </Link>
             ))}
-            <Link to='/mypage' className={generateClassName('py-5 px-3', true)}>
+            <Link
+              to='/userInfo/:userId'
+              className={generateClassName('py-5 px-3', true)}
+            >
               <FaUserCircle size={24} />
             </Link>
           </div>
