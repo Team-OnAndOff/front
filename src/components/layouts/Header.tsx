@@ -1,10 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FaUserCircle, FaTimes, FaBars } from 'react-icons/fa'
 import Logo from '@/assets/images/Logo.svg'
 import { Link } from 'react-router-dom'
+import { Category } from '@/types'
+import { fetchGetCategories } from '@/api/category'
+
+interface MenuItem {
+  to: string
+  text: string
+  id?: number
+}
 
 export default function Header() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false)
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([])
 
   const generateClassName = (
     base: string,
@@ -16,16 +25,32 @@ export default function Header() {
     setMenuToggle(false)
   }
 
-  const menuItems = [
-    { to: '/crews/0', text: 'Crew' },
-    { to: '/challenges/0', text: 'Challenge' },
-    { to: '/chat', text: 'Chat' },
-    { to: '/login', text: 'Login' },
-  ]
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchGetCategories()
+
+        const generatedMenuItems = data.map((category: Category) => ({
+          to: `/meetup-lists/${category.id}`,
+          text: category.name.charAt(0).toUpperCase() + category.name.slice(1),
+        }))
+
+        setMenuItems([
+          ...generatedMenuItems,
+          { to: '/chat', text: 'Chat' },
+          { to: '/login', text: 'Login' },
+        ])
+      } catch (error) {
+        console.error('Error', error)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <nav className='w-full sticky top-0 z-[999] bg-white border-b shadow-sm'>
-      <div className='relative z-[999]  w-8/12 max-w-screen-xl mx-auto bg-transparent'>
+      <div className='relative z-[999] w-8/12 max-w-screen-xl mx-auto bg-transparent'>
         <div className='flex justify-between'>
           <div className='flex space-x-4'>
             <div>
@@ -46,7 +71,10 @@ export default function Header() {
               <Link
                 key={index}
                 to={item.to}
-                className={generateClassName('py-5 px-3 text-gray-700', true)}
+                className={generateClassName(
+                  'py-5 px-3 text-gray-700 hover:font-bold',
+                  true,
+                )}
               >
                 {item.text}
               </Link>

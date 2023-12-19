@@ -16,7 +16,7 @@ export default function Footer() {
             <a target='_blank' href='#'>
               <strong>개인정보처리방침</strong>
             </a>
-            |
+            &nbsp; &#124; &nbsp;
             <a target='_blank' href='#' className='hover:underline'>
               이용약관
             </a>
@@ -25,11 +25,11 @@ export default function Footer() {
             <small>(주) </small>온앤오프
           </li>
           <li className='text-xs text-gray-800'>
-            대표자: 이준규 | 대표전화:
+            대표자: 이준규 &nbsp;|&nbsp; 대표전화:
             <a href='tel:0904-1229' className='hover:underline'>
               0904-1229
             </a>
-          </li>{' '}
+          </li>
           <li className='text-xs text-gray-800'>
             사업자등록번호:
             <span>317-25-89091</span>

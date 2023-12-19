@@ -1,4 +1,7 @@
-export type CategoryType = 'Crew' | 'Challenge'
+export type CategoryType = {
+  categoryId: number;
+  subCategoryId: number;
+};
 
 export const formatDate = (inputDate: Date) => {
   const date = new Date(inputDate);

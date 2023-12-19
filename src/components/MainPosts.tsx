@@ -1,11 +1,11 @@
 import { Card, Button } from '@/components/common'
 import { useNavigate } from 'react-router-dom'
-import { CategoryType } from '@/utils/index'
+import { CardData } from '@/types'
 
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Navigation } from 'swiper/modules'
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react'
+import swipercore from 'swiper'
+import { Autoplay } from 'swiper/modules'
 import { useState, useRef } from 'react'
-import SwiperCore from 'swiper/core'
 import { IoIosArrowBack } from 'react-icons/io'
 
 import 'swiper/css'
@@ -13,63 +13,34 @@ import 'swiper/css/effect-fade'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
-SwiperCore.use([Autoplay])
-
-interface HotPostsSectionProps {
-  title: string
-  data: {
-    postImageUrl: string
-    title: string
-    startDate: string
-    endDate?: string
-    category: string
-    leaderName: string
-    leaderImageUrl: string
-    createDate: string
-    detailCategory: string
-    like?: number
-  }[]
+swipercore.use([Autoplay])
+interface MainPostsProps {
+  title?: string
+  data: CardData[]
   isSlide: boolean
-  categoryType?: CategoryType
 }
 
-export default function HotPostsSection({
-  title,
-  data,
-  isSlide,
-  categoryType,
-}: HotPostsSectionProps) {
+export default function MainPosts({ title, data, isSlide }: MainPostsProps) {
   const navigate = useNavigate()
-  const [swiper, setSwiper] = useState<SwiperClass>()
+  const [swiper, setSwiper] = useState<SwiperClass | null>(null)
 
-  const filteredData = data.filter((item) => item.category === categoryType)
+  const items = isSlide ? data : data.slice(0, 3)
 
-  const sortedData = data.sort((a, b) => (b.like || 0) - (a.like || 0))
-  const topPosts = sortedData.slice(0, 3)
-
-  const handleClickCrew = () => {
-    if (categoryType) navigate(`/${categoryType.toLowerCase()}s/0`)
+  const handleClickCrew = (categoryId: number | undefined) => {
+    if (categoryId !== undefined) {
+      navigate(`/meetup-lists/${categoryId}`)
+    }
   }
 
-  const [items] = useState(filteredData)
-
-  const swiperRef = useRef(null)
-
+  const swiperRef = useRef<swipercore>()
   // 호버 시, 슬라이드 정지
-  const onInit = (swiper) => {
-    swiperRef.current = swiper
-  }
 
   const handleMouseEnter = () => {
-    if (swiperRef.current) {
-      swiperRef.current.autoplay.stop()
-    }
+    if (swiperRef.current) swiperRef.current.autoplay?.stop()
   }
 
   const handleMouseLeave = () => {
-    if (swiperRef.current) {
-      swiperRef.current.autoplay.start()
-    }
+    if (swiperRef.current) swiperRef.current.autoplay?.start()
   }
 
   // 이전, 다음 버튼 이벤트핸들러
@@ -114,25 +85,14 @@ export default function HotPostsSection({
                   prevEl: '#prev_slide',
                   nextEl: '#next_slide',
                 }}
-                onInit={onInit}
-                modules={[Autoplay, Navigation]}
                 onSwiper={(e) => {
                   setSwiper(e)
+                  swiperRef.current = e
                 }}
               >
                 {items.map((item) => (
-                  <SwiperSlide key={item.title}>
-                    <Card
-                      postImageUrl={item.postImageUrl}
-                      title={item.title}
-                      startDate={item.startDate}
-                      endDate={item.endDate}
-                      category={item.category}
-                      leaderName={item.leaderName}
-                      leaderImageUrl={item.leaderImageUrl}
-                      createDate={item.createDate}
-                      detailCategory={item.detailCategory}
-                    />
+                  <SwiperSlide key={item.id}>
+                    <Card data={item} />
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -158,27 +118,18 @@ export default function HotPostsSection({
           </div>
 
           <div className='pt-2 text-right text-size-subbody'>
-            <Button fill='border' onClick={handleClickCrew}>
+            <Button
+              fill='border'
+              onClick={() => handleClickCrew(data[0]?.category?.id)}
+            >
               전체보기
             </Button>
           </div>
         </>
       ) : (
-        // 슬라이드 없이 top3만 보여주기
         <div className='grid grid-cols-3 gap-4'>
-          {topPosts.map((item) => (
-            <Card
-              key={item.title}
-              postImageUrl={item.postImageUrl}
-              title={item.title}
-              startDate={item.startDate}
-              endDate={item.endDate}
-              category={item.category}
-              leaderName={item.leaderName}
-              leaderImageUrl={item.leaderImageUrl}
-              createDate={item.createDate}
-              detailCategory={item.detailCategory}
-            />
+          {items.map((item) => (
+            <Card key={item.id} data={item} />
           ))}
         </div>
       )}

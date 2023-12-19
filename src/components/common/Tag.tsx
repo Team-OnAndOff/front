@@ -13,7 +13,7 @@ export default function Tag({ options }: Tagprops) {
           <Link
             to={`/${option.meetup}/0?query=${option.tagName}`}
             key={index}
-            className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-subbody text-black-color'
+            className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-size-subbody text-dark-gray-color'
           >{`#${option.tagName}`}</Link>
         ))}
       </div>

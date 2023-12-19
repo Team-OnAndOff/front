@@ -3,8 +3,7 @@ import { Layout } from '@/components/layouts'
 import { Main } from '@/pages/home'
 import { Chat } from '@/pages/chat'
 import {
-  Crew,
-  Challenge,
+  MeetupList,
   Detail,
   RecruitsCreate,
   RecruitsEdit,
@@ -22,8 +21,7 @@ export default function App() {
             {/* 공통컴포넌트 샘플 */}
             {/* <Route path='/' element={<Example />} /> */}
             <Route path='/' element={<Main />} />
-            <Route path='/crews/:categoryId' element={<Crew />} />
-            <Route path='/challenges/:categoryId' element={<Challenge />} />
+            <Route path='/meetup-lists/:categoryId' element={<MeetupList />} />
             <Route path='/details/:postId' element={<Detail />} />
             <Route path='/userinfo/:userId' element={<MyPage />} />
             <Route path='/recruits-create' element={<RecruitsCreate />} />

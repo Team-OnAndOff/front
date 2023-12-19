@@ -1,5 +1,7 @@
 import ImageSlide from '@/components/ImageSlide'
-import HotPostsSection from '@/components/HotPostsSection'
+import MainPosts from '@/components/MainPosts'
 import CardSlide from '@/components/CardSlide'
+import CategoryHeader from '@/components/CategoryHeader'
+import TabList from '@/components/TabList'
 
-export { ImageSlide, HotPostsSection, CardSlide }
+export { ImageSlide, MainPosts, CardSlide, CategoryHeader, TabList }
