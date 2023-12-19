@@ -10,9 +10,9 @@ export default function Modal({ isOpen, closeModal, children }: ModalProps) {
   }
 
   return (
-    <div className='fixed inset-0 flex items-center justify-center'>
+    <div className='fixed inset-0 z-50 flex items-center justify-center'>
       <div
-        className='fixed inset-0 opacity-50 bg-dark-gray-color'
+        className='fixed inset-0 opacity-50 z-100 bg-dark-gray-color'
         onClick={closeModal}
       ></div>
       <div className='z-50 p-4 bg-white rounded-xl w-fit'>
