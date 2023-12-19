@@ -2,7 +2,7 @@ import {
   ChatRoomInput,
   ChatRoomTitle,
   ChatRoomMessage,
-  ChatRoomDate,
+  ChatBadge,
 } from '@/components/chat'
 
 export default function ChatRoomIcon() {
@@ -11,7 +11,7 @@ export default function ChatRoomIcon() {
       <ChatRoomTitle />
 
       <div className='flex flex-col flex-1 space-y-4 p-1 sm:p-4 overflow-y-auto'>
-        <ChatRoomDate />
+        <ChatBadge text='2023년 12월 19일' />
         {Array.from({ length: 50 }).map((_, i) => (
           <ChatRoomMessage
             isSelf={i % 4 === 0}
