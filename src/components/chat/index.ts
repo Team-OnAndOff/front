@@ -7,6 +7,7 @@ import ChatRoomInput from '@/components/chat/room/ChatRoomInput'
 import ChatRoomIcon from '@/components/chat/room/ChatRoomIcon'
 import ChatRoomSendButton from '@/components/chat/room/ChatRoomSendButton'
 import ChatRoomMessage from '@/components/chat/room/ChatRoomMessage'
+import ChatRoomDate from '@/components/chat/room/ChatRoomDate'
 
 export {
   ChatList,
@@ -17,4 +18,5 @@ export {
   ChatRoomIcon,
   ChatRoomSendButton,
   ChatRoomMessage,
+  ChatRoomDate,
 }
