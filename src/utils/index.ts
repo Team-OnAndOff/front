@@ -1,3 +1,9 @@
+import ScrollToTop from "@/utils/ScollToTop";
+import LazyImage from "@/utils/LazyImage";
+
+
+export { ScrollToTop, LazyImage }
+
 export type CategoryType = {
   categoryId: number;
   subCategoryId: number;
