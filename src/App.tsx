@@ -11,11 +11,13 @@ import {
 } from '@/pages/meeting'
 import { Login, MyPage } from '@/pages/user'
 import NotFound from '@/pages/NotFound'
+import { ScrollToTop } from '@/utils'
 
 export default function App() {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path='/' element={<Layout />}>
             {/* 공통컴포넌트 샘플 */}
