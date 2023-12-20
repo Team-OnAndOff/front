@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { FaEllipsisVertical } from 'react-icons/fa6'
 import { FaTimes } from 'react-icons/fa'
 import { Tag } from '@/components/common'
-import LazyImage from '@/utils/LazyImage'
+import { LazyImage } from '@/utils'
 
 export default function Card({ data }: CardProps) {
   const {
@@ -64,7 +64,6 @@ export default function Card({ data }: CardProps) {
   const handleUserImageLazyLoad = () => {
     setIsUserImageLoaded(true)
   }
-
   return (
     <>
       <div
@@ -100,6 +99,7 @@ export default function Card({ data }: CardProps) {
               <LazyImage
                 src={user.image.uploadPath}
                 alt={user.username}
+                className='rounded-full'
                 loading='lazy'
               />
             </Link>
@@ -111,11 +111,14 @@ export default function Card({ data }: CardProps) {
         </div>
         {/* 텍스트 영역 */}
         <div className='flex flex-col justify-between px-3 -mt-5 text-left gap-y-3'>
-          <div className='text-[0.6rem] text-dark-gray-color tablet:text-size-subbody'>
+          <Link
+            to={`/meetup-lists/${category.parentId.id}?subcategories=${category.id}`}
+            className='text-[0.6rem] text-dark-gray-color tablet:text-size-subbody'
+          >
             {category.name}
             &nbsp; &#124; &nbsp;
             {formatDate(createdAt)}
-          </div>
+          </Link>
           <div className='h-14'>
             <Link to={`/details/${data.id}`}>
               <h2 className='w-full font-bold line-clamp-2 text-size-body'>
@@ -132,13 +135,14 @@ export default function Card({ data }: CardProps) {
           <div>
             {/* 크루/챌린지스 */}
             <Link
-              to={`/meetup-lists/${category.id}`}
+              to={`/meetup-lists/${category.parentId}`}
               className='font-light text-main-color text-size-body'
             >
               {category.parentId.name}
             </Link>
             <div className='flex items-center justify-between w-full h-6 font-bold text-size-subbody'>
-              {challengeStartDate} &#126; {challengeEndDate}
+              {challengeStartDate}
+              {challengeEndDate && ` ~ ${challengeEndDate}`}
               {/* 호버시 보이는 영역 */}
               <div>
                 {/* Pop-up menu */}
@@ -187,7 +191,6 @@ export default function Card({ data }: CardProps) {
               </div>
             </div>
           </div>
-          {!isUserImageLoaded && <div>Loading...</div>}
         </div>
       </div>
     </>
