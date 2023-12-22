@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Layout } from '@/components/layouts'
+import { Layout, AdminLayout } from '@/components/layouts'
 import { Main } from '@/pages/home'
 import { Chat } from '@/pages/chat'
 import {
@@ -11,6 +11,13 @@ import {
 } from '@/pages/meeting'
 import { Login, MyPage } from '@/pages/user'
 import NotFound from '@/pages/NotFound'
+import {
+  AdminLogin,
+  AdminComplaint,
+  AdminCategory,
+  AdminEvent,
+  AdminUser,
+} from './pages/admin'
 
 export default function App() {
   return (
@@ -33,6 +40,15 @@ export default function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/chat' element={<Chat />} />
           </Route>
+
+          <Route path='/admin/login' element={<AdminLogin />} />
+          <Route path='/admin' element={<AdminLayout />}>
+            <Route path='users' element={<AdminUser />} />
+            <Route path='events' element={<AdminEvent />} />
+            <Route path='complaints' element={<AdminComplaint />} />
+            <Route path='categories' element={<AdminCategory />} />
+          </Route>
+
           <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>

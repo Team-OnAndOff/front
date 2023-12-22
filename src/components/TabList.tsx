@@ -1,4 +1,4 @@
-import { Category } from '@/types'
+import { Tab as TabType } from '@/types'
 
 interface TabProps {
   id: number
@@ -24,7 +24,7 @@ const Tab = ({ id, label, onClick, isSelected }: TabProps) => {
 }
 
 interface TabListProps {
-  categories: Category[]
+  categories: TabType[]
   handleTabClick: (categoryId: number) => void
   selectedCategoryId?: number
 }
