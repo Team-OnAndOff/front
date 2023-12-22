@@ -23,6 +23,7 @@ import {
   RecruitsSubCategory1,
   RecruitsSubCategory2,
 } from '@/components/meeting/index'
+import InputHash from '@/components/meeting/mypage/InputHash'
 // import InputsHashTag from '@/components/common/InputsHashTag'
 
 interface FormData {
@@ -66,6 +67,7 @@ export default function RecruitsCreate() {
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
   const [selectedOnLine, setSelectedOnLine] = useState<number | null>(null)
   const [myImage, setMyImage] = useState<File | null>(null)
+  const [dataArray, setDataArray] = useState<string[]>([])
   const currentStartDate = dayjs(watch('challengeStartDate')).format(
     'YYYY-MM-DD',
   )
@@ -179,6 +181,34 @@ export default function RecruitsCreate() {
     // 이미지 업로드 버튼으로 새로 이미지를 넣으면 reset이 되지만, (이미지 삭제버튼 안누르고)
     // 현재 버그있음 > 이미지를 삭제 버튼을 누르면 undefined로 고정이 되어버림.
     // 그렇다고, 그냥 이미지를 안보이게 하면, 다른 이미지로 바꿔도 처음 클릭했던 이미지가 들어감
+  }
+
+  // 해시태그 추가 로직
+  const handleEnter = (value: string) => {
+    if (value.trim() !== '') {
+      if (!dataArray.includes(value.trim())) {
+        if (dataArray.length < 10) {
+          setDataArray((prevArray) => [...prevArray, value.trim()])
+          // hashTags 필드의 값을 setValue를 사용하여 업데이트
+          setValue('hashTag', [...dataArray, value.trim()])
+        } else {
+          alert('태그는 10개까지만 입력할 수 있습니다.')
+          // console.log(formData)
+        }
+      } else {
+        console.log('이미 존재하는 값입니다.')
+      }
+    }
+  }
+
+  // 해시태그 삭제 로직
+  const handleRemoveHash = (index: number) => {
+    setDataArray((prevArray) => prevArray.filter((_, i) => i !== index))
+    // hashTags 필드의 값을 setValue를 사용하여 업데이트
+    setValue(
+      'hashTag',
+      dataArray.filter((_, i) => i !== index),
+    )
   }
 
   const category = RecruitsCategory()
@@ -417,6 +447,30 @@ export default function RecruitsCreate() {
           <div className='flex'>
             <RecruitsTitle>해시태그</RecruitsTitle>
             <div className='flex flex-col'>
+              <InputHash
+                placeholder='#태그입력'
+                width='w-80'
+                onEnter={(value) => handleEnter(value)}
+                register={register('hashTag')}
+              />
+              <div>
+                <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
+                  {dataArray.map((item, index) => (
+                    <li
+                      className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-subbody text-black-color'
+                      key={index}
+                    >
+                      #{item}{' '}
+                      <span
+                        onClick={() => handleRemoveHash(index)}
+                        className='cursor-pointer'
+                      >
+                        ⤫
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
               {/* <InputsHashTag register={register} setValue={setValue} /> */}
             </div>
           </div>
