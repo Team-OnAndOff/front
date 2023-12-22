@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { FaUserCircle, FaTimes, FaBars } from 'react-icons/fa'
 import Logo from '@/assets/images/Logo.svg'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Category } from '@/types'
 import { fetchGetCategories } from '@/api/category'
 
@@ -14,6 +14,7 @@ interface MenuItem {
 export default function Header() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false)
   const [menuItems, setMenuItems] = useState<MenuItem[]>([])
+  const location = useLocation()
 
   const generateClassName = (
     base: string,
@@ -71,6 +72,9 @@ export default function Header() {
               <Link
                 key={index}
                 to={item.to}
+                state={{
+                  path: location.pathname,
+                }} /* 로그인 페이지 이동 전 현재 페이지 넘겨주기 */
                 className={generateClassName(
                   'py-5 px-3 text-gray-700 hover:font-bold',
                   true,
