@@ -14,6 +14,7 @@ interface MenuItem {
 export default function Header() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false)
   const [menuItems, setMenuItems] = useState<MenuItem[]>([])
+  const location = useLocation()
 
   const generateClassName = (
     base: string,
@@ -69,6 +70,9 @@ export default function Header() {
               <NavLink
                 key={index}
                 to={item.to}
+                state={{
+                  path: location.pathname,
+                }} /* 로그인 페이지 이동 전 현재 페이지 넘겨주기 */
                 className={generateClassName(
                   'py-5 px-3 text-gray-700 hover:font-bold',
                   true,
