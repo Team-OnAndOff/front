@@ -7,6 +7,7 @@ interface DaumAddressData {
   zonecode: string
   address: string
   addressType: string
+  roadAddress: string
   bname: string
   buildingName: string
 }
@@ -26,6 +27,7 @@ const RecruitsAddress = ({ onComplete }: RecruitsAddressProps) => {
   const complete = (data: DaumAddressData) => {
     let fullAddress = data.address
     let extraAddress = ''
+    const zonecode = parseInt(data.zonecode)
 
     if (data.addressType === 'R') {
       if (data.bname !== '') {
@@ -38,7 +40,7 @@ const RecruitsAddress = ({ onComplete }: RecruitsAddressProps) => {
       fullAddress += extraAddress !== '' ? ` (${extraAddress})` : ''
     }
 
-    setValue('zonecode', data.zonecode)
+    setValue('zonecode', zonecode)
     setValue('address', fullAddress)
 
     onComplete(data)
@@ -63,7 +65,7 @@ const RecruitsAddress = ({ onComplete }: RecruitsAddressProps) => {
       </div>
       <input
         placeholder='주소'
-        className='flex w-full pt-4 pb-1 pl-3 border-b-2 focus:outline-none border-light-gray-color'
+        className='flex w-3/4 pt-4 pb-1 pl-3 border-b-2 focus:outline-none border-light-gray-color'
         value={watchedAddress}
         readOnly
       />
