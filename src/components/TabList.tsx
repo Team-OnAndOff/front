@@ -8,16 +8,13 @@ interface TabProps {
 }
 
 const Tab = ({ id, label, onClick, isSelected }: TabProps) => {
+  const tabStyles = `flex-1 items-center px-1 py-4 text-sm border-b-2 gap-x-2 whitespace-nowrap focus:outline-none ${
+    isSelected
+      ? 'font-semibold border-main-color text-main-color'
+      : 'hover:text-gray-500 border-transparent text-dark-gray-color'
+  }`
   return (
-    <button
-      type='button'
-      className={`flex-1 items-center px-1 py-4 text-sm border-b-2 gap-x-2 whitespace-nowrap focus:outline-none ${
-        isSelected
-          ? 'font-semibold border-main-color text-main-color'
-          : 'hover:text-gray-500 border-transparent text-dark-gray-color'
-      }`}
-      onClick={() => onClick(id)}
-    >
+    <button type='button' className={tabStyles} onClick={() => onClick(id)}>
       {label}
     </button>
   )
@@ -41,13 +38,13 @@ export default function TabList({
         aria-label='Tabs'
         role='tablist'
       >
-        {categories.map((category) => (
+        {categories.map(({ id, name }) => (
           <Tab
-            key={category.id}
-            id={category.id}
-            label={category.name}
-            onClick={(categoryId) => handleTabClick(categoryId)}
-            isSelected={selectedCategoryId === category.id}
+            key={id}
+            id={id}
+            label={name}
+            onClick={() => handleTabClick(id)}
+            isSelected={selectedCategoryId === id}
           />
         ))}
       </nav>

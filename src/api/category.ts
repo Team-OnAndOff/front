@@ -18,14 +18,12 @@ export const fetchGetCategories = async () => {
 }
 
 // 카테고리 상세 조회하기
-export const fetchGetCategory = async (categoryId: string) => {
+export const fetchGetCategory = async (categoryId: number) => {
   try {
-    const response = await instance.get<Response<Category>>(
-      `/${categoryId}`,
-    );
-    return response.data.data;
+    const response = await instance.get<Response<Category>>(`/${categoryId}`)
+    return response.data.data
   } catch (error) {
-    console.error(error);
-    return null;
+    console.error(error)
+    return null
   }
-};
+}

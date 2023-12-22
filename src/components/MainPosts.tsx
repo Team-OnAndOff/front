@@ -1,41 +1,31 @@
-import { Card, Button } from '@/components/common'
-import { useNavigate } from 'react-router-dom'
-import { CardData } from '@/types'
-
-import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react'
-import swipercore from 'swiper'
-import { Autoplay } from 'swiper/modules'
 import { useState, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { Card, Button } from '@/components/common'
+import { PostsProps } from '@/types'
 import { IoIosArrowBack } from 'react-icons/io'
 
+import { Swiper, SwiperClass, SwiperSlide } from 'swiper/react'
+import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/effect-fade'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import 'swiper/css/bundle'
 
+import swipercore from 'swiper'
 swipercore.use([Autoplay])
-interface MainPostsProps {
-  title?: string
-  data: CardData[]
-  isSlide: boolean
-}
 
-export default function MainPosts({ title, data, isSlide }: MainPostsProps) {
+export default function MainPosts({ title, data, isSlide }: PostsProps) {
   const navigate = useNavigate()
   const [swiper, setSwiper] = useState<SwiperClass | null>(null)
 
   // const items = isSlide ? data : data.slice(0, 3)
   const items = data
 
-  const handleClickCrew = (categoryId: number | undefined) => {
-    if (categoryId !== undefined) {
-      navigate(`/meetup-lists/${categoryId}`)
-    }
-  }
-
   const swiperRef = useRef<swipercore>()
-  // 호버 시, 슬라이드 정지
 
+  // 호버 시, 슬라이드 정지
   const handleMouseEnter = () => {
     if (swiperRef.current) swiperRef.current.autoplay?.stop()
   }
@@ -52,12 +42,18 @@ export default function MainPosts({ title, data, isSlide }: MainPostsProps) {
     swiper?.slideNext()
   }
 
+  const handleClickCategory = (categoryId: number | undefined) => {
+    if (categoryId !== undefined) {
+      navigate(`/meetup-lists/${categoryId}`)
+    }
+  }
+
   return (
     <section className='relative flex flex-col gap-y-7'>
       <h2 className='font-bold text-size-title break-keep'>{title}</h2>
       {isSlide ? (
         <>
-          <div id='post-slide' className='relative'>
+          <div className='relative'>
             <div
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
@@ -121,7 +117,7 @@ export default function MainPosts({ title, data, isSlide }: MainPostsProps) {
           <div className='pt-2 text-right text-size-subbody'>
             <Button
               fill='border'
-              onClick={() => handleClickCrew(data[0]?.category?.id)}
+              onClick={() => handleClickCategory(data[0]?.category?.id)}
             >
               전체보기
             </Button>

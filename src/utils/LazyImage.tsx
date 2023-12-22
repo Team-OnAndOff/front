@@ -3,6 +3,7 @@ import type { ImgHTMLAttributes } from 'react'
 
 type LazyImageProps = {
   src: string
+  alt?: string
   onLazyLoad?: (img: HTMLImageElement) => void
 }
 type ImgNativeProps = ImgHTMLAttributes<HTMLImageElement>
@@ -11,6 +12,7 @@ type Props = LazyImageProps & ImgNativeProps
 export default function LazyImage({
   src,
   onLazyLoad,
+  alt,
   ...imgProps
 }: Props): JSX.Element {
   const node = useRef<HTMLImageElement>(null)
@@ -41,14 +43,5 @@ export default function LazyImage({
     return () => observer.disconnect()
   }, [src, isLazyLoaded, onLazyLoad])
 
-  return (
-    <div>
-      <img
-        ref={node}
-        src={isIntersecting}
-        alt='Random fox image'
-        {...imgProps}
-      />
-    </div>
-  )
+  return <img ref={node} src={isIntersecting} alt={alt} {...imgProps} />
 }

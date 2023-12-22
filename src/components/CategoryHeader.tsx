@@ -15,7 +15,7 @@ export default function CategoryHeader({
     <header
       className={`${bgColor} flex flex-col items-center w-full gap-8 py-3`}
     >
-      <span className={`font-bold  text-size-title ${textColor}`}>{title}</span>
+      <span className={`font-bold text-size-title ${textColor}`}>{title}</span>
       <span className='text-white'>{content}</span>
     </header>
   )

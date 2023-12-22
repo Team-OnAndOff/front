@@ -1,17 +1,18 @@
-import tree_1 from '@/assets/images/tree_1.svg'
-import tree_2 from '@/assets/images/tree_2.svg'
-import tree_3 from '@/assets/images/tree_3.svg'
-import hand_1 from '@/assets/images/hand_1.svg'
-import hand_2 from '@/assets/images/hand_2.svg'
-import hand_3 from '@/assets/images/hand_3.svg'
-import challenge_1 from '@/assets/images/challenge_1.svg'
-import challenge_2 from '@/assets/images/challenge_2.svg'
-import challenge_3 from '@/assets/images/challenge_3.svg'
-import best_1 from '@/assets/images/best_1.svg'
-import best_2 from '@/assets/images/best_2.svg'
-import best_3 from '@/assets/images/best_3.svg'
 import { useState } from 'react'
-
+import {
+  tree_1,
+  tree_2,
+  tree_3,
+  hand_1,
+  hand_2,
+  hand_3,
+  challenge_1,
+  challenge_2,
+  challenge_3,
+  best_1,
+  best_2,
+  best_3,
+} from '@/assets/images'
 interface condition {
   attend: number
   open: number
