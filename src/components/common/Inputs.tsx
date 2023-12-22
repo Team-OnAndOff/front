@@ -6,6 +6,7 @@ interface InputsProps {
   width?: string
   onEnter?: (value: string) => void
   register?: UseFormRegisterReturn
+  type?: string
 }
 
 export default function Inputs({
@@ -13,6 +14,7 @@ export default function Inputs({
   width = 'w-80',
   onEnter,
   register,
+  type = 'text',
 }: InputsProps) {
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && onEnter) {
@@ -27,7 +29,7 @@ export default function Inputs({
       >
         <input
           className='w-full text-size-body text-black-color focus:outline-none'
-          type='text'
+          type={type}
           placeholder={placeholder}
           {...register}
           onKeyDown={handleKeyPress}

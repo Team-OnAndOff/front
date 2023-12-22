@@ -69,11 +69,10 @@ export default function Header() {
               <NavLink
                 key={index}
                 to={item.to}
-                className={({ isActive }) =>
-                  `min-w-[4rem] px-3 py-5 text-gray-600 hover:text-black-color font-light ${
-                    isActive && 'font-semibold text-black-color'
-                  }`
-                }
+                className={generateClassName(
+                  'py-5 px-3 text-gray-700 hover:font-bold',
+                  true,
+                )}
               >
                 {item.text}
               </NavLink>

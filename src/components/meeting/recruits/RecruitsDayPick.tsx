@@ -8,9 +8,7 @@ interface RecruitsDayPickProps {
 
 export default function RecruitsDayPick({ onDayClick }: RecruitsDayPickProps) {
   const { watch, setValue } = useForm()
-
   const selectedDate = watch('selectedDate')
-
   const isDisabled = (day: Date) => day < new Date()
 
   useEffect(() => {
@@ -23,7 +21,7 @@ export default function RecruitsDayPick({ onDayClick }: RecruitsDayPickProps) {
   return (
     <>
       <DayPicker
-        className='absolute flex flex-col p-5 mt-1 border-2 bg-main-light-color rounded-small-radius'
+        className='absolute z-10 flex flex-col p-5 mt-1 border-2 bg-main-light-color rounded-small-radius'
         mode='single'
         required
         selected={selectedDate}

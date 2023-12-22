@@ -1,31 +1,23 @@
-import {
-  FieldValues,
-  UseFormRegisterReturn,
-  UseFormSetValue,
-} from 'react-hook-form'
+import { useState } from 'react'
+
 interface CheckBoxProps {
   options: { text: string; value: number }[]
   name: string
-  setValue: UseFormSetValue<FieldValues>
-  register: UseFormRegisterReturn
+  onChange: (selectedValues: number[]) => void
 }
 
-export default function RecruitsCheckBox({
-  options,
-  register,
-  setValue,
-  name,
-}: CheckBoxProps) {
-  const handleCheckboxChange = (option: { text: string; value: number }) => {
-    return (e: React.ChangeEvent<HTMLInputElement>) => {
-      const isChecked = e.target.checked
-      setValue(name, (prevTargets: number[]) =>
-        isChecked
-          ? [...prevTargets, option.value]
-          : prevTargets.filter((target) => target !== option.value),
-      )
-    }
+export default function RecruitsCheckBox({ options, onChange }: CheckBoxProps) {
+  const [selectedValues, setSelectedValues] = useState<number[]>([])
+
+  const handleCheckBoxChange = (value: number) => {
+    const updatedValues = selectedValues.includes(value)
+      ? selectedValues.filter((v) => v !== value)
+      : [...selectedValues, value]
+
+    setSelectedValues(updatedValues)
+    onChange(updatedValues)
   }
+
   return (
     <div className='flex items-center'>
       <div className='flex'>
@@ -35,8 +27,8 @@ export default function RecruitsCheckBox({
               className='w-4 h-4 mr-1 cursor-pointer accent-main-color'
               type='checkbox'
               value={option.value}
-              {...register}
-              onChange={handleCheckboxChange(option)}
+              checked={selectedValues.includes(option.value)}
+              onChange={() => handleCheckBoxChange(option.value)}
             />
             <span className='text-size-body mb-0.5 ml-2 cursor-pointer'>
               {option.text}
