@@ -15,27 +15,21 @@ export default function MeetPlace({ address }: Address) {
   useEffect(() => {
     const geocoder = new window.kakao.maps.services.Geocoder()
 
-    const callback = function (
-      result: Array<object>,
-      status: kakao.maps.services.Status,
-    ) {
+    geocoder.addressSearch(address, (result, status) => {
       if (status === kakao.maps.services.Status.OK) {
         setLocation({
           x: Number(result[0].x),
           y: Number(result[0].y),
         })
       }
-    }
-
-    geocoder.addressSearch(address, callback)
+    })
   }, [address])
-  console.log(location)
   return (
     <>
       <StaticMap
         center={{
-          lat: location.y, // 위도 37.503773975836
-          lng: location.x, // 경도  127.048914400159
+          lat: location.y,
+          lng: location.x,
         }}
         className='mt-3 h-[400px] rounded'
         level={3}
