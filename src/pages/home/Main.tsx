@@ -1,31 +1,31 @@
 import { useState, useEffect } from 'react'
 import { ImageSlide, MainPosts } from '@/components'
-import { CardData } from '@/types'
 import { fetchGetEvents } from '@/api/event'
+import { CardData, EventQuery } from '@/types'
 
 export default function Main() {
-  const [postData, setPostData] = useState<CardData[]>([])
+  const [topData, setTopData] = useState<CardData[]>([])
   const [crewData, setCrewData] = useState<CardData[]>([])
   const [challengeData, setChallengeData] = useState<CardData[]>([])
 
   useEffect(() => {
-    const fetchData = async (categoryId: number) => {
+    const fetchData = async (query: EventQuery) => {
       try {
-        const data = await fetchGetEvents(categoryId)
-        setPostData(data)
-
-        if (categoryId === 1) {
+        const data = await fetchGetEvents(query)
+        if (query.sort === 'likes') {
+          setTopData(data)
+        } else if (query.categoryId === 1) {
           setCrewData(data)
-        } else if (categoryId === 2) {
+        } else if (query.categoryId === 2) {
           setChallengeData(data)
         }
       } catch (error) {
         console.error('Error', error)
       }
     }
-
-    fetchData(1)
-    fetchData(2)
+    fetchData({ sort: 'likes', limit: 3 })
+    fetchData({ categoryId: 1 })
+    fetchData({ categoryId: 2 })
   }, [])
 
   return (
@@ -34,7 +34,7 @@ export default function Main() {
       <article className='flex flex-col gap-y-16'>
         <MainPosts
           title='🔥 HOT! 금주의 가장 인기있는 모임!'
-          data={postData}
+          data={topData}
           isSlide={false}
         />
         <MainPosts

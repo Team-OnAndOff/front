@@ -8,6 +8,7 @@ import { fetchGetCategories } from '@/api/category'
 interface MenuItem {
   to: string
   text: string
+  state?: { categoryName: string }
   id?: number
 }
 
@@ -34,6 +35,10 @@ export default function Header() {
         const generatedMenuItems = data.map((category: Category) => ({
           to: `/meetup-lists/${category.id}`,
           text: category.name.charAt(0).toUpperCase() + category.name.slice(1),
+          state: {
+            categoryName:
+              category.name.charAt(0).toUpperCase() + category.name.slice(1),
+          },
         }))
 
         setMenuItems([
@@ -66,17 +71,20 @@ export default function Header() {
           </div>
 
           <div className={'hidden md:flex items-center space-x-1'}>
-            {menuItems.map((item, index) => (
+               {menuItems.map((item, index) => (
               <NavLink
                 key={index}
                 to={item.to}
-                state={{
-                  path: location.pathname,
-                }} /* 로그인 페이지 이동 전 현재 페이지 넘겨주기 */
-                className={generateClassName(
-                  'py-5 px-3 text-gray-700 hover:font-bold',
-                  true,
-                )}
+                state={{ categoryId: item.state, path: location.pathname }}
+                className={({ isActive }) =>
+                  `min-w-[4rem] px-3 py-5 text-gray-600 hover:text-main-color font-light ${
+                    isActive && 'font-semibold text-main-color'
+                  }`
+                }
+              >
+                {item.text}
+              </NavLink>
+            ))}
               >
                 {item.text}
               </NavLink>

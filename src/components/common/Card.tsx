@@ -39,8 +39,10 @@ export default function Card({ data }: CardProps) {
   }
 
   const tagOptions = hashTags.map((tag) => ({
-    meetup: '',
-    tagName: tag.hashtag,
+    createdAt: tag.createdAt,
+    updatedAt: tag.updatedAt,
+    id: tag.id,
+    hashtag: tag.hashtag,
   }))
 
   useEffect(() => {
@@ -111,11 +113,12 @@ export default function Card({ data }: CardProps) {
         </div>
         {/* 텍스트 영역 */}
         <div className='flex flex-col justify-between px-3 -mt-5 text-left gap-y-3'>
-          <Link
-            to={`/meetup-lists/${category.parentId.id}?subcategories=${category.id}`}
-            className='text-[0.6rem] text-dark-gray-color tablet:text-size-subbody'
-          >
-            {category.name}
+          <div className='text-[0.6rem] text-dark-gray-color tablet:text-size-subbody'>
+            <Link
+              to={`/meetup-lists/${category.parentId?.id}?subcategories=${category.id}`}
+            >
+              {category.name}
+            </Link>
             &nbsp; &#124; &nbsp;
             {formatDate(createdAt)}
           </Link>
@@ -129,16 +132,20 @@ export default function Card({ data }: CardProps) {
 
           {/* 태그 */}
           <div className='flex flex-row h-8 gap-x-3'>
-            <Tag options={tagOptions} />
+            <Tag
+              options={tagOptions}
+              parentId={category.parentId?.id}
+              subCategoryId={category.id}
+            />
           </div>
 
           <div>
             {/* 크루/챌린지스 */}
             <Link
-              to={`/meetup-lists/${category.parentId}`}
+              to={`/meetup-lists/${category.parentId?.id}`}
               className='font-light text-main-color text-size-body'
             >
-              {category.parentId.name}
+              {category.parentId?.name}
             </Link>
             <div className='flex items-center justify-between w-full h-6 font-bold text-size-subbody'>
               {challengeStartDate}

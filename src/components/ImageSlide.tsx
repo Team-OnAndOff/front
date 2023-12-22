@@ -8,24 +8,68 @@ import 'swiper/css/effect-fade'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
+import {
+  Main1,
+  Main2,
+  Main3,
+  Main4,
+  Main5,
+  Main6,
+  Main7,
+  Main8,
+  Main9,
+  Main10,
+  Main11,
+  Main12,
+  Main13,
+  Main14,
+} from '@/assets/images'
+
 export default function ImageSlide() {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null)
 
   const images = [
     {
-      src: 'https://randompicturegenerator.com/img/people-generator/g846294a31ce69fb5a7c35f45e3c4a917e1448ac59b4514d8def85c9d0c34e79e4a42edfb2d4c142e9ff4889235f7dc95_640.jpg',
+      src: Main1,
     },
     {
-      src: 'https://randompicturegenerator.com/img/people-generator/g93cba33c199271afc9093ab785c9c112c2755189d534a55e70d3dfc633da7fc7f2bf105dba1088c76a396106fb473790_640.jpg',
+      src: Main2,
     },
     {
-      src: 'https://randompicturegenerator.com/img/people-generator/g48bbb088770f42532887c08f55575381936e2f3a1094b7a12bcc9dcbdef67a0308675bbdf6a6716de31bdfe711188b72_640.jpg',
+      src: Main3,
     },
     {
-      src: 'https://randompicturegenerator.com/img/people-generator/g8ce2dca76287a17421911ed8a95a299d9759f854d35faeb700ac8e7e51d7bcffecc118f2ca569dbd6188d24faba1ef4b_640.jpg',
+      src: Main4,
     },
     {
-      src: 'https://randompicturegenerator.com/img/people-generator/g9b088ea64c7f343c8b0aded228615a1d69f8f80e4ed3f739929271b5ab67e1aa10ea2f28c495314b9431cc804128e58f_640.jpg',
+      src: Main5,
+    },
+    {
+      src: Main6,
+    },
+    {
+      src: Main7,
+    },
+    {
+      src: Main8,
+    },
+    {
+      src: Main9,
+    },
+    {
+      src: Main10,
+    },
+    {
+      src: Main11,
+    },
+    {
+      src: Main12,
+    },
+    {
+      src: Main13,
+    },
+    {
+      src: Main14,
     },
   ]
 
@@ -46,7 +90,7 @@ export default function ImageSlide() {
   }
 
   return (
-    <div id='banner-slide' className='relative'>
+    <div className='relative'>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}

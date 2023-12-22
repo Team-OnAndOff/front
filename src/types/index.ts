@@ -8,22 +8,14 @@ export interface Image {
   deletedAt?: Date
 }
 
-export interface ParentCategory {
-  id: number
-  name: string
-  flag?: number
-  createdAt: Date
-  updatedAt: Date
-  deletedAt?: Date
-}
-
 export interface Category {
   id: number
   name: string
-  createdAt: Date
-  updatedAt: Date
+  flag?: number
+  createdAt?: Date
+  updatedAt?: Date
   deletedAt?: Date
-  parentId: ParentCategory
+  parentId?: Category
   subCategories?: Category[]
 }
 
@@ -130,6 +122,23 @@ export interface Response<T> {
   code: number
   message: string
   data: T
+}
+
+export interface PostsProps {
+  title?: string
+  data: CardData[]
+  isSlide: boolean
+}
+
+export interface EventQuery {
+  categoryId?: number
+  subCategoryId?: number
+  sort?: 'likes'
+  limit?: number
+  search?: string
+  order?: 'ASC' | 'DESC'
+  page?: number
+  perPage?: number
 }
 
 export interface RecruitData {
