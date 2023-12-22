@@ -117,84 +117,86 @@ export default function Card({ data }: CardProps) {
             <Link
               to={`/meetup-lists/${category.parentId?.id}?subcategories=${category.id}`}
             >
-              {category.name}
+              &nbsp; &#124; &nbsp;
+              {formatDate(createdAt)}
             </Link>
-            &nbsp; &#124; &nbsp;
-            {formatDate(createdAt)}
-          </Link>
-          <div className='h-14'>
-            <Link to={`/details/${data.id}`}>
-              <h2 className='w-full font-bold line-clamp-2 text-size-body'>
-                {title}
-              </h2>
-            </Link>
-          </div>
+            <div className='h-14'>
+              <Link to={`/details/${data.id}`}>
+                <h2 className='w-full font-bold line-clamp-2 text-size-body'>
+                  {title}
+                </h2>
+              </Link>
+            </div>
 
-          {/* 태그 */}
-          <div className='flex flex-row h-8 gap-x-3'>
-            <Tag
-              options={tagOptions}
-              parentId={category.parentId?.id}
-              subCategoryId={category.id}
-            />
-          </div>
+            {/* 태그 */}
+            <div className='flex flex-row h-8 gap-x-3'>
+              <Tag
+                options={tagOptions}
+                parentId={category.parentId?.id}
+                subCategoryId={category.id}
+              />
+            </div>
 
-          <div>
-            {/* 크루/챌린지스 */}
-            <Link
-              to={`/meetup-lists/${category.parentId?.id}`}
-              className='font-light text-main-color text-size-body'
-            >
-              {category.parentId?.name}
-            </Link>
-            <div className='flex items-center justify-between w-full h-6 font-bold text-size-subbody'>
-              {challengeStartDate}
-              {challengeEndDate && ` ~ ${challengeEndDate}`}
-              {/* 호버시 보이는 영역 */}
-              <div>
-                {/* Pop-up menu */}
-                {isKebabVisible && (
-                  <div>
-                    {isMenuVisible ? (
-                      <button onClick={handleCancelMenu} className='p-3 -m-3'>
-                        <FaTimes fill='black' size={16} />
+            <div>
+              {/* 크루/챌린지스 */}
+              <Link
+                to={`/meetup-lists/${category.parentId?.id}`}
+                className='font-light text-main-color text-size-body'
+              >
+                {category.parentId?.name}
+              </Link>
+              <div className='flex items-center justify-between w-full h-6 font-bold text-size-subbody'>
+                {challengeStartDate}
+                {challengeEndDate && ` ~ ${challengeEndDate}`}
+                {/* 호버시 보이는 영역 */}
+                <div>
+                  {/* Pop-up menu */}
+                  {isKebabVisible && (
+                    <div>
+                      {isMenuVisible ? (
+                        <button onClick={handleCancelMenu} className='p-3 -m-3'>
+                          <FaTimes fill='black' size={16} />
+                        </button>
+                      ) : (
+                        <div className='flex'>
+                          <button
+                            onClick={handleIconClick}
+                            className='p-2 transition-transform transform active:scale-75 tablet:text-size-title'
+                          >
+                            {isLike ? (
+                              <i className='text-size-body tablet:text-size-title'>
+                                <TiHeartFullOutline fill='#ff5e2e' />
+                              </i>
+                            ) : (
+                              <i className='text-size-body tablet:text-size-title'>
+                                <TiHeartOutline />
+                              </i>
+                            )}
+                          </button>
+                          <button
+                            onClick={handleMenuClick}
+                            className='p-3 -m-3'
+                          >
+                            <i className='text-size-body tablet:text-xl'>
+                              <FaEllipsisVertical fill='black' />
+                            </i>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {/* Pop-up menu */}
+                  {isMenuVisible && (
+                    <div className='absolute bg-white rounded-small-radius shadow w-big-button right-2 bottom-12 z-[998]'>
+                      <button className='w-full p-2 px-4 cursor-pointer menuItems hover:text-main-color'>
+                        <Link to='/chat'>채팅방 입장하기</Link>
                       </button>
-                    ) : (
-                      <div className='flex'>
-                        <button
-                          onClick={handleIconClick}
-                          className='p-2 transition-transform transform active:scale-75 tablet:text-size-title'
-                        >
-                          {isLike ? (
-                            <i className='text-size-body tablet:text-size-title'>
-                              <TiHeartFullOutline fill='#ff5e2e' />
-                            </i>
-                          ) : (
-                            <i className='text-size-body tablet:text-size-title'>
-                              <TiHeartOutline />
-                            </i>
-                          )}
-                        </button>
-                        <button onClick={handleMenuClick} className='p-3 -m-3'>
-                          <i className='text-size-body tablet:text-xl'>
-                            <FaEllipsisVertical fill='black' />
-                          </i>
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )}
-                {/* Pop-up menu */}
-                {isMenuVisible && (
-                  <div className='absolute bg-white rounded-small-radius shadow w-big-button right-2 bottom-12 z-[998]'>
-                    <button className='w-full p-2 px-4 cursor-pointer menuItems hover:text-main-color'>
-                      <Link to='/chat'>채팅방 입장하기</Link>
-                    </button>
-                    <button className='w-full p-2 px-4 cursor-pointer menuItems hover:text-main-color'>
-                      신고하기
-                    </button>
-                  </div>
-                )}
+                      <button className='w-full p-2 px-4 cursor-pointer menuItems hover:text-main-color'>
+                        신고하기
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

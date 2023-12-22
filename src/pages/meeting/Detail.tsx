@@ -48,7 +48,7 @@ export default function Detail() {
               endDate={postDetail.challengeEndDate}
               title={postDetail.title}
               content={postDetail.content}
-              place={postDetail.address.detail1}
+              place={postDetail.address?.detail1}
               memNum={postDetail.recruitment}
               postImageUrl={postDetail.image.uploadPath}
               hashTags={postDetail.hashTags}

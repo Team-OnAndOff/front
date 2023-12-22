@@ -71,7 +71,7 @@ export default function Header() {
           </div>
 
           <div className={'hidden md:flex items-center space-x-1'}>
-               {menuItems.map((item, index) => (
+            {menuItems.map((item, index) => (
               <NavLink
                 key={index}
                 to={item.to}
@@ -81,10 +81,6 @@ export default function Header() {
                     isActive && 'font-semibold text-main-color'
                   }`
                 }
-              >
-                {item.text}
-              </NavLink>
-            ))}
               >
                 {item.text}
               </NavLink>

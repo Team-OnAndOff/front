@@ -71,21 +71,6 @@ export const fetchGetEvents = async (query: EventQuery) => {
 
     const url = `?${searchParams.toString()}`
 
-=======
-
-// 모임 목록 조회하기
-export const fetchGetEvents = async (
-  categoryId: number,
-  subCategoryId?: number,
-) => {
-  try {
-    let url = `/?categoryId=${categoryId}`
-
-    if (subCategoryId !== undefined) {
-      url += `&subCategoryId=${subCategoryId}`
-    }
-
->>>>>>> src/api/event.ts
     const response = await instance.get<Response<CardData[]>>(url)
     return response.data.data
   } catch (error) {
@@ -93,8 +78,6 @@ export const fetchGetEvents = async (
     return []
   }
 }
-<<<<<<< src/api/event.ts
-=======
 
 // 모임 등록하기
 export const fetchPostEvents = async (eventData: FormData) => {
@@ -134,4 +117,3 @@ export const fetchPostRecruitEditEvents = async (eventId: number) => {
     throw error
   }
 }
->>>>>>> src/api/event.ts
