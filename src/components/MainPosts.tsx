@@ -41,7 +41,7 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
   const handleNext = () => {
     swiper?.slideNext()
   }
-
+  console.log(items)
   const handleClickCategory = (categoryId: number | undefined) => {
     if (categoryId !== undefined) {
       navigate(`/meetup-lists/${categoryId}`)
@@ -117,7 +117,9 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
           <div className='pt-2 text-right text-size-subbody'>
             <Button
               fill='border'
-              onClick={() => handleClickCategory(data[0]?.category?.id)}
+              onClick={() =>
+                handleClickCategory(data[0]?.category?.parentId?.id)
+              }
             >
               전체보기
             </Button>
