@@ -2,28 +2,64 @@ import Betsy from '@/components/meeting/mypage/Betsy'
 import IntroModal from '@/components/meeting/mypage/IntroModal'
 import SwiperCard from '@/components/meeting/mypage/SwiperCard'
 import TapCard from '@/components/meeting/mypage/Tapcard'
-import { FaUserGear } from 'react-icons/fa6'
-import { useState } from 'react'
+import { FaUserGear, FaRegFaceGrin } from 'react-icons/fa6'
+import { PiSiren } from 'react-icons/pi'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 import { Modal } from '@/components/common'
-interface UserType {
-  text: string
+import Declaration from '@/components/common/Declaration'
+import Evaluation from '@/components/meeting/mypage/Evaluation'
+import { useParams, useNavigate } from 'react-router-dom'
+
+interface UserData {
+  username: string | null
+  image: {
+    uploadPath: string | null
+  }
+  introduction: string
 }
 
 export default function MyPage() {
   const [selectedTab, setSelectedTab] = useState(0) // 탭 기능구현 스테이트
+  const [userData, setUserData] = useState<UserData | null>(null) //유저 데이터
+  const navigate = useNavigate() // 유저없을시 페이지 강제이동
   const handleTabClick = (index: number) => {
     // 탭 기능구현 핸들러
     setSelectedTab(index)
   }
+  const { userId } = useParams()
 
-  const user: UserType = {
-    text: '나 자신에 대해 간단히 소개하자면. 나의 지향점은 항상 협력과 개방적인 소통에 기반을 두고 있습니다. 모두가 자신의 강점을 발휘하고 의견을 나 자신에 대해 간단히 소개하자면. 나의 지향점은 항상 협력과 개방적인',
-  }
+  //유저 데이터 가져오기
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/api/users/${userId}/info`,
+        )
+        const data = await response.data.data
+        setUserData(data)
+      } catch (error) {
+        console.error('에러 발생:', error)
+        navigate('/')
+      }
+    }
+    fetchData()
+  }, []) // userData가 변경될 때마다 useEffect 다시 실행
+
+  console.log(userData)
 
   // 모달 관련 기능 start
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const openModal = () => setIsModalOpen(true)
-  const closeModal = () => setIsModalOpen(false)
+  const [modalType, setModalType] = useState('')
+
+  const openModal = (type: string) => {
+    setModalType(type)
+    setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
 
   return (
     <>
@@ -37,17 +73,24 @@ export default function MyPage() {
       border border-solid border-light-gray-color mt-7 shadow-md'
       >
         {/* 이미지박스 */}
-        <div className='flex relative items-center justify-center w-[17.5%] h-full '>
-          <div className='bg-aquamarine w-[138px] h-[138px] flex items-center justify-center rounded-full overflow-hidden'>
-            <img src='../../src/assets/images/Logo.svg' alt='testImg' />
+        <div className='p-3 flex relative items-center justify-center w-min-[100px] h-auto '>
+          <div className='bg-aquamarine w-[150px] h-[150px] flex items-center justify-center rounded-full overflow-hidden'>
+            <img
+              src={userData?.image?.uploadPath || 'none.jpg'}
+              alt='프로필사진'
+            />
           </div>
         </div>
         {/* 소개박스 */}
         <div className='flex gap-2 flex-col justify-between relative h-full w-[65%] '>
           {/* 아래로 유저 데이터 넣어야함 */}
-          <h4 className='mt-6 font-bold text-size-body'>블랙 목티남</h4>
+          {userData ? (
+            <h4 className='mt-6 font-bold text-size-body'>로딩중</h4>
+          ) : (
+            <h4 className='mt-6 font-bold text-size-body'>로딩중..</h4>
+          )}
           <p className='font-medium break-keep text-size-subbody'>
-            {user.text}
+            {userData?.introduction}
           </p>
           <ul className='flex gap-3 mb-6'>
             <li className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-subbody text-black-color'>
@@ -61,24 +104,52 @@ export default function MyPage() {
             </li>
           </ul>
         </div>
-        {/* 온도박스 */}
+        {/* 온도박스\ 신고,프로필 설정 버튼  */}
         <div className='flex relative items-center justify-center w-[17.5%] h-full'>
           {/* 프로필 설정 버튼 s */}
           <div className='absolute z-100 right-[10px] top-[10px]'>
-            <button onClick={openModal}>
+            <button onClick={() => openModal('profile')}>
               <FaUserGear style={{ color: 'red' }} />
             </button>
-            {/* <IntroModal
-              isOpen={isModalOpen}
+            <Modal
+              isOpen={isModalOpen && modalType === 'profile'}
               closeModal={closeModal}
-            ></IntroModal> */}
-            <Modal isOpen={isModalOpen} closeModal={closeModal}>
-              <IntroModal />
+            >
+              <IntroModal closeModal={closeModal} />
             </Modal>
           </div>
           {/* 프로필 설정 버튼 e */}
+
+          {/* 신고 s*/}
+          <div className='absolute z-100 right-[10px] top-[30px]'>
+            <button onClick={() => openModal('declaration')}>
+              <PiSiren />
+            </button>
+            <Modal
+              isOpen={isModalOpen && modalType === 'declaration'}
+              closeModal={closeModal}
+            >
+              <Declaration closeModal={closeModal} />
+            </Modal>
+          </div>
+          {/* 신고 e*/}
+
+          {/* 평가 s*/}
+          <div className='absolute z-100 right-[10px] top-[50px]'>
+            <button onClick={() => openModal('evaluation')}>
+              <FaRegFaceGrin />
+            </button>
+            <Modal
+              isOpen={isModalOpen && modalType === 'evaluation'}
+              closeModal={closeModal}
+            >
+              <Evaluation closeModal={closeModal} />
+            </Modal>
+          </div>
+          {/* 평가 e*/}
+
           <div className='w-[68px] h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
-            <p className='mt-[5px] text-white'>
+            <p className='mt-[4px] text-white'>
               36.5
               <span className='w-[3px] h-[3px] mt-1 ml-0.5 bor absolute rounded-md border border-solid border-white'></span>
             </p>
@@ -115,9 +186,8 @@ export default function MyPage() {
             onClick={() => handleTabClick(3)}
           />
         </div>
-        {/* 프로필설정/신고 */}
         <div>
-          <SwiperCard />
+          <SwiperCard selectedTab={selectedTab} />
         </div>
       </section>
       {/* 모임 개설 탭 end */}

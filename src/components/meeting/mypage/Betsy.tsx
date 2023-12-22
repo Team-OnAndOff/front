@@ -20,7 +20,7 @@ interface condition {
 }
 
 const Betsy = ({ attend, open, success, bestValse }: condition) => {
-  const [value, _] = useState([1, 10, 100])
+  const [value] = useState([1, 10, 100])
 
   const images = [tree_1, tree_2, tree_3]
   const hand = [hand_1, hand_2, hand_3]
