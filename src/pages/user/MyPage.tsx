@@ -21,7 +21,7 @@ interface UserData {
 
 export default function MyPage() {
   const [selectedTab, setSelectedTab] = useState(0) // 탭 기능구현 스테이트
-  const [userData, setUserData] = useState<UserData | null>(null) //유저 데이터
+  const [userData, setUserData] = useState<UserData | null | undefined>(null) //유저 데이터
   const navigate = useNavigate() // 유저없을시 페이지 강제이동
   const handleTabClick = (index: number) => {
     // 탭 기능구현 핸들러
@@ -70,7 +70,7 @@ export default function MyPage() {
       {/* 프로필 카드 start */}
       <section
         className='flex flex-row items-center h-[12.5rem] w-full rounded-big-radius
-      border border-solid border-light-gray-color mt-7 shadow-md'
+      border border-solid border-light-gray-color mt-7 shadow-md justify-between'
       >
         {/* 이미지박스 */}
         <div className='p-3 flex relative items-center justify-center w-min-[100px] h-auto '>
@@ -85,9 +85,11 @@ export default function MyPage() {
         <div className='flex gap-2 flex-col justify-between relative h-full w-[65%] '>
           {/* 아래로 유저 데이터 넣어야함 */}
           {userData ? (
-            <h4 className='mt-6 font-bold text-size-body'>로딩중</h4>
+            <h4 className='mt-6 font-bold text-size-body'>
+              {userData?.username}
+            </h4>
           ) : (
-            <h4 className='mt-6 font-bold text-size-body'>로딩중..</h4>
+            <h4 className='mt-6 font-bold text-size-body'>로딩중입니다.</h4>
           )}
           <p className='font-medium break-keep text-size-subbody'>
             {userData?.introduction}
