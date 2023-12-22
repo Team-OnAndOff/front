@@ -8,6 +8,15 @@ export interface Image {
   deletedAt?: Date
 }
 
+export interface ParentCategory {
+  id: number
+  name: string
+  flag?: number
+  createdAt: Date
+  updatedAt: Date
+  deletedAt?: Date
+}
+
 export interface Category {
   id: number
   name: string
@@ -69,6 +78,52 @@ export interface CardData {
 
 export interface CardProps {
   data: CardData
+}
+
+export interface EventDetailData {
+  address: EventAddress
+  category: Category
+  challengeEndDate?: string
+  challengeStartDate?: string
+  content: string
+  createdAt: Date
+  deleteAt?: Date
+  eventApplies: EventAppliesUser[]
+  hashTags: HashTag[]
+  id: number
+  image: Image
+  likes: number
+  online: number
+  question: string
+  recruitment: number
+  title: string
+  updatedAt: string
+  user: User
+}
+
+export interface EventAddress {
+  createdAt: Date
+  deleteAt?: Date
+  detail1: string
+  detail2: string
+  id: number
+  latitude: number
+  longitude: number
+  updatedAt: Date
+  zipCode: number
+}
+
+export interface EventAppliesUser {
+  answer: string
+  appliedAt: string
+  approvedAt: string
+  createdAt: string
+  deleteAt?: string
+  flat: number
+  id: number
+  status: number
+  updatedAt: string
+  user: User
 }
 
 export interface Response<T> {

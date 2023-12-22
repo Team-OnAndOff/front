@@ -5,15 +5,10 @@ import 'swiper/css'
 import 'swiper/css/effect-fade'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import { EventAppliesUser } from '@/types'
 
 interface MeetMemberListProps {
-  participatedMem: {
-    userId: number
-    memberImgUrl: string
-    memberName: string
-    memberIntroduce: string
-    temperature: number
-  }[]
+  participatedMem: EventAppliesUser[]
 }
 
 export default function MeetMemberList({
@@ -21,23 +16,24 @@ export default function MeetMemberList({
 }: MeetMemberListProps) {
   return (
     <>
-      <div className='flex justify-between mt-3'>
-        {participatedMem.length > 4 ? (
+      <div className='flex mt-3'>
+        {participatedMem && participatedMem?.length > 4 ? (
           <Swiper
             slidesPerView={4}
             modules={[Navigation]}
+            spaceBetween={30}
             autoplay={{ delay: 2500, disableOnInteraction: false }}
             loop={true}
             navigation
           >
-            {participatedMem.map((member, index) => (
+            {participatedMem?.map((member, index) => (
               <SwiperSlide key={index}>
                 <MeetMemberCard member={member} />
               </SwiperSlide>
             ))}
           </Swiper>
         ) : (
-          participatedMem.map((member, index) => (
+          participatedMem?.map((member, index) => (
             <MeetMemberCard key={index} member={member} />
           ))
         )}
