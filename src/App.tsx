@@ -8,6 +8,7 @@ import {
   RecruitsCreate,
   RecruitsEdit,
   RecruitsRegister,
+  WantJoinList,
 } from '@/pages/meeting'
 import { Login, MyPage } from '@/pages/user'
 import NotFound from '@/pages/NotFound'
@@ -26,6 +27,7 @@ export default function App() {
             <Route path='/userinfo/:userId' element={<MyPage />} />
             <Route path='/recruits-create' element={<RecruitsCreate />} />
             <Route path='/recruits-edit' element={<RecruitsEdit />} />
+            <Route path='/want-join/:meetingId' element={<WantJoinList />} />
             <Route
               path='/recruits-register/:postId'
               element={<RecruitsRegister />}

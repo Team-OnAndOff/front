@@ -1,3 +1,4 @@
+import WantJoinList from '@/pages/meeting/WantJoinList';
 import MeetupList from '@/pages/meeting/MeetupList'
 import Detail from '@/pages/meeting/Detail'
 import RecruitsCreate from '@/pages/meeting/RecruitsCreate'
@@ -10,4 +11,5 @@ export {
   RecruitsCreate,
   RecruitsEdit,
   RecruitsRegister,
+  WantJoinList
 }
