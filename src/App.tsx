@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Layout } from '@/components/layouts'
+import { ChatLayout, Layout } from '@/components/layouts'
 import { Main } from '@/pages/home'
-import { Chat } from '@/pages/chat'
+import { Chat, ChatList } from '@/pages/chat'
 import {
   MeetupList,
   Detail,
@@ -35,7 +35,11 @@ export default function App() {
               element={<RecruitsRegister />}
             />
             <Route path='/login' element={<Login />} />
-            <Route path='/chat' element={<Chat />} />
+          </Route>
+
+          <Route path='/chat' element={<ChatLayout />}>
+            <Route path='' element={<ChatList />} />
+            <Route path=':roomId' element={<Chat />} />
           </Route>
           <Route path='*' element={<NotFound />} />
         </Routes>

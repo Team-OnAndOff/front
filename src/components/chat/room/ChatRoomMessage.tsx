@@ -4,23 +4,22 @@ import {
   ChatRoomImage,
   ChatRoomMessageContent,
 } from '@/components/chat'
+import { ChatMessage } from '@/types'
+import { formatDateTime } from '@/utils'
 import { useState } from 'react'
 
 interface ChatRoomMessageProps {
-  isSelf: boolean
-  message: string
+  item: ChatMessage
 }
 
-export default function ChatRoomMessage({
-  isSelf,
-  message,
-}: ChatRoomMessageProps) {
+export default function ChatRoomMessage({ item }: ChatRoomMessageProps) {
   const [isOpen, setIsOpen] = useState(false)
 
+  const isSelf = item.user.userId === Number(localStorage.getItem('userId')!)
   return (
     <div className='chat-message'>
       <div className={`flex items-end ${isSelf && 'justify-end'}`}>
-        <ChatRoomMessageContent isSelf={isSelf} message={message} />
+        <ChatRoomMessageContent isSelf={isSelf} message={item.message} />
         {!isSelf && (
           <div className='relative'>
             <ChatRoomImage
@@ -31,7 +30,7 @@ export default function ChatRoomMessage({
             <DropDownItems isOpen={isOpen} />
           </div>
         )}
-        <ChatRoomTime isSelf={isSelf} time={'17:00'} />
+        <ChatRoomTime isSelf={isSelf} time={formatDateTime(item.createdAt)} />
       </div>
     </div>
   )

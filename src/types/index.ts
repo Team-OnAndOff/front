@@ -178,3 +178,33 @@ export interface careerCategory {
   parentId: ParentCategory
   categories?: Category[]
 }
+
+export interface ChatUser {
+  _id: string
+  userId: number
+  socketId: string
+  online: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+export interface ChatMessage {
+  _id: string
+  type: 'text' | 'image' | 'link' | 'system'
+  user: ChatUser
+  message: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface ChatRoom {
+  _id: string
+  groupId: number
+  users: number[]
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface ChatResponse<T> {
+  code: number
+  data?: T
+}

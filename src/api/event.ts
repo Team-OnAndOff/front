@@ -99,7 +99,7 @@ export const fetchGetRecruitEvents = async (eventId: number) => {
   try {
     const url = `/${eventId}`
 
-    const response = await instance.get<Response<RecruitData[]>>(url)
+    const response = await instance.get<Response<RecruitData>>(url)
     return response.data.data
   } catch (error) {
     console.error('Error:', error)
