@@ -22,14 +22,18 @@ export default function Login() {
     */
     const url = `${
       import.meta.env.VITE_BACKEND_HOST
-    }/api/auth/login/kakao?originUrl=http://localhost:5173/userinfo/1`
+    }/api/auth/login/kakao?host=${
+      import.meta.env.VITE_CLIENT_HOST
+    }&redirectPath=${redirectPath}&profilePath=/userinfo/`
     window.location.href = url
   }
 
   const handleGoogleBtnClick = () => {
     const url = `${
       import.meta.env.VITE_BACKEND_HOST
-    }/api/auth/login/google?originUrl=http://localhost:5173/userinfo/1`
+    }/api/auth/login/google?host=${
+      import.meta.env.VITE_CLIENT_HOST
+    }&redirectPath=${redirectPath}&profilePath=/userinfo/`
     window.location.href = url
   }
 
