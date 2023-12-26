@@ -104,6 +104,7 @@ export default function MeetupList() {
     // 태그검색
     if (hasSearch) {
       inputSearch(hasSearch)
+      setSearchInput(hasSearch)
       fetchEventData(categoryId, hasSubCategory, hasSearch)
     } else {
       // 일반 리스트 가져오기
@@ -119,10 +120,9 @@ export default function MeetupList() {
         // 검색어 입력
         inputSearch(searchInput)
         fetchEventData(categoryId, hasSubCategory, searchInput)
-        console.log('검색어 입력')
       }
     }
-  }, [categoryId, selectedCategoryId, searchInput])
+  }, [categoryId, selectedCategoryId, searchInput, location.search])
 
   // 카테고리 API
   const fetchCategoryData = async () => {

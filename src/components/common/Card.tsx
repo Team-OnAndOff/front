@@ -98,7 +98,7 @@ export default function Card({ data, openModal }: CardProps) {
           <div className='group'>
             <Link
               to={`/userInfo/${user.id}`}
-              className='absolute bg-white rounded-full cursor-pointer -bottom-6 drop-shadow-xl right-3 desktop:-bottom-6 desktop:right-5'
+              className='absolute bg-white rounded-full cursor-pointer -bottom-6 drop-shadow-xl right-2 desktop:-bottom-6 desktop:right-5'
             >
               <LazyImage
                 src={user.image.uploadPath}
@@ -108,7 +108,7 @@ export default function Card({ data, openModal }: CardProps) {
               />
             </Link>
             {/* TODO: 이름이 있을 경우에만 ToolTip이 보여지도록 */}
-            <span className='absolute px-2 py-1 text-sm font-medium transition-opacity bg-gray-900 rounded shadow opacity-0 pointer-events-none desktop:right-5 bottom-12 w-max text-light-gray-color group-hover:opacity-100'>
+            <span className='absolute px-2 py-1 text-sm font-medium transition-opacity bg-gray-900 rounded shadow opacity-0 pointer-events-none desktop:right-3 bottom-12 w-max text-light-gray-color group-hover:opacity-100'>
               {user.username}
             </span>
           </div>
@@ -132,7 +132,9 @@ export default function Card({ data, openModal }: CardProps) {
             </div>
 
             {/* 태그 */}
-            <Tag options={tagOptions} parentId={category.parentId?.id} />
+            <div className='h-8'>
+              <Tag options={tagOptions} parentId={category.parentId?.id} />
+            </div>
 
             <div className='w-full'>
               {/* 크루/챌린지스 */}

@@ -11,6 +11,7 @@ interface SearchInputProps {
 
 export default function SearchInput({
   handleKeyPress,
+  searchInput,
   hasReset = false,
   handleResetClick,
 }: SearchInputProps) {
@@ -38,6 +39,7 @@ export default function SearchInput({
         className='w-full p-4 text-sm border-2 h-9 rounded-xl text-black-color border-dark-gray-color ps-10 focus:border-main-color focus:outline-none'
         placeholder='제목이나 태그를 입력해주세요.'
         onKeyDown={handleKeyPress}
+        value={searchInput}
       />
 
       {inputRef.current?.value && (
