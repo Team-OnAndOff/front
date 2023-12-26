@@ -13,6 +13,7 @@ import {
 import { Login, MyPage } from '@/pages/user'
 import NotFound from '@/pages/NotFound'
 import { ScrollToTop } from '@/utils'
+import { PrivateRouter } from '@/components/common'
 
 export default function App() {
   return (
@@ -26,16 +27,18 @@ export default function App() {
             <Route path='/' element={<Main />} />
             <Route path='/meetup-lists/:categoryId' element={<MeetupList />} />
             <Route path='/details/:postId' element={<Detail />} />
-            <Route path='/userinfo/:userId' element={<MyPage />} />
-            <Route path='/recruits-create' element={<RecruitsCreate />} />
-            <Route path='/recruits-edit' element={<RecruitsEdit />} />
-            <Route path='/want-join/:meetingId' element={<WantJoinList />} />
-            <Route
-              path='/recruits-register/:postId'
-              element={<RecruitsRegister />}
-            />
+            <Route element={<PrivateRouter />}>
+              <Route path='/userinfo/:userId' element={<MyPage />} />
+              <Route path='/recruits-create' element={<RecruitsCreate />} />
+              <Route path='/recruits-edit' element={<RecruitsEdit />} />
+              <Route path='/want-join/:meetingId' element={<WantJoinList />} />
+              <Route
+                path='/recruits-register/:postId'
+                element={<RecruitsRegister />}
+              />
+              <Route path='/chat' element={<Chat />} />
+            </Route>
             <Route path='/login' element={<Login />} />
-            <Route path='/chat' element={<Chat />} />
           </Route>
           <Route path='*' element={<NotFound />} />
         </Routes>

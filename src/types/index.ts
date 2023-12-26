@@ -24,7 +24,7 @@ export interface User {
   updatedAt: Date
   deletedAt?: Date
   id: number
-  socialId: number
+  socialId?: number
   provider: string
   username?: string
   email: string

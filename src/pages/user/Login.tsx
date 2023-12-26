@@ -1,16 +1,16 @@
 import Logo from '@/assets/images/Logo.svg'
 import kakao_login_btn from '@/assets/images/kakao_login_btn.png'
 import google_login_btn from '@/assets/images/google_login_btn.png'
-import { useLocation } from 'react-router-dom'
+//import { useLocation } from 'react-router-dom'
 
 export default function Login() {
   /* Header에서 로그인 탭을 눌러서 로그인 페이지로 왔을시에 로그인 페이지 오기전
     url을 넘겨주게 설정하려하는데 이렇게 하면 url으로 직접 로그인 페이지로 왔을때는
     값이 undefined라서 어떻게 처리해야할지 고민중....
   */
-  const location = useLocation()
-  const redirectPath = location.state?.path
-  console.log(redirectPath)
+  // const location = useLocation()
+  // const redirectPath = location.state.path
+  // console.log(redirectPath)
   const handleKakaoBtnClick = () => {
     /*url을 
     `${
@@ -24,7 +24,7 @@ export default function Login() {
       import.meta.env.VITE_BACKEND_HOST
     }/api/auth/login/kakao?host=${
       import.meta.env.VITE_CLIENT_HOST
-    }&redirectPath=${redirectPath}&profilePath=/userinfo/`
+    }&redirectPath=/&profilePath=/userinfo`
     window.location.href = url
   }
 
@@ -33,7 +33,7 @@ export default function Login() {
       import.meta.env.VITE_BACKEND_HOST
     }/api/auth/login/google?host=${
       import.meta.env.VITE_CLIENT_HOST
-    }&redirectPath=${redirectPath}&profilePath=/userinfo/`
+    }&redirectPath=/&profilePath=/userinfo`
     window.location.href = url
   }
 
