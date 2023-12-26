@@ -57,6 +57,10 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
     setIsModalOpen(false)
   }
 
+  // useEffect(() => {
+  //   setIsLike(likes.some((like) => like.user.id === store.user?.id))
+  // }, [])
+
   return (
     <section className='relative flex flex-col gap-y-7'>
       <h2 className='mb-8 font-bold desktop:m-0 text-size-title break-keep'>
