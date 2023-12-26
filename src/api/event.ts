@@ -1,24 +1,13 @@
 import axios from 'axios'
 import { VITE_BACKEND_HOST } from '@/assets/config'
 import { CardData, Response, RecruitData, EventQuery } from '@/types'
+import { HandleSearchParams } from '@/utils'
 import { DataProps } from '@/pages/meeting/RecruitsRegister'
 
 const instance = axios.create({
   baseURL: `${VITE_BACKEND_HOST}/api/events`,
   withCredentials: true,
 })
-
-const handleSearchParams = (
-  searchParams: URLSearchParams,
-  key: string,
-  value: string | undefined,
-) => {
-  if (value) {
-    searchParams.set(key, value)
-  } else {
-    searchParams.delete(key)
-  }
-}
 
 // 모임 목록 조회하기
 export const fetchGetEvents = async (query: EventQuery) => {
@@ -27,7 +16,7 @@ export const fetchGetEvents = async (query: EventQuery) => {
 
     // 카테고리 조회
     if (query.categoryId) {
-      handleSearchParams(
+      HandleSearchParams(
         searchParams,
         'categoryId',
         query.categoryId.toString(),
@@ -36,7 +25,7 @@ export const fetchGetEvents = async (query: EventQuery) => {
 
     // 서브카테고리 조회
     if (query.subCategoryId) {
-      handleSearchParams(
+      HandleSearchParams(
         searchParams,
         'subCategoryId',
         query.subCategoryId.toString(),
@@ -45,30 +34,30 @@ export const fetchGetEvents = async (query: EventQuery) => {
 
     // 제목이나 해시태그로 검색
     if (query.search) {
-      handleSearchParams(searchParams, 'search', query.search)
+      HandleSearchParams(searchParams, 'search', query.search)
     }
 
     // 메인 Like Top3
     if (query.sort) {
-      handleSearchParams(searchParams, 'sort', query.sort)
+      HandleSearchParams(searchParams, 'sort', query.sort)
     }
 
     // 보여줄 card의 개수
     if (query.limit) {
-      handleSearchParams(searchParams, 'limit', query.limit.toString())
+      HandleSearchParams(searchParams, 'limit', query.limit.toString())
     }
 
     // 오름차순, 내림차순
     if (query.order) {
-      handleSearchParams(searchParams, 'order', query.order)
+      HandleSearchParams(searchParams, 'order', query.order)
     }
 
     // 무한스크롤
     if (query.page) {
-      handleSearchParams(searchParams, 'page', query.page.toString())
+      HandleSearchParams(searchParams, 'page', query.page.toString())
     }
     if (query.perPage) {
-      handleSearchParams(searchParams, 'perPage', query.perPage.toString())
+      HandleSearchParams(searchParams, 'perPage', query.perPage.toString())
     }
 
     const url = `?${searchParams.toString()}`
@@ -113,6 +102,18 @@ export const fetchPostRecruitEditEvents = async (eventId: number) => {
   try {
     const url = `/${eventId}`
     const response = await instance.put<Response<FormData>>(url)
+    return response.data.data
+  } catch (error) {
+    console.error('Error:', error)
+    throw error
+  }
+}
+
+// 좋아요 누를 시, 해당 포스트 id보내기
+export const fetchPutLikePosts = async (eventId: number) => {
+  try {
+    const url = `/${eventId}/likes`
+    const response = await instance.put<Response<number>>(url)
     return response.data.data
   } catch (error) {
     console.error('Error:', error)

@@ -20,7 +20,6 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
   const navigate = useNavigate()
   const [swiper, setSwiper] = useState<SwiperClass | null>(null)
 
-  // const items = isSlide ? data : data.slice(0, 3)
   const items = data
 
   const swiperRef = useRef<swipercore>()
@@ -41,7 +40,6 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
   const handleNext = () => {
     swiper?.slideNext()
   }
-  console.log(items)
   const handleClickCategory = (categoryId: number | undefined) => {
     if (categoryId !== undefined) {
       navigate(`/meetup-lists/${categoryId}`)

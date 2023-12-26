@@ -7,6 +7,7 @@ import { FaEllipsisVertical } from 'react-icons/fa6'
 import { FaTimes } from 'react-icons/fa'
 import { Tag } from '@/components/common'
 import { LazyImage } from '@/utils'
+import { fetchPutLikePosts } from '@/api/event'
 
 export default function Card({ data }: CardProps) {
   const {
@@ -19,14 +20,24 @@ export default function Card({ data }: CardProps) {
     challengeStartDate,
     challengeEndDate,
   } = data
-
   const [isLike, setIsLike] = useState(false)
   const [isKebabVisible, setIsKebabVisible] = useState(false)
   const [isMenuVisible, setIsMenuVisible] = useState(false)
 
-  const handleIconClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  // 하트 클릭
+  const handleIconClick: React.MouseEventHandler<HTMLButtonElement> = async (
+    e,
+  ) => {
     e.stopPropagation()
     setIsLike(!isLike)
+
+    if (!isLike) {
+      try {
+        await fetchPutLikePosts(data.id)
+      } catch (error) {
+        console.error('Error liking post:', error)
+      }
+    }
   }
 
   const handleMenuClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -69,7 +80,9 @@ export default function Card({ data }: CardProps) {
   return (
     <>
       <div
-        className={'relative flex flex-col pb-2 rounded-button-radius gap-y-5'}
+        className={
+          'relative flex flex-col pb-2 rounded-button-radius gap-y-5 w-full'
+        }
         onMouseEnter={() => setIsKebabVisible(true)}
         onMouseLeave={() => {
           !isMenuVisible && setIsKebabVisible(false)
@@ -115,8 +128,9 @@ export default function Card({ data }: CardProps) {
         <div className='flex flex-col justify-between px-3 -mt-5 text-left gap-y-3'>
           <div className='text-[0.6rem] text-dark-gray-color tablet:text-size-subbody'>
             <Link
-              to={`/meetup-lists/${category.parentId?.id}?subcategories=${category.id}`}
+              to={`/meetup-lists/${category.parentId?.id}?subCategoryId=${category.id}`}
             >
+              {category.name}
               &nbsp; &#124; &nbsp;
               {formatDate(createdAt)}
             </Link>
@@ -130,11 +144,7 @@ export default function Card({ data }: CardProps) {
 
             {/* 태그 */}
             <div className='flex flex-row h-8 gap-x-3'>
-              <Tag
-                options={tagOptions}
-                parentId={category.parentId?.id}
-                subCategoryId={category.id}
-              />
+              <Tag options={tagOptions} parentId={category.parentId?.id} />
             </div>
 
             <div>
