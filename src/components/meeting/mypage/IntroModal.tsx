@@ -3,27 +3,36 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import Swal from 'sweetalert2'
 import InputHash from './InputHash'
 import { Button } from '@/components/common'
+import { userEdit } from '@/api/userEdit'
 
 // 폼 데이터 타입 정의
 interface FormData {
-  textareaValue: string
-  image: File | null
+  username: string
+  introduction: string
+  image: File
   hashTags: string[]
 }
 
 // 부모 컴포넌트로 전달되는 프롭스 타입 정의
 interface Props {
   closeModal: () => void
+  userId?: string
+  myUserData?: {
+    username?: string | null
+    image: {
+      uploadPath: string | null
+    }
+    introduction: string
+  } | null
 }
 
 // 컴포넌트 정의
-export default function IntroModal({ closeModal }: Props) {
+export default function IntroModal({ closeModal, myUserData, userId }: Props) {
   // useForm 훅을 사용하여 폼 상태 관리
   const { register, handleSubmit, getValues, setValue } = useForm<FormData>()
   const [dataArray, setDataArray] = useState<string[]>([])
   const [myImage, setMyImage] = useState<File | null>(null)
   const formData = getValues()
-
   // 이미지 변경 핸들러
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0]
@@ -33,11 +42,27 @@ export default function IntroModal({ closeModal }: Props) {
 
   // 폼 서밋 핸들러
   const onSubmit: SubmitHandler<FormData> = async (data, event) => {
+    console.log(data, '엑시오스쪽')
     if (event) {
       event.preventDefault()
     }
-    //여기에 데이터 전송 로직 넣으면된다.
-    console.log('테스트 폼 데이터:', data)
+    const formData = new FormData()
+    formData.append('username', data.username.toString())
+    formData.append('introduction', data.introduction.toString())
+    // 이미지가 선택된 경우에만 추가
+    if (data.image) {
+      formData.append('image', data.image)
+    }
+    try {
+      await userEdit(formData, userId)
+      rePage()
+    } catch {
+      console.log('데이터 전달오류')
+    }
+  }
+
+  const rePage = () => {
+    window.location.reload()
   }
 
   // 해시태그 추가 로직
@@ -95,12 +120,22 @@ export default function IntroModal({ closeModal }: Props) {
         </div>
         <div>
           <form onSubmit={handleSubmit(onSubmit)}>
+            <div className='flex flex-col w-40 pt-4 pb-1 pl-3 mb-2 border-b-2 border-light-gray-color focus-within:border-main-color'>
+              <input
+                className='w-full text-size-body text-black-color focus:outline-none'
+                type='text'
+                placeholder='닉네임'
+                defaultValue={myUserData?.username as string | undefined}
+                {...register('username')}
+              />
+            </div>
             <textarea
               className='resize-none overflow-hidden p-[10px] text-size-body font-medium rounded-button-radius mt-[10px] border-2 border-solid border-main-color '
-              {...register('textareaValue')}
+              {...register('introduction')}
               rows={7}
               cols={80}
               maxLength={200}
+              defaultValue={myUserData?.introduction as string | undefined}
               placeholder='자기소개 내용을 입력해주세요. &#xa;(최대 200자)'
             />
             <div className='flex items-start justify-between mt-3 mb-2'>
