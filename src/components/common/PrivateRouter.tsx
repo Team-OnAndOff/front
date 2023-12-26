@@ -1,13 +1,11 @@
 // import useAuthStore from '@/store/userStore'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import useAuthStore from '@/store/userStore'
 
 export default function PrivateRouter() {
-  //const location = useLocation()
   const navigate = useNavigate()
-  //const { user } = useAuthStore((state) => state)
-  //console.log(user)
-  const user = localStorage.getItem('user')
+  const { user } = useAuthStore((state) => state)
   useEffect(() => {
     if (!user) {
       navigate('/login')
