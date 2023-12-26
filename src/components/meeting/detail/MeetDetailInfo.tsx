@@ -1,10 +1,11 @@
 import { TiHeartOutline, TiHeartFullOutline } from 'react-icons/ti'
 import { MdPlace, MdAccessTimeFilled } from 'react-icons/md'
-import { FaUser } from 'react-icons/fa'
-import { Modal, Tag, TextArea } from '@/components/common'
+import { FaUser, FaUserCircle } from 'react-icons/fa'
+import { Modal, Tag } from '@/components/common'
 import { useState } from 'react'
-import { HashTag } from '@/types'
+import { HashTag, careerCategory } from '@/types'
 import { LuSiren } from 'react-icons/lu'
+import Declaration from '@/components/common/Declaration'
 
 interface MeetDetailProps {
   startDate?: string
@@ -15,8 +16,9 @@ interface MeetDetailProps {
   memNum: number
   postImageUrl: string
   hashTags: HashTag[]
-  parentId: number
+  parentId?: number
   online: number
+  careerCategories: careerCategory[]
 }
 
 export default function MeetDetailInfo({
@@ -30,10 +32,10 @@ export default function MeetDetailInfo({
   hashTags,
   parentId,
   online,
+  careerCategories,
 }: MeetDetailProps) {
   const [isLike, setIsLike] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
-
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
   const handleLikeClick = () => {
@@ -67,12 +69,12 @@ export default function MeetDetailInfo({
 
       {isModalOpen && (
         <Modal isOpen={isModalOpen} closeModal={closeModal}>
-          <TextArea placeholder='신고 사유를 적어주세요!' />
+          <Declaration closeModal={closeModal} />
         </Modal>
       )}
 
       {/* 모임 장소, 시간, 인원, 해시태그 관련 내용 */}
-      <div className='flex justify-between p-2 mt-3'>
+      <div className='flex items-center justify-between p-2 mt-3'>
         <div className='flex'>
           <MdPlace size={24} />
           {online === 1 ? (
@@ -96,6 +98,22 @@ export default function MeetDetailInfo({
         <div className='flex'>
           <FaUser size={24} />
           <span className='ml-2 text-size-body'>모집인원: {memNum}명</span>
+        </div>
+        &#124;
+        <div className='flex items-center'>
+          <FaUserCircle size={24} />
+          <div className='flex ml-3'>
+            <ul className='flex items-center gap-3'>
+              {careerCategories?.map((career) => (
+                <li
+                  key={career.id}
+                  className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-size-subbody text-black-color'
+                >
+                  #{career.name}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
