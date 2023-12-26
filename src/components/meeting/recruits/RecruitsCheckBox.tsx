@@ -1,13 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface CheckBoxProps {
   options: { text: string; value: number }[]
   name: string
   onChange: (selectedValues: number[]) => void
+  selectedValues?: number[]
 }
 
-export default function RecruitsCheckBox({ options, onChange }: CheckBoxProps) {
-  const [selectedValues, setSelectedValues] = useState<number[]>([])
+export default function RecruitsCheckBox({
+  options,
+  onChange,
+  selectedValues: initialSelectedValues = [],
+}: CheckBoxProps) {
+  const [selectedValues, setSelectedValues] = useState<number[]>(
+    initialSelectedValues,
+  )
+
+  useEffect(() => {
+    if (
+      !initialSelectedValues.every(
+        (value, index) => value === selectedValues[index],
+      )
+    ) {
+      setSelectedValues(initialSelectedValues)
+    }
+  }, [initialSelectedValues, selectedValues])
 
   const handleCheckBoxChange = (value: number) => {
     const updatedValues = selectedValues.includes(value)

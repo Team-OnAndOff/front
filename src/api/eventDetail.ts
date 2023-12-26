@@ -4,6 +4,7 @@ import { EventDetailData, Response } from '@/types'
 
 const instance = axios.create({
   baseURL: `${VITE_BACKEND_HOST}/api/events`,
+  withCredentials: true,
 })
 
 export const fetchGetEventDetail = async (eventId: number) => {

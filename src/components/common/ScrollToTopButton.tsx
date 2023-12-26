@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { FaArrowAltCircleUp } from 'react-icons/fa'
 
-export default function ScrollToTop() {
+export default function ScrollToTopButton() {
   const [showButton, setShowButton] = useState(false)
 
   const handleScroll = () => {
@@ -28,6 +28,8 @@ export default function ScrollToTop() {
     }
   }, [])
 
+  // 로그인 페이지에서는 안보이도록
+  if (window.location.pathname === '/login') return null
   return (
     <>
       {showButton && (

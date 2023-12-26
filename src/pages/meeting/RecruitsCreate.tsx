@@ -24,10 +24,8 @@ import {
   RecruitsSubCategory2,
 } from '@/components/meeting/index'
 import InputHash from '@/components/meeting/mypage/InputHash'
-// import InputsHashTag from '@/components/common/InputsHashTag'
 
 interface FormData {
-  userId: number
   categoryId: number
   subCategoryId: number
   careerCategoryId: number[]
@@ -79,7 +77,6 @@ export default function RecruitsCreate() {
     }
 
     const formData = new FormData()
-    formData.append('userId', '1')
     formData.append('categoryId', data.categoryId.toString())
     formData.append('subCategoryId', data.subCategoryId.toString())
     formData.append('careerCategoryId', data.careerCategoryId.toString())
@@ -97,12 +94,9 @@ export default function RecruitsCreate() {
       formData.append('challengeEndDate', '')
     }
     formData.append('address', JSON.stringify(data.address))
-    fetchPostEvents(formData)
 
     try {
       await fetchPostEvents(formData)
-      console.log('formData', formData)
-      console.log('FormData', data)
     } catch (error) {
       console.error('Error:', error)
     }
@@ -169,6 +163,10 @@ export default function RecruitsCreate() {
     })
   }
 
+  const handleAddress2 = (address2: string) => {
+    setValue('address.detail2', address2)
+  }
+
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0]
     setMyImage(selectedFile || null)
@@ -189,11 +187,9 @@ export default function RecruitsCreate() {
       if (!dataArray.includes(value.trim())) {
         if (dataArray.length < 10) {
           setDataArray((prevArray) => [...prevArray, value.trim()])
-          // hashTags 필드의 값을 setValue를 사용하여 업데이트
           setValue('hashTag', [...dataArray, value.trim()])
         } else {
           alert('태그는 10개까지만 입력할 수 있습니다.')
-          // console.log(formData)
         }
       } else {
         console.log('이미 존재하는 값입니다.')
@@ -201,10 +197,8 @@ export default function RecruitsCreate() {
     }
   }
 
-  // 해시태그 삭제 로직
   const handleRemoveHash = (index: number) => {
     setDataArray((prevArray) => prevArray.filter((_, i) => i !== index))
-    // hashTags 필드의 값을 setValue를 사용하여 업데이트
     setValue(
       'hashTag',
       dataArray.filter((_, i) => i !== index),
@@ -240,13 +234,14 @@ export default function RecruitsCreate() {
               {getErrorMessage('categoryId')}
             </div>
           </div>
+          {/* TODO: selectedCategory flag번호로 조회할 수 있도록 하기 */}
           {selectedCategory === 2 && (
             <div className='flex'>
               <RecruitsTitle>챌린지 기간</RecruitsTitle>
               <div className='flex gap-3'>
                 <div>
                   <div
-                    className='flex p-2.5 px-3 border-2 rounded-md cursor-pointer'
+                    className='flex p-2.5 px-3 border-2 rounded-small-radius cursor-pointer'
                     onClick={handleDayPickClick}
                   >
                     <CiCalendar />
@@ -259,7 +254,7 @@ export default function RecruitsCreate() {
                 <p className='pt-2 font-bold'>~</p>
                 <div>
                   <div
-                    className='flex p-2.5 px-3 border-2 rounded-md cursor-pointer '
+                    className='flex p-2.5 px-3 border-2 rounded-small-radius cursor-pointer '
                     onClick={handleDayPickClick}
                   >
                     <CiCalendar />
@@ -277,7 +272,7 @@ export default function RecruitsCreate() {
               <RecruitsTitle>모임 시작일</RecruitsTitle>
               <div>
                 <div
-                  className='flex items-center gap-1 p-2.5 px-3 border-2 rounded-md cursor-pointer w-fit'
+                  className='flex items-center gap-1 p-2.5 px-3 border-2 rounded-small-radius cursor-pointer w-fit'
                   onClick={handleDayPickClick}
                 >
                   <CiCalendar />
@@ -386,11 +381,9 @@ export default function RecruitsCreate() {
               <RecruitsTitle>오프라인 장소</RecruitsTitle>
               <div className='flex flex-col w-1/2'>
                 <div className='flex flex-wrap justify-between gap-5'>
-                  <RecruitsAddress onComplete={handleAddress} />
-                  <Inputs
-                    placeholder='상세주소'
-                    width='w-3/4'
-                    register={register('address.detail2')}
+                  <RecruitsAddress
+                    onComplete={handleAddress}
+                    onChange={handleAddress2}
                   />
                   {getErrorMessage('address')}
                 </div>
@@ -457,7 +450,7 @@ export default function RecruitsCreate() {
                 <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
                   {dataArray.map((item, index) => (
                     <li
-                      className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-subbody text-black-color'
+                      className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'
                       key={index}
                     >
                       #{item}{' '}
@@ -471,7 +464,6 @@ export default function RecruitsCreate() {
                   ))}
                 </ul>
               </div>
-              {/* <InputsHashTag register={register} setValue={setValue} /> */}
             </div>
           </div>
           <div className='flex'>

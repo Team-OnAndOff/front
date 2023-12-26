@@ -16,11 +16,13 @@ import 'swiper/css/bundle'
 import swipercore from 'swiper'
 swipercore.use([Autoplay])
 
+import { Modal, Declaration } from '@/components/common'
+
 export default function MainPosts({ title, data, isSlide }: PostsProps) {
   const navigate = useNavigate()
   const [swiper, setSwiper] = useState<SwiperClass | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
-  // const items = isSlide ? data : data.slice(0, 3)
   const items = data
 
   const swiperRef = useRef<swipercore>()
@@ -41,16 +43,25 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
   const handleNext = () => {
     swiper?.slideNext()
   }
-  console.log(items)
   const handleClickCategory = (categoryId: number | undefined) => {
     if (categoryId !== undefined) {
       navigate(`/meetup-lists/${categoryId}`)
     }
   }
 
+  // 신고모달
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
+
   return (
     <section className='relative flex flex-col gap-y-7'>
-      <h2 className='font-bold text-size-title break-keep'>{title}</h2>
+      <h2 className='mb-8 font-bold desktop:m-0 text-size-title break-keep'>
+        {title}
+      </h2>
       {isSlide ? (
         <>
           <div className='relative'>
@@ -60,10 +71,10 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
             >
               <Swiper
                 className='pt-1'
-                loop={items.length > 1}
+                loop={items.length >= 1}
                 speed={2000}
                 slideToClickedSlide={true}
-                loopedSlides={2}
+                // loopedSlides={2}
                 slidesPerView={3}
                 spaceBetween={30}
                 watchOverflow={true}
@@ -73,9 +84,15 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
                   disableOnInteraction: false,
                 }}
                 breakpoints={{
-                  768: {
+                  1740: {
                     slidesPerView: 3,
                     spaceBetween: 30,
+                    slidesPerGroupSkip: 1,
+                  },
+                  1120: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                    slidesPerGroupSkip: 1,
                   },
                 }}
                 navigation={{
@@ -89,7 +106,7 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
               >
                 {items.map((item) => (
                   <SwiperSlide key={item.id}>
-                    <Card data={item} />
+                    <Card data={item} openModal={openModal} />
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -100,7 +117,7 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
               className='absolute top-1/2 -left-[50px]'
               onClick={handlePrev}
             >
-              <i className='text-size-title tablet:text-[2rem] text-black-color'>
+              <i className='text-size-title desktop:text-[2rem] text-black-color'>
                 <IoIosArrowBack />
               </i>
             </button>
@@ -108,13 +125,13 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
               className='absolute top-1/2 -right-[50px]'
               onClick={handleNext}
             >
-              <i className='text-size-title tablet:text-[2rem] text-black-color'>
+              <i className='text-size-title desktop:text-[2rem] text-black-color'>
                 <IoIosArrowBack className='rotate-180' />
               </i>
             </button>
           </div>
 
-          <div className='pt-2 text-right text-size-subbody'>
+          <div className='text-right text-size-subbody transition-all duration-[1000ms] ease-in-out'>
             <Button
               fill='border'
               onClick={() =>
@@ -126,11 +143,16 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
           </div>
         </>
       ) : (
-        <div className='grid grid-cols-3 gap-4'>
+        <div className='grid desktop:gap-4 gap-y-14 desktop:grid-cols-3 transition-all duration-[1000ms] ease-in-out'>
           {items.map((item) => (
-            <Card key={item.id} data={item} />
+            <Card key={item.id} data={item} openModal={openModal} />
           ))}
         </div>
+      )}
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} closeModal={closeModal}>
+          <Declaration closeModal={closeModal} />
+        </Modal>
       )}
     </section>
   )

@@ -6,8 +6,7 @@ import { FaUserGear, FaRegFaceGrin } from 'react-icons/fa6'
 import { PiSiren } from 'react-icons/pi'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Modal } from '@/components/common'
-import Declaration from '@/components/common/Declaration'
+import { Modal, Declaration } from '@/components/common'
 import Evaluation from '@/components/meeting/mypage/Evaluation'
 import { useParams, useNavigate } from 'react-router-dom'
 
@@ -91,17 +90,17 @@ export default function MyPage() {
           ) : (
             <h4 className='mt-6 font-bold text-size-body'>로딩중입니다.</h4>
           )}
-          <p className='font-medium break-keep text-size-subbody'>
+          <p className='pl-1.5 font-medium break-keep text-size-subbody'>
             {userData?.introduction}
           </p>
           <ul className='flex gap-3 mb-6'>
-            <li className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-subbody text-black-color'>
+            <li className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'>
               #테스트
             </li>
-            <li className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-subbody text-black-color'>
+            <li className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'>
               #테스트
             </li>
-            <li className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-subbody text-black-color'>
+            <li className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'>
               #테스트
             </li>
           </ul>
@@ -117,7 +116,11 @@ export default function MyPage() {
               isOpen={isModalOpen && modalType === 'profile'}
               closeModal={closeModal}
             >
-              <IntroModal closeModal={closeModal} />
+              <IntroModal
+                closeModal={closeModal}
+                userId={userId}
+                myUserData={userData}
+              />
             </Modal>
           </div>
           {/* 프로필 설정 버튼 e */}
@@ -131,7 +134,7 @@ export default function MyPage() {
               isOpen={isModalOpen && modalType === 'declaration'}
               closeModal={closeModal}
             >
-              <Declaration closeModal={closeModal} />
+              <Declaration closeModal={closeModal} userId={userId} />
             </Modal>
           </div>
           {/* 신고 e*/}
@@ -153,7 +156,7 @@ export default function MyPage() {
           <div className='w-[68px] h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
             <p className='mt-[4px] text-white'>
               36.5
-              <span className='w-[3px] h-[3px] mt-1 ml-0.5 bor absolute rounded-md border border-solid border-white'></span>
+              <span className='w-[3px] h-[3px] mt-1 ml-0.5 bor absolute rounded-small-radius border border-solid border-white'></span>
             </p>
           </div>
         </div>

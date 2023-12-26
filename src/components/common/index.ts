@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button'
 import Card from '@/components/common/Card'
 import CheckBoxList from '@/components/common/CheckBoxList'
-import ScrollToTop from '@/components/common/ScrollToTop'
+import ScrollToTopButton from '@/components/common/ScrollToTopButton'
 import FloatingButton from '@/components/common/FloatingButton'
 import Inputs from '@/components/common/Inputs'
 import Modal from '@/components/common/Modal'
@@ -10,13 +10,14 @@ import SelectBox from '@/components/common/SelectBox'
 import Tag from '@/components/common/Tag'
 import TextArea from '@/components/common/TextArea'
 import SearchInput from '@/components/common/SearchInput'
+import Declaration from '@/components/common/Declaration'
 import PrivateRouter from '@/components/common/PrivateRouter'
 
 export {
   Button,
   Card,
   CheckBoxList,
-  ScrollToTop,
+  ScrollToTopButton,
   FloatingButton,
   Inputs,
   Modal,
@@ -25,5 +26,6 @@ export {
   Tag,
   TextArea,
   SearchInput,
+  Declaration,
   PrivateRouter,
 }

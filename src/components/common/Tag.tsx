@@ -7,15 +7,15 @@ interface TagProps {
   subCategoryId?: number
 }
 
-export default function Tag({ options, parentId, subCategoryId }: TagProps) {
+export default function Tag({ options, parentId }: TagProps) {
   return (
     <>
       <div className='flex gap-3'>
         {options?.map((option, index) => (
           <Link
-            to={`/meetup-lists/${parentId}?search=${option.hashtag}?subcategories=${subCategoryId}`}
+            to={`/meetup-lists/${parentId}?search=${option.hashtag}`}
             key={index}
-            className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-size-subbody text-dark-gray-color'
+            className='p-1 px-3  my-1 rounded-small-radius bg-main-light-color w-fit desktop:text-size-subbody text-[0.5rem] text-dark-gray-color'
           >{`#${option.hashtag}`}</Link>
         ))}
       </div>

@@ -38,31 +38,29 @@ export default function Login() {
   }
 
   return (
-    <div className='flex flex-col items-center justify-center'>
-      <div className='flex flex-col items-center justify-center mb-5'>
-        <img src={Logo} alt={Logo} className='w-[300px] h-[300px]' />
-        <span className='font-bold text-center text-size-title'>
-          우리의 성장은 함께하는 여정에서 비로소 의미를 찾는다
-        </span>
-      </div>
+    <div className='flex flex-col items-center justify-center w-full h-full gap-y-10'>
+      <img src={Logo} alt={Logo} className='w-[300px]' />
+      <h2 className='text-5xl font-bold transition-all duration-1000 ease-in-out desktop:text-6xl break-keep text-black-color'>
+        Login
+      </h2>
+      <h4 className='font-bold select-none text-size-title break-keep text-black-color'>
+        우리의 성장은 함께하는 여정에서 비로소 의미를 찾는다
+      </h4>
 
-      <div className='flex flex-col p-5 min-h-[300]'>
-        <button
-          className='px-2 py-2 transition duration-150 rounded-[12px]'
-          onClick={handleKakaoBtnClick}
-        >
+      <div className='flex flex-col items-center w-full mt-10 transition-all duration-1000 ease-in-out desktop:gap-y-10 gap-y-5'>
+        <button className='rounded-button-radius' onClick={handleKakaoBtnClick}>
           <img
-            className='object-cover'
+            className='object-cover desktop:scale-[1.43] scale-105 transition-all duration-1000 ease-in-out'
             src={kakao_login_btn}
             alt={kakao_login_btn}
           />
         </button>
         <button
           onClick={handleGoogleBtnClick}
-          className='px-3 py-2 transition duration-150 rounded-[12px]'
+          className='rounded-button-radius'
         >
           <img
-            className='object-cover'
+            className='object-cover desktop:scale-[1.5] scale-110 transition-all duration-1000 ease-in-out'
             src={google_login_btn}
             alt={google_login_btn}
           />

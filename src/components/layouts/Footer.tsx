@@ -3,7 +3,7 @@ import { Logo } from '@/assets/images'
 export default function Footer() {
   return (
     <footer className='bottom-0 flex justify-center w-full pt-8 pb-4 border-t border-light-gray-color bg-main-light-color'>
-      <div className='w-8/12 max-w-screen-xl'>
+      <div className='w-3/4 desktop:w-8/12 max-w-common-screen-width'>
         <ul className='flex flex-col pb-4 text-sm text-left border-b gap-y-1 border-light-gray-color'>
           <li>
             <img
@@ -56,7 +56,7 @@ export default function Footer() {
             </p>
           </li>
         </ul>
-        <p className='text-dark-gray-color text-[0.6rem] text-left'>
+        <p className='text-dark-gray-color text-[0.6rem] text-left break-keep'>
           온앤오프는 모임 중개기관으로 온앤오프 플랫폼을 통하여 방장과 모임
           참여자 사이에 이루어지는 모임의 당사자가 아닙니다. 온앤오프 플랫폼을
           통하여 예약된 일정, 장소, 방장 서비스에 관한 의무와 책임은 해당

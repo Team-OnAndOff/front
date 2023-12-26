@@ -1,13 +1,19 @@
-import React, { useRef, ChangeEvent } from 'react'
+import React, { useRef } from 'react'
 import { FaSearch, FaTimes } from 'react-icons/fa'
+import { Button } from '@/components/common'
 
 interface SearchInputProps {
-  searchInputHandler: (e: ChangeEvent<HTMLInputElement>) => void
   handleKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void
   searchInput: string
+  hasReset?: boolean
+  handleResetClick?: () => void
 }
 
-export default function SearchInput({ handleKeyPress }: SearchInputProps) {
+export default function SearchInput({
+  handleKeyPress,
+  hasReset = false,
+  handleResetClick,
+}: SearchInputProps) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const clearInput = () => {
@@ -18,7 +24,7 @@ export default function SearchInput({ handleKeyPress }: SearchInputProps) {
   }
 
   return (
-    <div className='relative'>
+    <div className='relative flex flex-row gap-x-1'>
       <label htmlFor='default-search' className='sr-only'>
         검색
       </label>
@@ -38,10 +44,21 @@ export default function SearchInput({ handleKeyPress }: SearchInputProps) {
         <button
           type='button'
           onClick={clearInput}
-          className='absolute end-1 bottom-[3px] focus:outline-none font-medium rounded-lg text-sm px-4 py-2 '
+          className='absolute right-[65px] bottom-[3px] focus:outline-none font-medium rounded-lg text-sm px-4 py-2 '
         >
           <FaTimes fill='#666' />
         </button>
+      )}
+      {hasReset && (
+        <div className='pt-1 text-size-subbody'>
+          <Button
+            fill='inactiveFill'
+            width='w-16'
+            onClick={handleResetClick ?? (() => {})}
+          >
+            초기화
+          </Button>
+        </div>
       )}
     </div>
   )

@@ -10,6 +10,12 @@ export default function FloatingButton() {
     navigator('/recruits-create')
   }
 
+  // 로그인 페이지나 등록페이지에서는 안보이도록
+  if (
+    window.location.pathname === '/login' ||
+    window.location.pathname === '/recruits-create'
+  )
+    return null
   return (
     <button
       onClick={handleClick}

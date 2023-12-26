@@ -14,7 +14,7 @@ const CardBtn = ({ selectedTab }: StateNumber) => {
   return (
     <>
       {selectedTab === 0 && (
-        <div>
+        <div className='flex justify-center mt-5'>
           <Button
             children='신청 취소'
             width='w-[120px]  font-bold m-1'
@@ -24,7 +24,7 @@ const CardBtn = ({ selectedTab }: StateNumber) => {
         </div>
       )}
       {selectedTab === 1 && (
-        <div>
+        <div className='flex justify-center mt-5'>
           <Button
             children='채팅방 입장'
             width='w-[120px]  font-bold m-1'
@@ -40,7 +40,7 @@ const CardBtn = ({ selectedTab }: StateNumber) => {
         </div>
       )}
       {selectedTab === 2 && (
-        <div>
+        <div className='flex justify-center mt-5'>
           <Button
             children='모집글 수정'
             width='w-[120px]  font-bold m-1'
@@ -56,7 +56,7 @@ const CardBtn = ({ selectedTab }: StateNumber) => {
         </div>
       )}
       {selectedTab === 3 && (
-        <div>
+        <div className='flex justify-center mt-5'>
           <Button
             children='상세보기'
             width='w-[120px]  font-bold m-1'
