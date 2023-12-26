@@ -52,7 +52,8 @@ export default function Detail() {
               memNum={postDetail.recruitment}
               postImageUrl={postDetail.image.uploadPath}
               hashTags={postDetail.hashTags}
-              parentId={postDetail.category.parentId.id}
+              parentId={postDetail.category?.parentId?.id}
+              careerCategories={postDetail.careerCategories}
             />
           </div>
           <div className='mt-6'>

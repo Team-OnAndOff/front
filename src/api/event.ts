@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { VITE_BACKEND_HOST } from '@/assets/config'
 import { CardData, Response, RecruitData, EventQuery } from '@/types'
+import { DataProps } from '@/pages/meeting/RecruitsRegister'
 
 const instance = axios.create({
   baseURL: `${VITE_BACKEND_HOST}/api/events`,
@@ -116,5 +117,19 @@ export const fetchPostRecruitEditEvents = async (eventId: number) => {
   } catch (error) {
     console.error('Error:', error)
     throw error
+  }
+}
+
+// user가 모임 신청하기
+export const fetchPostRecruitRegister = async (
+  eventId: number,
+  data: DataProps,
+) => {
+  try {
+    const url = `/${eventId}/applies`
+    const response = await instance.post(url, data)
+    return response.data.data
+  } catch (error) {
+    console.error(error)
   }
 }

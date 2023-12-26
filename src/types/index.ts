@@ -91,6 +91,7 @@ export interface EventDetailData {
   title: string
   updatedAt: string
   user: User
+  careerCategories: careerCategory[]
 }
 
 export interface EventAddress {
