@@ -10,6 +10,7 @@ import SelectBox from '@/components/common/SelectBox'
 import Tag from '@/components/common/Tag'
 import TextArea from '@/components/common/TextArea'
 import SearchInput from '@/components/common/SearchInput'
+import PrivateRouter from '@/components/common/PrivateRouter'
 
 export {
   Button,
@@ -24,4 +25,5 @@ export {
   Tag,
   TextArea,
   SearchInput,
+  PrivateRouter,
 }
