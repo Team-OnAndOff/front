@@ -314,7 +314,7 @@ export default function RecruitsEdit() {
               <div className='flex gap-3'>
                 <div>
                   <div
-                    className='flex p-2.5 px-3 border-2 rounded-md cursor-pointer'
+                    className='flex p-2.5 px-3 border-2 rounded-small-radius cursor-pointer'
                     onClick={handleDayPickClick}
                   >
                     <CiCalendar />
@@ -327,7 +327,7 @@ export default function RecruitsEdit() {
                 <p className='pt-2 font-bold'>~</p>
                 <div>
                   <div
-                    className='flex p-2.5 px-3 border-2 rounded-md cursor-pointer '
+                    className='flex p-2.5 px-3 border-2 rounded-small-radius cursor-pointer '
                     onClick={handleDayPickClick}
                   >
                     <CiCalendar />
@@ -345,7 +345,7 @@ export default function RecruitsEdit() {
               <RecruitsTitle>모임 시작일</RecruitsTitle>
               <div>
                 <div
-                  className='flex items-center gap-1 p-2.5 px-3 border-2 rounded-md cursor-pointer w-fit'
+                  className='flex items-center gap-1 p-2.5 px-3 border-2 rounded-small-radius cursor-pointer w-fit'
                   onClick={handleDayPickClick}
                 >
                   <CiCalendar />

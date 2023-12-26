@@ -74,10 +74,13 @@ export default function SwiperCard({ selectedTab }: StateNumber) {
           </button>
 
           <Swiper
-            slidesPerView={3}
             spaceBetween={20}
             freeMode={true}
             loop={true}
+            speed={2000}
+            slideToClickedSlide={true}
+            // loopedSlides={2}
+            slidesPerView={1}
             onSwiper={(e) => {
               setSwiper(e)
             }}
@@ -87,11 +90,23 @@ export default function SwiperCard({ selectedTab }: StateNumber) {
             }}
             modules={[FreeMode, Pagination, Navigation]}
             className='w-full h-full mt-5 mySwiper'
+            breakpoints={{
+              1740: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+                slidesPerGroupSkip: 1,
+              },
+              1120: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+                slidesPerGroupSkip: 1,
+              },
+            }}
           >
             {data.map((item: CardData) => (
               <SwiperSlide
-                className='flex flex-col items-center justify-center text-center bg-white text-18'
                 key={item.id}
+                className='flex flex-col justify-center'
               >
                 <Card data={item} />
                 <CardBtn selectedTab={selectedTab} />

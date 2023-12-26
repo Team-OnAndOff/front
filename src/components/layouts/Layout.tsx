@@ -22,9 +22,9 @@ export default function Layout() {
     fetchData()
   }, [setLoginUser])
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center h-screen'>
       <Header />
-      <div className='flex-1 w-8/12 max-w-common-screen-width justify-self-center'>
+      <div className='flex-1 w-3/4 desktop:w-8/12 max-w-common-screen-width justify-self-center'>
         <Outlet />
       </div>
       <FloatingButton />

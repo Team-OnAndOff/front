@@ -15,7 +15,7 @@ const getButtonStyle = (fill: ButtonProps['fill']) => {
     case 'inactiveFill':
       return 'bg-light-gray-color text-black-color'
     case 'border':
-      return 'border border-main-color bg-white hover:bg-light-gray-color'
+      return 'border border-main-color bg-white hover:bg-main-light-color'
     default:
       return ''
   }

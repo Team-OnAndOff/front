@@ -56,7 +56,7 @@ export default function Header() {
 
   return (
     <nav className='w-full sticky top-0 z-[999] bg-white border-b shadow-sm'>
-      <div className='relative z-[999] w-8/12 max-w-screen-xl mx-auto bg-transparent'>
+      <div className='relative z-[999] w-3/4 desktop:w-8/12 max-w-common-screen-width mx-auto bg-transparent'>
         <div className='flex justify-between'>
           <div className='flex space-x-4'>
             <Link

@@ -182,7 +182,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
               <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
                 {dataArray.map((item, index) => (
                   <li
-                    className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-subbody text-black-color'
+                    className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'
                     key={index}
                   >
                     #{item}{' '}
