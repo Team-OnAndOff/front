@@ -7,7 +7,6 @@ import useAuthStore from '@/store/userStore'
 
 export default function Layout() {
   const { setLoginUser, user } = useAuthStore((state) => state)
-  console.log(user)
   useEffect(() => {
     const fetchData = async () => {
       try {

@@ -12,10 +12,20 @@ export default function RecruitsCheckBox({
   onChange,
   selectedValues: initialSelectedValues = [],
 }: CheckBoxProps) {
-  const [selectedValues, setSelectedValues] = useState<number[]>([])
+  const [selectedValues, setSelectedValues] = useState<number[]>(
+    initialSelectedValues,
+  )
+
   useEffect(() => {
-    setSelectedValues(initialSelectedValues)
-  }, [initialSelectedValues])
+    if (
+      !initialSelectedValues.every(
+        (value, index) => value === selectedValues[index],
+      )
+    ) {
+      setSelectedValues(initialSelectedValues)
+    }
+  }, [initialSelectedValues, selectedValues])
+
   const handleCheckBoxChange = (value: number) => {
     const updatedValues = selectedValues.includes(value)
       ? selectedValues.filter((v) => v !== value)
