@@ -1,5 +1,8 @@
-import { useState, ChangeEvent } from 'react'
-import { fetchPostEvents } from '@/api/event'
+import { useState, useEffect, ChangeEvent } from 'react'
+import {
+  fetchGetRecruitEvents,
+  // , fetchPostRecruitEditEvents
+} from '@/api/event'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { GoPlus } from 'react-icons/go'
@@ -23,15 +26,15 @@ import {
   RecruitsSubCategory1,
   RecruitsSubCategory2,
 } from '@/components/meeting/index'
-// import InputsHashTag from '@/components/common/InputsHashTag'
+import InputHash from '@/components/meeting/mypage/InputHash'
 
 interface FormData {
-  userId: number
   categoryId: number
   subCategoryId: number
   careerCategoryId: number[]
   hashTag: string[]
   image: File
+  showImage: string
   title: string
   content: string
   recruitment: number
@@ -48,7 +51,12 @@ interface FormData {
   }
 }
 
-export default function RecruitsCreate() {
+// interface RecruitsEditProps {
+//   eventId: number
+// }
+export default function RecruitsEdit() {
+  // { eventId }: RecruitsEditProps
+  const eventId = 16
   const {
     register,
     handleSubmit,
@@ -61,23 +69,83 @@ export default function RecruitsCreate() {
       challengeStartDate: new Date(),
     },
   })
+
   const navigate = useNavigate()
   const [showDayPick, setShowDayPick] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
   const [selectedOnLine, setSelectedOnLine] = useState<number | null>(null)
+  const [selectedCareerCategoryId, setSelectedCareerCategoryId] = useState<
+    number[]
+  >([])
+  // const [selectedSubCategory, setSelectedSubCategory] = useState<number | null>(
+  // null,
+  // )
   const [myImage, setMyImage] = useState<File | null>(null)
+  const [dataArray, setDataArray] = useState<string[]>([])
   const currentStartDate = dayjs(watch('challengeStartDate')).format(
     'YYYY-MM-DD',
   )
   const currentEndDate = dayjs(watch('challengeEndDate')).format('YYYY-MM-DD')
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const recruitGetEvents = await fetchGetRecruitEvents(eventId)
+        console.log(recruitGetEvents)
+        if (recruitGetEvents) {
+          setValue('categoryId', recruitGetEvents.category.parentId!.id)
+          setSelectedCategory(recruitGetEvents.category.parentId!.id)
+          setValue('subCategoryId', recruitGetEvents.category.id)
+          // setSelectedSubCategory(recruitGetEvents.category.id)
+          const careerCategoryIds = recruitGetEvents.careerCategories.map(
+            (category: { id: number }) => category.id,
+          )
+
+          setValue('careerCategoryId', careerCategoryIds)
+          setSelectedCareerCategoryId(careerCategoryIds)
+          const hashTags = recruitGetEvents.hashTags.map(
+            (hashTag: { hashtag: string }) => hashTag.hashtag,
+          )
+
+          setValue('hashTag', hashTags)
+          setDataArray(hashTags)
+          setValue('showImage', recruitGetEvents.image.uploadPath)
+          setValue('title', recruitGetEvents.title)
+          setValue('content', recruitGetEvents.content)
+          setValue('recruitment', recruitGetEvents.recruitment)
+          setValue('question', recruitGetEvents.question)
+          setValue('online', recruitGetEvents.online)
+          setSelectedOnLine(recruitGetEvents.online)
+
+          if (recruitGetEvents.challengeStartDate) {
+            const challengeStartDate = new Date(
+              recruitGetEvents.challengeStartDate,
+            )
+            setValue('challengeStartDate', challengeStartDate)
+          }
+          if (recruitGetEvents.challengeEndDate) {
+            const challengeEndDate = new Date(recruitGetEvents.challengeEndDate)
+            setValue('challengeEndDate', challengeEndDate)
+          }
+          setValue('address.zipCode', recruitGetEvents.address.zipCode)
+          setValue('address.detail1', recruitGetEvents.address.detail1)
+          setValue('address.detail2', recruitGetEvents.address.detail2)
+          setValue('address.latitude', recruitGetEvents.address.latitude)
+          setValue('address.longitude', recruitGetEvents.address.longitude)
+        }
+      } catch (error) {
+        console.error('Error:', error)
+      }
+    }
+
+    fetchData()
+  }, [eventId, setValue])
   const onSubmit: SubmitHandler<FormData> = async (data, event) => {
     if (event) {
       event.preventDefault()
     }
 
     const formData = new FormData()
-    formData.append('userId', '1')
     formData.append('categoryId', data.categoryId.toString())
     formData.append('subCategoryId', data.subCategoryId.toString())
     formData.append('careerCategoryId', data.careerCategoryId.toString())
@@ -95,15 +163,14 @@ export default function RecruitsCreate() {
       formData.append('challengeEndDate', '')
     }
     formData.append('address', JSON.stringify(data.address))
-    fetchPostEvents(formData)
 
-    try {
-      await fetchPostEvents(formData)
-      console.log('formData', formData)
-      console.log('FormData', data)
-    } catch (error) {
-      console.error('Error:', error)
-    }
+    // try {
+    //   await fetchPostRecruitEditEvents(formData)
+    //   console.log('formData', formData)
+    //   console.log('FormData', data)
+    // } catch (error) {
+    //   console.error('Error:', error)
+    // }
     console.log('FormData', data)
   }
 
@@ -137,13 +204,15 @@ export default function RecruitsCreate() {
   // TODO: 다른 공간 누르면 dayPick 창 닫히게 하기
 
   const handleCategoryChange = (value: number) => {
-    setSelectedCategory(value)
-    setValue('categoryId', value)
+    if (!selectedCategory) {
+      setSelectedCategory(value)
+    }
   }
 
   const handleOnLineChange = (value: number) => {
-    setSelectedOnLine(value)
-    setValue('online', value)
+    if (!selectedOnLine) {
+      setSelectedOnLine(value)
+    }
   }
 
   const handleValueClick = (value: number) => {
@@ -167,6 +236,10 @@ export default function RecruitsCreate() {
     })
   }
 
+  const handleAddress2 = (address2: string) => {
+    setValue('address.detail2', address2)
+  }
+
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0]
     setMyImage(selectedFile || null)
@@ -179,6 +252,30 @@ export default function RecruitsCreate() {
     // 이미지 업로드 버튼으로 새로 이미지를 넣으면 reset이 되지만, (이미지 삭제버튼 안누르고)
     // 현재 버그있음 > 이미지를 삭제 버튼을 누르면 undefined로 고정이 되어버림.
     // 그렇다고, 그냥 이미지를 안보이게 하면, 다른 이미지로 바꿔도 처음 클릭했던 이미지가 들어감
+  }
+
+  // 해시태그 추가 로직
+  const handleEnter = (value: string) => {
+    if (value.trim() !== '') {
+      if (!dataArray.includes(value.trim())) {
+        if (dataArray.length < 10) {
+          setDataArray((prevArray) => [...prevArray, value.trim()])
+          setValue('hashTag', [...dataArray, value.trim()])
+        } else {
+          alert('태그는 10개까지만 입력할 수 있습니다.')
+        }
+      } else {
+        console.log('이미 존재하는 값입니다.')
+      }
+    }
+  }
+
+  const handleRemoveHash = (index: number) => {
+    setDataArray((prevArray) => prevArray.filter((_, i) => i !== index))
+    setValue(
+      'hashTag',
+      dataArray.filter((_, i) => i !== index),
+    )
   }
 
   const category = RecruitsCategory()
@@ -206,6 +303,7 @@ export default function RecruitsCreate() {
                 name='category'
                 clickChange={handleCategoryChange}
                 selectedValue={selectedCategory}
+                disabled={!!selectedCategory}
               />
               {getErrorMessage('categoryId')}
             </div>
@@ -290,6 +388,7 @@ export default function RecruitsCreate() {
                 onChange={(selectedValues) => {
                   setValue('careerCategoryId', selectedValues)
                 }}
+                selectedValues={selectedCareerCategoryId}
               />
               {getErrorMessage('careerCategoryId')}
             </div>
@@ -347,6 +446,7 @@ export default function RecruitsCreate() {
                 name='online'
                 clickChange={handleOnLineChange}
                 selectedValue={selectedOnLine}
+                disabled={!!selectedOnLine}
               />
               {getErrorMessage('online')}
             </div>
@@ -356,11 +456,10 @@ export default function RecruitsCreate() {
               <RecruitsTitle>오프라인 장소</RecruitsTitle>
               <div className='flex flex-col w-1/2'>
                 <div className='flex flex-wrap justify-between gap-5'>
-                  <RecruitsAddress onComplete={handleAddress} />
-                  <Inputs
-                    placeholder='상세주소'
-                    width='w-3/4'
-                    register={register('address.detail2')}
+                  <RecruitsAddress
+                    onComplete={handleAddress}
+                    onChange={handleAddress2}
+                    address={watch('address')}
                   />
                   {getErrorMessage('address')}
                 </div>
@@ -417,7 +516,30 @@ export default function RecruitsCreate() {
           <div className='flex'>
             <RecruitsTitle>해시태그</RecruitsTitle>
             <div className='flex flex-col'>
-              {/* <InputsHashTag register={register} setValue={setValue} /> */}
+              <InputHash
+                placeholder='#태그입력'
+                width='w-80'
+                onEnter={(value) => handleEnter(value)}
+                register={register('hashTag')}
+              />
+              <div>
+                <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
+                  {dataArray.map((item, index) => (
+                    <li
+                      className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-subbody text-black-color'
+                      key={index}
+                    >
+                      #{item}{' '}
+                      <span
+                        onClick={() => handleRemoveHash(index)}
+                        className='cursor-pointer'
+                      >
+                        ⤫
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
           <div className='flex'>
@@ -448,7 +570,7 @@ export default function RecruitsCreate() {
             취소
           </Button>
           <Button onClick={handleSubmit(onSubmit)} fill='activeFill'>
-            등록
+            수정하기
           </Button>
         </div>
       </div>
