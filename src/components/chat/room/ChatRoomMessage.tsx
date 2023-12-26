@@ -15,7 +15,7 @@ interface ChatRoomMessageProps {
 export default function ChatRoomMessage({ item }: ChatRoomMessageProps) {
   const [isOpen, setIsOpen] = useState(false)
 
-  const isSelf = item.user.userId === Number(localStorage.getItem('userId')!)
+  const isSelf = item.user.id === Number(localStorage.getItem('userId')!)
   return (
     <div className='chat-message'>
       <div className={`flex items-end ${isSelf && 'justify-end'}`}>
@@ -30,7 +30,7 @@ export default function ChatRoomMessage({ item }: ChatRoomMessageProps) {
             <DropDownItems isOpen={isOpen} />
           </div>
         )}
-        <ChatRoomTime isSelf={isSelf} time={formatDateTime(item.createdAt)} />
+        <ChatRoomTime isSelf={isSelf} time={formatDateTime(item.date)} />
       </div>
     </div>
   )

@@ -190,21 +190,32 @@ export interface ChatUser {
 export interface ChatMessage {
   _id: string
   type: 'text' | 'image' | 'link' | 'system'
-  user: ChatUser
   message: string
-  createdAt: Date
-  updatedAt: Date
+  date: Date
+  user: any
 }
 
 export interface ChatRoom {
-  _id: string
-  groupId: number
-  users: number[]
-  createdAt: Date
-  updatedAt: Date
+  id: number
+  event: {
+    id: number
+    title: string
+    image: { uploadPath: string }
+  }
 }
 
 export interface ChatResponse<T> {
   code: number
   data?: T
+}
+
+export enum CHAT {
+  CONNECT = 'first',
+  JOIN_ROOM = 'room',
+  ENTERED = 'entered',
+  LOGIN = 'login',
+  ROOMS = 'rooms',
+  PREV_MESSAGES = 'getPrevMessages',
+  SEND_MESSAGE = 'sendMessage',
+  MESSAGE = 'message',
 }
