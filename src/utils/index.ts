@@ -1,8 +1,9 @@
-import ScrollToTop from '@/utils/ScrollToTop'
+import NewPageScrollToTop from '@/utils/NewPageScrollToTop'
+import ReloadScrollToTop from '@/utils/ReloadScrollToTop'
 import LazyImage from '@/utils/LazyImage'
 import HandleSearchParams from '@/utils/HandleSearchParams'
 
-export { ScrollToTop, LazyImage, HandleSearchParams }
+export { NewPageScrollToTop, ReloadScrollToTop, LazyImage, HandleSearchParams }
 
 export type CategoryType = {
   categoryId: number

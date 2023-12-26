@@ -61,7 +61,7 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
                 loop={items.length > 1}
                 speed={2000}
                 slideToClickedSlide={true}
-                loopedSlides={2}
+                // loopedSlides={2}
                 slidesPerView={3}
                 spaceBetween={30}
                 watchOverflow={true}

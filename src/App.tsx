@@ -13,20 +13,16 @@ import {
 } from '@/pages/meeting'
 import { Login, MyPage } from '@/pages/user'
 import NotFound from '@/pages/NotFound'
-import { ScrollToTop } from '@/utils'
-import { PrivateRouter } from '@/components/common'
+import { NewPageScrollToTop, ReloadScrollToTop } from '@/utils'
 
 export default function App() {
   // 새로고침 시, scroll to top
-  useEffect(() => {
-    window.onbeforeunload = function pushRefresh() {
-      window.scrollTo(0, 0)
-    }
-  }, [])
+  ReloadScrollToTop()
   return (
     <>
       <BrowserRouter>
-        <ScrollToTop />
+        {/* 페이지 이동 시, scroll to top */}
+        <NewPageScrollToTop />
         <Routes>
           <Route path='/' element={<Layout />}>
             {/* 공통컴포넌트 샘플 */}
