@@ -177,3 +177,44 @@ export interface careerCategory {
   parentId: ParentCategory
   categories?: Category[]
 }
+
+export interface ChatUser {
+  _id: string
+  userId: number
+  socketId: string
+  online: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+export interface ChatMessage {
+  _id: string
+  type: 'text' | 'image' | 'link' | 'system'
+  message: string
+  date: Date
+  user: any
+}
+
+export interface ChatRoom {
+  id: number
+  event: {
+    id: number
+    title: string
+    image: { uploadPath: string }
+  }
+}
+
+export interface ChatResponse<T> {
+  code: number
+  data?: T
+}
+
+export enum CHAT {
+  CONNECT = 'first',
+  JOIN_ROOM = 'room',
+  ENTERED = 'entered',
+  LOGIN = 'login',
+  ROOMS = 'rooms',
+  PREV_MESSAGES = 'getPrevMessages',
+  SEND_MESSAGE = 'sendMessage',
+  MESSAGE = 'message',
+}

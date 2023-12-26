@@ -3,10 +3,8 @@ import ChatMessageCount from '@/components/chat/common/ChatMessageCount'
 import DropDownItem from '@/components/chat/common/DropDownItem'
 import DropDownItems from '@/components/chat/common/DropDownItems'
 
-import ChatList from '@/components/chat/list/ChatList'
 import ChatListCard from '@/components/chat/list/ChatListCard'
 
-import ChatRoom from '@/components/chat/room/ChatRoom'
 import ChatRoomTitle from '@/components/chat/room/ChatRoomTitle'
 import ChatRoomInput from '@/components/chat/room/ChatRoomInput'
 import ChatRoomIcon from '@/components/chat/room/ChatRoomIcon'
@@ -21,9 +19,7 @@ export {
   ChatMessageCount,
   DropDownItem,
   DropDownItems,
-  ChatList,
   ChatListCard,
-  ChatRoom,
   ChatRoomTitle,
   ChatRoomInput,
   ChatRoomIcon,
