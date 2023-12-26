@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Button from '@/components/common/Button'
+import { Button } from '@/components/common'
 
 export default function ButtonSample() {
   const navigate = useNavigate()

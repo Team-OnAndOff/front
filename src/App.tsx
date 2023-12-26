@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Layout } from '@/components/layouts'
 import { Main } from '@/pages/home'
@@ -16,6 +17,12 @@ import { ScrollToTop } from '@/utils'
 import { PrivateRouter } from '@/components/common'
 
 export default function App() {
+  // 새로고침 시, scroll to top
+  useEffect(() => {
+    window.onbeforeunload = function pushRefresh() {
+      window.scrollTo(0, 0)
+    }
+  }, [])
   return (
     <>
       <BrowserRouter>
