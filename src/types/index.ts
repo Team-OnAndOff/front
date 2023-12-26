@@ -66,6 +66,7 @@ export interface CardData {
   deletedAt?: Date
   user: User
   hashTags: HashTag[]
+  likes: any[]
 }
 
 export interface CardProps {

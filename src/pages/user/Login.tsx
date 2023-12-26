@@ -39,18 +39,18 @@ export default function Login() {
 
   return (
     <div className='flex flex-col items-center justify-center w-full h-full gap-y-10'>
-      <img src={Logo} alt={Logo} className='w-[300px]' />
-      <h2 className='text-5xl font-bold transition-all duration-1000 ease-in-out desktop:text-6xl break-keep text-black-color'>
+      <img src={Logo} alt={Logo} className='w-[16rem]' />
+      <h2 className='text-4xl font-bold transition-all duration-1000 ease-in-out desktop:text-5xl break-keep text-black-color'>
         Login
       </h2>
       <h4 className='font-bold select-none text-size-title break-keep text-black-color'>
         우리의 성장은 함께하는 여정에서 비로소 의미를 찾는다
       </h4>
 
-      <div className='flex flex-col items-center w-full mt-10 transition-all duration-1000 ease-in-out desktop:gap-y-10 gap-y-5'>
+      <div className='flex flex-col items-center w-full mt-10 transition-all duration-1000 ease-in-out desktop:gap-y-5 gap-y-3'>
         <button className='rounded-button-radius' onClick={handleKakaoBtnClick}>
           <img
-            className='object-cover desktop:scale-[1.43] scale-105 transition-all duration-1000 ease-in-out'
+            className='object-cover transition-all duration-1000 ease-in-out'
             src={kakao_login_btn}
             alt={kakao_login_btn}
           />
@@ -60,7 +60,7 @@ export default function Login() {
           className='rounded-button-radius'
         >
           <img
-            className='object-cover desktop:scale-[1.5] scale-110 transition-all duration-1000 ease-in-out'
+            className='object-cover transition-all duration-1000 ease-in-out'
             src={google_login_btn}
             alt={google_login_btn}
           />

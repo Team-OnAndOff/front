@@ -1,13 +1,14 @@
 import { CardProps } from '@/types'
 import { formatDate } from '@/utils'
 import { TiHeartOutline, TiHeartFullOutline } from 'react-icons/ti'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FaEllipsisVertical } from 'react-icons/fa6'
 import { FaTimes } from 'react-icons/fa'
 import { Tag } from '@/components/common'
 import { LazyImage } from '@/utils'
 import { fetchPutLikePosts } from '@/api/event'
+import useAuthStore from '@/store/userStore'
 
 export default function Card({ data, openModal }: CardProps) {
   const {
@@ -19,8 +20,11 @@ export default function Card({ data, openModal }: CardProps) {
     hashTags,
     challengeStartDate,
     challengeEndDate,
+    likes,
   } = data
+  const store = useAuthStore()
   const [isLike, setIsLike] = useState(false)
+
   const [isKebabVisible, setIsKebabVisible] = useState(false)
   const [isMenuVisible, setIsMenuVisible] = useState(false)
 
@@ -37,11 +41,18 @@ export default function Card({ data, openModal }: CardProps) {
     e.stopPropagation()
     try {
       await fetchPutLikePosts(data.id)
-      setIsLike(!isLike)
+      setIsLike((prev) => !prev)
     } catch (error) {
       console.error('Error liking post:', error)
     }
   }
+
+  // 내가 누른 좋아요 보이게
+  useEffect(() => {
+    const userHasLiked = likes.some((like) => like.user.id === store.user?.id)
+    setIsKebabVisible(userHasLiked)
+    setIsLike(userHasLiked)
+  }, [])
 
   const handleMenuClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation()
@@ -158,15 +169,13 @@ export default function Card({ data, openModal }: CardProps) {
                             onClick={handleIconClick}
                             className='p-2 transition-transform transform active:scale-75 tablet:text-size-title'
                           >
-                            {isLike ? (
-                              <i className='text-size-body tablet:text-size-title'>
+                            <i className='text-size-body tablet:text-size-title'>
+                              {isLike ? (
                                 <TiHeartFullOutline fill='#ff5e2e' />
-                              </i>
-                            ) : (
-                              <i className='text-size-body tablet:text-size-title'>
+                              ) : (
                                 <TiHeartOutline />
-                              </i>
-                            )}
+                              )}
+                            </i>
                           </button>
                           <button
                             onClick={handleMenuClick}

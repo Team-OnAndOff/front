@@ -19,7 +19,7 @@ export default function MeetupList() {
   const categoryId = Number(location.pathname.split('/')[2].trim())
 
   const page = useRef(1)
-  const perPage = 12
+  const perPage = 3
   const [postData, setPostData] = useState<CardData[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isNext, setIsNext] = useState(false)

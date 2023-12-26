@@ -4,6 +4,7 @@ import Logo from '@/assets/images/Logo.svg'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Category } from '@/types'
 import { fetchGetCategories } from '@/api/category'
+import useAuthStore from '@/store/userStore'
 
 interface MenuItem {
   to: string
@@ -16,6 +17,7 @@ export default function Header() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false)
   const [menuItems, setMenuItems] = useState<MenuItem[]>([])
   const location = useLocation()
+  const store = useAuthStore()
 
   const generateClassName = (
     base: string,
@@ -41,11 +43,7 @@ export default function Header() {
           },
         }))
 
-        setMenuItems([
-          ...generatedMenuItems,
-          { to: '/chat', text: 'Chat' },
-          { to: '/login', text: 'Login' },
-        ])
+        setMenuItems([...generatedMenuItems, { to: '/chat', text: 'Chat' }])
       } catch (error) {
         console.error('Error', error)
       }
@@ -86,7 +84,16 @@ export default function Header() {
               </NavLink>
             ))}
             <Link
-              to='/userInfo/:userId'
+              to={store.user ? '/logout' : '/login'}
+              className={generateClassName(
+                'py-5 px-3 hover:text-main-color font-light text-gray-600',
+                true,
+              )}
+            >
+              {store.user ? 'Logout' : 'Login'}
+            </Link>
+            <Link
+              to={`/userInfo/${store.user?.id}`}
               className={generateClassName('py-5 px-3', true)}
             >
               <FaUserCircle size={24} />

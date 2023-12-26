@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ChatLayout, Layout } from '@/components/layouts'
 import { Main } from '@/pages/home'

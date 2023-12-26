@@ -6,7 +6,7 @@ import { fetchLoginUser } from '@/api/user'
 import useAuthStore from '@/store/userStore'
 
 export default function Layout() {
-  const { setLoginUser, user } = useAuthStore((state) => state)
+  const { setLoginUser } = useAuthStore((state) => state)
   useEffect(() => {
     const fetchData = async () => {
       try {
