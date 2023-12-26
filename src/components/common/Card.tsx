@@ -29,14 +29,11 @@ export default function Card({ data }: CardProps) {
     e,
   ) => {
     e.stopPropagation()
-    setIsLike(!isLike)
-
-    if (!isLike) {
-      try {
-        await fetchPutLikePosts(data.id)
-      } catch (error) {
-        console.error('Error liking post:', error)
-      }
+    try {
+      await fetchPutLikePosts(data.id)
+      setIsLike(!isLike)
+    } catch (error) {
+      console.error('Error liking post:', error)
     }
   }
 
@@ -77,6 +74,7 @@ export default function Card({ data }: CardProps) {
   const handleUserImageLazyLoad = () => {
     setIsUserImageLoaded(true)
   }
+
   return (
     <>
       <div
@@ -114,7 +112,7 @@ export default function Card({ data }: CardProps) {
               <LazyImage
                 src={user.image.uploadPath}
                 alt={user.username}
-                className='rounded-full'
+                className='rounded-full '
                 loading='lazy'
               />
             </Link>

@@ -23,7 +23,7 @@ export default function SwiperCard({ selectedTab }: StateNumber) {
         // 데이터 파일 경로
         const response = await fetch('http://localhost:4000/api/events')
         const jsonData = await response.json()
-        console.log(jsonData.data)
+        // console.log(jsonData.data)
         // 불러온 데이터를 상태에 설정
         setData(jsonData.data)
       } catch (error) {

@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { Header, Footer } from '@/components/layouts'
-import { FloatingButton, ScrollToTop } from '@/components/common'
+import { FloatingButton, ScrollToTopButton } from '@/components/common'
 import { useEffect } from 'react'
 import { fetchLoginUser } from '@/api/user'
 import useAuthStore from '@/store/userStore'
@@ -28,7 +28,7 @@ export default function Layout() {
         <Outlet />
       </div>
       <FloatingButton />
-      <ScrollToTop />
+      <ScrollToTopButton />
       <Footer />
     </div>
   )

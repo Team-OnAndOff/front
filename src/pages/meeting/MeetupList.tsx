@@ -19,7 +19,7 @@ export default function MeetupList() {
   const categoryId = Number(location.pathname.split('/')[2].trim())
 
   const page = useRef(1)
-  const perPage = 3
+  const perPage = 12
   const [postData, setPostData] = useState<CardData[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isNext, setIsNext] = useState(false)
@@ -117,8 +117,8 @@ export default function MeetupList() {
         )
       } else {
         // 검색어 입력
-        fetchEventData(categoryId, hasSubCategory, searchInput)
         inputSearch(searchInput)
+        fetchEventData(categoryId, hasSubCategory, searchInput)
         console.log('검색어 입력')
       }
     }
