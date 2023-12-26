@@ -4,6 +4,7 @@ interface RadioButtonsProps {
   name: string
   clickChange: (value: number) => void
   selectedValue?: number | null
+  disabled?: boolean
 }
 
 export default function RadioButtons({

@@ -4,6 +4,7 @@ import { CardData, Response, RecruitData, EventQuery } from '@/types'
 
 const instance = axios.create({
   baseURL: `${VITE_BACKEND_HOST}/api/events`,
+  withCredentials: true,
 })
 
 const handleSearchParams = (
@@ -99,7 +100,7 @@ export const fetchGetRecruitEvents = async (eventId: number) => {
   try {
     const url = `/${eventId}`
 
-    const response = await instance.get<Response<RecruitData[]>>(url)
+    const response = await instance.get<Response<RecruitData>>(url)
     return response.data.data
   } catch (error) {
     console.error('Error:', error)
@@ -110,7 +111,7 @@ export const fetchGetRecruitEvents = async (eventId: number) => {
 export const fetchPostRecruitEditEvents = async (eventId: number) => {
   try {
     const url = `/${eventId}`
-    const response = await instance.post<Response<FormData>>(url)
+    const response = await instance.put<Response<FormData>>(url)
     return response.data.data
   } catch (error) {
     console.error('Error:', error)

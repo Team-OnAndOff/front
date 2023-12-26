@@ -4,6 +4,7 @@ import { Category, Response } from '@/types'
 
 const instance = axios.create({
   baseURL: `${VITE_BACKEND_HOST}/api/categories`,
+  withCredentials: true,
 })
 
 // 카테고리 목록 조회하기

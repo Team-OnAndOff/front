@@ -142,27 +142,25 @@ export interface EventQuery {
 }
 
 export interface RecruitData {
+  address: EventAddress
   category: Category
-  userId: number
-  categoryId: number
-  subCategoryId: number
-  careerCategoryId: number[]
-  hashTag: string[]
-  image: File | undefined
-  title: string
+  challengeEndDate?: string
+  challengeStartDate?: string
+  careerCategories: careerCategory[]
   content: string
-  recruitment: number
-  question: string
+  createdAt: Date
+  deleteAt?: Date
+  eventApplies: EventAppliesUser[]
+  hashTags: HashTag[]
+  id: number
+  image: Image
+  likes: number
   online: number
-  challengeStartDate: Date | null
-  challengeEndDate: Date | null
-  address: {
-    zipCode: number
-    detail1: string
-    detail2: string
-    latitude: number
-    longitude: number
-  }
+  question: string
+  recruitment: number
+  title: string
+  updatedAt: string
+  user: User
 }
 
 export interface RecruitDataProps {

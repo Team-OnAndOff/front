@@ -4,6 +4,7 @@ import { careerCategory, Response } from '@/types'
 
 const instance = axios.create({
   baseURL: `${VITE_BACKEND_HOST}/api/careerCategories`,
+  withCredentials: true,
 })
 
 // 직업카테고리 목록 조회하기
