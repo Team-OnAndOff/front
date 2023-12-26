@@ -91,7 +91,7 @@ export default function RecruitsEdit() {
     const fetchData = async () => {
       try {
         const recruitGetEvents = await fetchGetRecruitEvents(eventId)
-        console.log(recruitGetEvents)
+        // console.log(recruitGetEvents)
         if (recruitGetEvents) {
           setValue('categoryId', recruitGetEvents.category.parentId!.id)
           setSelectedCategory(recruitGetEvents.category.parentId!.id)
