@@ -1,22 +1,36 @@
+import { userReports } from '@/api/userReports'
 import { Button } from '@/components/common'
 import { useForm, SubmitHandler } from 'react-hook-form'
 interface FormData {
-  textareaValue: string
+  introduction: string
 }
 interface Props {
   closeModal: () => void
+  userId?: string
 }
-// 폼 서밋 핸들러
-const onSubmit: SubmitHandler<FormData> = async (data, event) => {
-  if (event) {
-    event.preventDefault()
-  }
-  //여기에 데이터 전송 로직 넣으면된다.
-  console.log('테스트 폼 데이터:', data)
-}
-const Declaration = ({ closeModal }: Props) => {
+
+const Declaration = ({ closeModal, userId }: Props) => {
   const { register, handleSubmit } = useForm<FormData>()
   const action = () => {}
+
+  // 폼 서밋 핸들러
+  const onSubmit: SubmitHandler<FormData> = async (data, event) => {
+    if (event) {
+      event.preventDefault()
+    }
+    console.log(data, '데이터 테스트')
+    //여기에 데이터 전송 로직 넣으면된다.
+    const formData = new FormData()
+    formData.append('introduction', data.introduction.toString())
+    if (userId !== undefined) {
+      formData.append('attendeeId', userId.toString())
+    }
+    try {
+      await userReports(formData)
+    } catch {
+      console.log('데이터 전달오류')
+    }
+  }
 
   return (
     <>
@@ -27,7 +41,7 @@ const Declaration = ({ closeModal }: Props) => {
         <form onSubmit={action}>
           <textarea
             className='resize-none overflow-hidden p-[10px] text-size-body font-medium rounded-button-radius mt-[11px] border-2 border-solid border-main-color '
-            {...register('textareaValue')}
+            {...register('introduction')}
             rows={7}
             cols={80}
             maxLength={200}

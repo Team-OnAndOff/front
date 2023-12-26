@@ -91,7 +91,7 @@ export default function MyPage() {
           ) : (
             <h4 className='mt-6 font-bold text-size-body'>로딩중입니다.</h4>
           )}
-          <p className='font-medium break-keep text-size-subbody'>
+          <p className='pl-1.5 font-medium break-keep text-size-subbody'>
             {userData?.introduction}
           </p>
           <ul className='flex gap-3 mb-6'>
@@ -117,7 +117,11 @@ export default function MyPage() {
               isOpen={isModalOpen && modalType === 'profile'}
               closeModal={closeModal}
             >
-              <IntroModal closeModal={closeModal} />
+              <IntroModal
+                closeModal={closeModal}
+                userId={userId}
+                myUserData={userData}
+              />
             </Modal>
           </div>
           {/* 프로필 설정 버튼 e */}
@@ -131,7 +135,7 @@ export default function MyPage() {
               isOpen={isModalOpen && modalType === 'declaration'}
               closeModal={closeModal}
             >
-              <Declaration closeModal={closeModal} />
+              <Declaration closeModal={closeModal} userId={userId} />
             </Modal>
           </div>
           {/* 신고 e*/}
