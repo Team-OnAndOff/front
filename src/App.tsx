@@ -14,6 +14,7 @@ import {
 import { Login, MyPage } from '@/pages/user'
 import NotFound from '@/pages/NotFound'
 import { NewPageScrollToTop, ReloadScrollToTop } from '@/utils'
+import { PrivateRouter } from '@/components/common'
 
 export default function App() {
   // 새로고침 시, scroll to top
