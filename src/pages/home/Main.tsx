@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { ImageSlide, MainPosts } from '@/components'
 import { fetchGetEvents } from '@/api/event'
 import { CardData, EventQuery } from '@/types'
-import SwalModal from '@/components/common/SwalModal'
 
 export default function Main() {
   const [topData, setTopData] = useState<CardData[]>([])
@@ -25,20 +24,9 @@ export default function Main() {
       }
     }
     fetchData({ sort: 'likes', limit: 3 })
-    fetchData({ categoryId: 1 })
-    fetchData({ categoryId: 2 })
+    fetchData({ categoryId: 1, page: 1, perPage: 9 })
+    fetchData({ categoryId: 2, page: 1, perPage: 9 })
   }, [])
-
-  // Swal 모달
-  const handleConfirm = () => {
-    // Handle confirm action
-    console.log('Changes saved!')
-  }
-
-  const handleDeny = () => {
-    // Handle deny action
-    console.log('Changes not saved')
-  }
 
   return (
     <>
