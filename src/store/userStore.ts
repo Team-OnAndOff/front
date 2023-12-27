@@ -5,6 +5,7 @@ import { persist } from 'zustand/middleware'
 interface UserProps {
   user: User | null
   setLoginUser: (user: User) => void
+  setUserLogout: () => void
 }
 
 const useAuthStore = create(
@@ -12,6 +13,7 @@ const useAuthStore = create(
     (set) => ({
       user: null,
       setLoginUser: (user: User) => set({ user }),
+      setUserLogout: () => set({ user: null }),
     }),
     {
       name: 'user',

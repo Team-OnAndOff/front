@@ -85,7 +85,7 @@ export interface EventDetailData {
   hashTags: HashTag[]
   id: number
   image: Image
-  likes: number
+  likes: any[]
   online: number
   question: string
   recruitment: number
