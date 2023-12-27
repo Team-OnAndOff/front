@@ -1,3 +1,4 @@
+import { statusPut, wantJoin } from '@/api/wantJoinList'
 import { Button } from '@/components/common'
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -19,14 +20,8 @@ const UserCard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 데이터 파일 경로
-        const response = await fetch(
-          `http://localhost:4000/api/events/${meetingId}/applies`,
-        )
-        const jsonData = await response.json()
-        console.log(jsonData.data)
-        // 불러온 데이터를 상태에 설정
-        setUserData(jsonData.data)
+        const wantUserData = await wantJoin(meetingId)
+        setUserData(wantUserData.data || [])
       } catch (error) {
         console.error('모임장이 아닙니다', error)
         navigate('/')
@@ -34,10 +29,26 @@ const UserCard = () => {
     }
 
     fetchData()
-  }, [])
+  }, [meetingId, navigate])
+  console.log(userData)
 
-  const userSec = () => {
-    console.log('유저아이디')
+  //수락버튼
+  const userSec = async (
+    meetingUserId: number,
+    userId: number,
+    status: number,
+    meetingId: number,
+  ) => {
+    console.log(meetingUserId, userId, status, meetingId, '미팅/유저아이디')
+    const formData = new FormData()
+    formData.append('status', status.toString())
+    formData.append('userId', userId.toString())
+
+    try {
+      await statusPut(formData, meetingUserId, meetingId)
+    } catch {
+      console.log('데이터 전달오류')
+    }
   }
 
   return (
@@ -76,7 +87,7 @@ const UserCard = () => {
               children='수락'
               width='w-[70%]'
               fill='activeFill'
-              onClick={userSec}
+              onClick={userSec(item.id, item.user.id, 1, meetingId)}
             />
           </div>
         </section>

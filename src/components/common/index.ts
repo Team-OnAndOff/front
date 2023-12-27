@@ -12,6 +12,8 @@ import TextArea from '@/components/common/TextArea'
 import SearchInput from '@/components/common/SearchInput'
 import Declaration from '@/components/common/Declaration'
 import PrivateRouter from '@/components/common/PrivateRouter'
+import MyPageCard from '@/components/common/MyPageCard'
+
 
 export {
   Button,
@@ -28,4 +30,5 @@ export {
   SearchInput,
   Declaration,
   PrivateRouter,
+  MyPageCard
 }
