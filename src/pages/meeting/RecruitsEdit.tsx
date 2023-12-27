@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { fetchGetRecruitEvents, fetchPostRecruitEditEvents } from '@/api/event'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { GoPlus } from 'react-icons/go'
 import { IoClose } from 'react-icons/io5'
 import { CiCalendar } from 'react-icons/ci'
@@ -49,7 +49,6 @@ interface FormData {
 }
 
 export default function RecruitsEdit() {
-  const eventId = 16
   const {
     register,
     handleSubmit,
@@ -62,10 +61,11 @@ export default function RecruitsEdit() {
       challengeStartDate: new Date(),
     },
   })
-  // const location = useLocation()
-  // const eventId = location.state.eventId
+  const location = useLocation()
+  const eventId = location.state.eventId
   const navigate = useNavigate()
-  const [showDayPick, setShowDayPick] = useState(false)
+  const [showStartDayPick, setShowStartDayPick] = useState(false)
+  const [showEndDayPick, setShowEndDayPick] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
   const [selectedOnLine, setSelectedOnLine] = useState<number | null>(null)
   const [selectedCareerCategoryId, setSelectedCareerCategoryId] = useState<
@@ -120,11 +120,13 @@ export default function RecruitsEdit() {
             const challengeEndDate = new Date(recruitGetEvents.challengeEndDate)
             setValue('challengeEndDate', challengeEndDate)
           }
-          setValue('address.zipCode', recruitGetEvents.address.zipCode)
-          setValue('address.detail1', recruitGetEvents.address.detail1)
-          setValue('address.detail2', recruitGetEvents.address.detail2)
-          setValue('address.latitude', recruitGetEvents.address.latitude)
-          setValue('address.longitude', recruitGetEvents.address.longitude)
+          if (recruitGetEvents.address) {
+            setValue('address.zipCode', recruitGetEvents.address.zipCode)
+            setValue('address.detail1', recruitGetEvents.address.detail1)
+            setValue('address.detail2', recruitGetEvents.address.detail2)
+            setValue('address.latitude', recruitGetEvents.address.latitude)
+            setValue('address.longitude', recruitGetEvents.address.longitude)
+          }
         }
       } catch (error) {
         console.error('Error:', error)
@@ -163,12 +165,11 @@ export default function RecruitsEdit() {
 
     try {
       await fetchPostRecruitEditEvents(formData, eventId)
-      console.log('formData', formData)
-      console.log('FormData', data)
+      alert('수정이 완료되었습니다.')
+      navigate(-1)
     } catch (error) {
       console.error('Error:', error)
     }
-    console.log('FormData', data)
   }
 
   const handleButtonClick = () => {
@@ -187,16 +188,22 @@ export default function RecruitsEdit() {
 
   const handleDateChange = (date: Date) => {
     setValue('challengeStartDate', date)
-    setShowDayPick(false)
+    setShowStartDayPick(false)
   }
 
   const handleEndDateChange = (date: Date) => {
     setValue('challengeEndDate', date)
-    setShowDayPick(false)
+    setShowEndDayPick(false)
   }
 
-  const handleDayPickClick = () => {
-    setShowDayPick(!showDayPick)
+  const handleStartDayPickClick = () => {
+    setShowStartDayPick(!showStartDayPick)
+    setShowEndDayPick(false) // 종료일 선택기는 닫기
+  }
+
+  const handleEndDayPickClick = () => {
+    setShowEndDayPick(!showEndDayPick)
+    setShowStartDayPick(false) // 시작일 선택기는 닫기
   }
   // TODO: 다른 공간 누르면 dayPick 창 닫히게 하기
 
@@ -240,15 +247,15 @@ export default function RecruitsEdit() {
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0]
     setMyImage(selectedFile || null)
+    if (selectedFile) {
+      setValue('image', selectedFile)
+    }
+    console.log(selectedFile)
   }
 
   const onImageDelete = () => {
     setMyImage(null)
-    // TODO: image 다시 등록할 때 버그 생기는 것 없애기
-    // setValue('image')
-    // 이미지 업로드 버튼으로 새로 이미지를 넣으면 reset이 되지만, (이미지 삭제버튼 안누르고)
-    // 현재 버그있음 > 이미지를 삭제 버튼을 누르면 undefined로 고정이 되어버림.
-    // 그렇다고, 그냥 이미지를 안보이게 하면, 다른 이미지로 바꿔도 처음 클릭했던 이미지가 들어감
+    setValue('image', null)
   }
 
   // 해시태그 추가 로직
@@ -312,12 +319,12 @@ export default function RecruitsEdit() {
                 <div>
                   <div
                     className='flex p-2.5 px-3 border-2 rounded-small-radius cursor-pointer'
-                    onClick={handleDayPickClick}
+                    onClick={handleStartDayPickClick}
                   >
                     <CiCalendar />
                     {currentStartDate}
                   </div>
-                  {showDayPick && (
+                  {showStartDayPick && (
                     <RecruitsDayPick onDayClick={handleDateChange} />
                   )}
                 </div>
@@ -325,12 +332,12 @@ export default function RecruitsEdit() {
                 <div>
                   <div
                     className='flex p-2.5 px-3 border-2 rounded-small-radius cursor-pointer '
-                    onClick={handleDayPickClick}
+                    onClick={handleEndDayPickClick}
                   >
                     <CiCalendar />
                     {currentEndDate}
                   </div>
-                  {showDayPick && (
+                  {showEndDayPick && (
                     <RecruitsDayPick onDayClick={handleEndDateChange} />
                   )}
                 </div>
@@ -343,12 +350,12 @@ export default function RecruitsEdit() {
               <div>
                 <div
                   className='flex items-center gap-1 p-2.5 px-3 border-2 rounded-small-radius cursor-pointer w-fit'
-                  onClick={handleDayPickClick}
+                  onClick={handleStartDayPickClick}
                 >
                   <CiCalendar />
                   {currentStartDate}
                 </div>
-                {showDayPick && (
+                {showStartDayPick && (
                   <RecruitsDayPick onDayClick={handleDateChange} />
                 )}
               </div>
@@ -486,22 +493,6 @@ export default function RecruitsEdit() {
                 >
                   <GoPlus className='w-10 h-10 m-auto fill-light-gray-color' />
                 </div>
-                {/* {myImage ? (
-                  <div className='relative'>
-                    <div className='relative flex overflow-hidden border-2 cursor-pointer border-light-gray-color rounded-image-radius w-36 h-36'>
-                      <img
-                        className='w-full h-full'
-                        src={URL.createObjectURL(myImage)}
-                      />
-                    </div>
-                    <div
-                      className='absolute top-[-7px] right-[-7px] z-10 cursor-pointer'
-                      onClick={onImageDelete}
-                    >
-                      <IoClose className='w-6 h-6 bg-white border-2 rounded-full fill-main-color border-main-color' />
-                    </div>
-                  </div>
-                ) : null} */}
                 {watch('showImage') ? (
                   <div className='relative'>
                     <div className='relative flex overflow-hidden border-2 cursor-pointer border-light-gray-color rounded-image-radius w-36 h-36'>
