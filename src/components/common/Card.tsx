@@ -9,6 +9,12 @@ import { Tag } from '@/components/common'
 import { LazyImage } from '@/utils'
 import { fetchPutLikePosts } from '@/api/event'
 import useAuthStore from '@/store/userStore'
+import { DefaultProfile } from '@/assets/images'
+import Swal, { SweetAlertResult } from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { useNavigate } from 'react-router-dom'
+
+const MySwal = withReactContent(Swal)
 
 export default function Card({ data, openModal }: CardProps) {
   const {
@@ -21,17 +27,83 @@ export default function Card({ data, openModal }: CardProps) {
     challengeStartDate,
     challengeEndDate,
     likes,
+    eventApplies,
+    id,
   } = data
+  const navigate = useNavigate()
   const store = useAuthStore()
   const [isLike, setIsLike] = useState(false)
 
   const [isKebabVisible, setIsKebabVisible] = useState(false)
   const [isMenuVisible, setIsMenuVisible] = useState(false)
 
+  // 클릭한 게시물에 내가 참가하고 있는지
+  const amIParticipant = eventApplies.some(
+    (eventApply) => eventApply.user.id === store.user?.id,
+  )
+
+  // 채팅방 입장하기
+  const handleChatRoomEntry: React.MouseEventHandler<
+    HTMLButtonElement
+  > = () => {
+    setIsMenuVisible(false)
+    // 비회원일 경우
+    if (!store.user) {
+      MySwal.fire({
+        title: '로그인이 필요합니다',
+        text: '로그인 후에 채팅방에 입장하실 수 있습니다.',
+        icon: 'warning',
+        iconColor: '#ff5e2e',
+        footer: '로그인 페이지로 이동하시겠습니까?',
+        confirmButtonText: '확인',
+        showCancelButton: true,
+        cancelButtonText: '취소',
+      }).then((result: SweetAlertResult) => {
+        if (result.isConfirmed) {
+          navigate('/login')
+        }
+      })
+      return
+    }
+    if (amIParticipant) {
+      navigate(`/chat/${id}`)
+    } else {
+      MySwal.fire({
+        title: '해당 모임의 참가자가 아닙니다.',
+        text: '상세페이지로 이동합니다.',
+        icon: 'info',
+        iconColor: '#ff5e2e',
+        showConfirmButton: false,
+        timer: 2000,
+      }).then(() => {
+        navigate(`/details/${data.id}`)
+      })
+    }
+  }
+
   // 신고하기 클릭
   const handleDeclaration = () => {
     setIsMenuVisible(false)
-    openModal()
+
+    if (!store.user) {
+      MySwal.fire({
+        title: '로그인이 필요합니다',
+        text: '로그인 후에 해당 게시물을 신고하실 수 있습니다.',
+        icon: 'warning',
+        iconColor: '#ff5e2e',
+        footer: '로그인 페이지로 이동하시겠습니까?',
+        confirmButtonText: '확인',
+        showCancelButton: true,
+        cancelButtonText: '취소',
+      }).then((result: SweetAlertResult) => {
+        if (result.isConfirmed) {
+          navigate('/login')
+        }
+      })
+      return
+    } else {
+      openModal()
+    }
   }
 
   // 하트 클릭
@@ -39,6 +111,26 @@ export default function Card({ data, openModal }: CardProps) {
     e,
   ) => {
     e.stopPropagation()
+
+    // 비회원일 경우
+    if (!store.user) {
+      MySwal.fire({
+        title: '로그인이 필요합니다',
+        text: '로그인 후에 좋아요를 누르실 수 있습니다.',
+        icon: 'warning',
+        iconColor: '#ff5e2e',
+        footer: '로그인 페이지로 이동하시겠습니까?',
+        confirmButtonText: '확인',
+        showCancelButton: true,
+        cancelButtonText: '취소',
+      }).then((result: SweetAlertResult) => {
+        if (result.isConfirmed) {
+          navigate('/login')
+        }
+      })
+      return
+    }
+
     try {
       await fetchPutLikePosts(data.id)
       setIsLike((prev) => !prev)
@@ -63,13 +155,6 @@ export default function Card({ data, openModal }: CardProps) {
     setIsMenuVisible(false)
   }
 
-  const tagOptions = hashTags.map((tag) => ({
-    createdAt: tag.createdAt,
-    updatedAt: tag.updatedAt,
-    id: tag.id,
-    hashtag: tag.hashtag,
-  }))
-
   // 이미지 로더
   const [isUserImageLoaded, setIsUserImageLoaded] = useState(false)
 
@@ -81,7 +166,7 @@ export default function Card({ data, openModal }: CardProps) {
     <>
       <div
         className={
-          'relative flex desktop:flex-col justify-between desktop:pb-2 flex-row rounded-button-radius desktop:gap-y-10 tablet:gap-x-10 gap-x-12 w-full transition-all duration-[1000ms] ease-in-out'
+          'relative flex desktop:flex-col justify-between desktop:pb-2 flex-row rounded-button-radius desktop:gap-y-10 gap-y-0 tablet:gap-x-10 gap-x-6 w-full transition-all duration-[1000ms] ease-in-out'
         }
         onMouseEnter={() => setIsKebabVisible(true)}
         onMouseLeave={() => {
@@ -90,10 +175,10 @@ export default function Card({ data, openModal }: CardProps) {
         }}
       >
         {isMenuVisible && (
-          <div className='absolute w-full h-full bg-white opacity-80 z-[997]' />
+          <div className='absolute w-full desktop:h-full h-[120%] bg-white opacity-80 z-[997]' />
         )}
         {/* 이미지 영역 */}
-        <div className='relative flex justify-center hover:-translate-y-1 hover:transition-all aspect-w-1 aspect-h-1 hover:drop-shadow-xl w-[14rem] desktop:max-w-[32rem] desktop:w-full'>
+        <div className='relative flex justify-center hover:-translate-y-1 hover:transition-all aspect-w-1 aspect-h-1 hover:drop-shadow-xl w-[14rem] desktop:max-w-[32rem] desktop:w-full mb-10 desktop:mb-0'>
           <div className='w-full h-36 desktop:h-[14vw]'>
             <Link to={`/details/${data.id}`}>
               <LazyImage
@@ -112,21 +197,21 @@ export default function Card({ data, openModal }: CardProps) {
               className='absolute bg-white rounded-full cursor-pointer -bottom-6 drop-shadow-xl right-2 desktop:-bottom-6 desktop:right-5'
             >
               <LazyImage
-                src={user.image.uploadPath}
+                src={user.image.uploadPath || DefaultProfile}
                 alt={user.username}
-                className='w-16 h-16 rounded-full'
+                className='w-12 h-12 rounded-full'
                 loading='lazy'
               />
             </Link>
             {/* TODO: 이름이 있을 경우에만 ToolTip이 보여지도록 */}
-            <span className='absolute px-2 py-1 text-sm font-medium transition-opacity bg-gray-900 rounded shadow opacity-0 pointer-events-none desktop:right-3 bottom-12 w-max text-light-gray-color group-hover:opacity-100'>
+            <span className='absolute px-2 py-1 text-xs font-light transition-opacity rounded shadow opacity-0 pointer-events-none bg-dark-gray-color -bottom-6 -right-10 desktop:right-3 desktop:-bottom-14 w-max text-light-gray-color group-hover:opacity-100'>
               {user.username}
             </span>
           </div>
         </div>
         {/* 텍스트 영역 */}
         <div className='flex flex-col justify-between flex-1 desktop:px-3 desktop:-mt-5 desktop:gap-y-3'>
-          <div className='text-[0.6rem] text-dark-gray-color tablet:text-size-subbody  desktop:text-left'>
+          <div className='text-[0.6rem] text-dark-gray-color tablet:text-size-subbody desktop:text-left'>
             <Link
               to={`/meetup-lists/${category.parentId?.id}?subCategoryId=${category.id}`}
             >
@@ -144,7 +229,7 @@ export default function Card({ data, openModal }: CardProps) {
 
             {/* 태그 */}
             <div className='h-8'>
-              <Tag options={tagOptions} parentId={category.parentId?.id} />
+              <Tag options={hashTags} parentId={category.parentId?.id} />
             </div>
 
             <div className='w-full'>
@@ -191,10 +276,13 @@ export default function Card({ data, openModal }: CardProps) {
                   )}
                   {/* Pop-up menu */}
                   {isMenuVisible && (
-                    <div className='absolute desktop:right-5 desktop:bottom-6 right-0.5 bottom-5 z-[998]'>
+                    <div className='absolute desktop:right-5 desktop:bottom-6 right-0.5 bottom-8 z-[998]'>
                       <div className='bg-white rounded-small-radius shadow w-big-button z-[998] mb-4'>
-                        <button className='w-full p-2 px-4 cursor-pointer menuItems hover:text-main-color'>
-                          <Link to='/chat'>채팅방 입장하기</Link>
+                        <button
+                          className='w-full p-2 px-4 cursor-pointer menuItems hover:text-main-color'
+                          onClick={handleChatRoomEntry}
+                        >
+                          채팅방 입장하기
                         </button>
                         <button
                           onClick={handleDeclaration}
@@ -205,7 +293,7 @@ export default function Card({ data, openModal }: CardProps) {
                       </div>
                       <button
                         onClick={handleCancelMenu}
-                        className='absolute right-0 p-3 -m-3'
+                        className='absolute bottom-0 right-0 p-3 -m-3 desktop:bottom-0'
                       >
                         <FaTimes fill='black' size={16} />
                       </button>

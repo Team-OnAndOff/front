@@ -67,6 +67,7 @@ export interface CardData {
   user: User
   hashTags: HashTag[]
   likes: any[]
+  eventApplies: any[]
 }
 
 export interface CardProps {

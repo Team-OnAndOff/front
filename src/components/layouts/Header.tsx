@@ -6,6 +6,8 @@ import { Category } from '@/types'
 import { fetchGetCategories } from '@/api/category'
 import useAuthStore from '@/store/userStore'
 import { fetchLogout } from '@/api/logout'
+import Swal, { SweetAlertResult } from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 interface MenuItem {
   to: string
@@ -13,6 +15,8 @@ interface MenuItem {
   state?: { categoryName: string }
   id?: number
 }
+
+const MySwal = withReactContent(Swal)
 
 export default function Header() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false)
@@ -31,11 +35,24 @@ export default function Header() {
   }
 
   const handleLogout: React.MouseEventHandler<HTMLAnchorElement> = async () => {
-    const data = await fetchLogout()
-    if (data && data.code === 200) {
-      store.setUserLogout()
-      navigate('/')
-    }
+    MySwal.fire({
+      title: '로그아웃',
+      text: '정말 로그아웃하시겠습니까?',
+      icon: 'question',
+      iconColor: '#ff5e2e',
+      footer: '로그아웃 시, 서비스 이용에 제약이 걸릴 수 있습니다.',
+      confirmButtonText: '확인',
+      showCancelButton: true,
+      cancelButtonText: '취소',
+    }).then(async (result: SweetAlertResult) => {
+      if (result.isConfirmed) {
+        const data = await fetchLogout()
+        if (data && data.code === 200) {
+          store.setUserLogout()
+          navigate('/')
+        }
+      }
+    })
   }
 
   useEffect(() => {

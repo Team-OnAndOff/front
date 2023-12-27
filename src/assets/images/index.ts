@@ -12,6 +12,7 @@ import best_1 from '@/assets/images/best_1.svg'
 import best_2 from '@/assets/images/best_2.svg'
 import best_3 from '@/assets/images/best_3.svg'
 import NoResult from '@/assets/images/no_result.svg'
+import DefaultProfile from '@/assets/images/default_profile.svg'
 
 import Main1 from '@/assets/images/main_bg1.png'
 import Main2 from '@/assets/images/main_bg2.png'
@@ -43,6 +44,7 @@ export {
   best_2,
   best_3,
   NoResult,
+  DefaultProfile,
   Main1,
   Main2,
   Main3,
