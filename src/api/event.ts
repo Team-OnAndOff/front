@@ -1,6 +1,12 @@
 import axios from 'axios'
 import { VITE_BACKEND_HOST } from '@/assets/config'
-import { CardData, Response, RecruitData, EventQuery } from '@/types'
+import {
+  CardData,
+  Response,
+  RecruitData,
+  EventQuery,
+  EventDetailData,
+} from '@/types'
 import { HandleSearchParams } from '@/utils'
 import { DataProps } from '@/pages/meeting/RecruitsRegister'
 
@@ -139,5 +145,27 @@ export const fetchPostRecruitRegister = async (
     return response.data.data
   } catch (error) {
     console.error(error)
+  }
+}
+
+// 모임 상세 조회
+export const fetchGetEventDetail = async (eventId: number) => {
+  try {
+    const response = await instance.get<Response<EventDetailData>>(
+      `/${eventId}`,
+    )
+    return response.data.data
+  } catch (error) {
+    return null
+  }
+}
+
+// 모임 삭제
+export const fetchDeleteEvent = async (eventId: number) => {
+  try {
+    const response = await instance.delete<Response<null>>(`/${eventId}`)
+    return response.data
+  } catch (error) {
+    console.log(error)
   }
 }

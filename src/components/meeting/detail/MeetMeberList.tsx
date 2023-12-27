@@ -17,11 +17,11 @@ export default function MeetMemberList({
   return (
     <>
       <div className='flex mt-3'>
-        {participatedMem && participatedMem?.length > 4 ? (
+        {participatedMem && participatedMem.length > 4 ? (
           <Swiper
             slidesPerView={4}
             modules={[Navigation]}
-            spaceBetween={30}
+            spaceBetween={10}
             autoplay={{ delay: 2500, disableOnInteraction: false }}
             loop={true}
             navigation

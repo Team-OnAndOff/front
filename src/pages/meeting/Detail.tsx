@@ -5,20 +5,29 @@ import {
   MeetMemberList,
   MeetPlace,
 } from '@/components/meeting'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { FaRegLightbulb } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
-import { fetchGetEventDetail } from '@/api/eventDetail'
+import { fetchDeleteEvent, fetchGetEventDetail } from '@/api/event'
 import { EventDetailData } from '@/types'
+import useAuthStore from '@/store/userStore'
 
 export default function Detail() {
   const [postDetail, setPostDetail] = useState<EventDetailData | null>(null)
   const { postId } = useParams()
   const eventId = Number(postId)
+  const { user } = useAuthStore((state) => state)
+  const navigate = useNavigate()
 
-  // 버튼 클릭 이벤트 핸들러
   const handleBtnClick = () => {
-    console.log('버튼이 클릭되었습니다!')
+    return
+  }
+  const handleEventDelete = async () => {
+    const data = await fetchDeleteEvent(eventId)
+    if (data && data.code === 200) {
+      alert('모임 삭제 완료')
+      navigate('/')
+    }
   }
   useEffect(() => {
     const fetchDetailData = async (eventId: number) => {
@@ -64,6 +73,7 @@ export default function Detail() {
               leaderName={postDetail.user.username}
               leaderImageUrl={postDetail.user.image.uploadPath}
               leaderIntroduce={postDetail.user.introduction}
+              hostId={postDetail.user.id}
             />
           </div>
 
@@ -86,29 +96,53 @@ export default function Detail() {
               <MeetPlace address={postDetail.address.detail1} />
             </div>
           )}
-          {/* 버튼 위치  일단 모든 버튼 넣어놓고 조건에 따라 다르게 수정*/}
-          {/* TODO: 현재 user의 id 값에 따라 버튼 보여주는 것 다르게 하기 */}
-          <div className='flex justify-between mt-6 p-2.5'>
-            <Button fill='inactiveFill' onClick={handleBtnClick}>
-              삭제하기
-            </Button>
-            <Button fill='activeFill' onClick={handleBtnClick}>
-              수정하기
-            </Button>
-            <Button
-              fill='activeFill'
-              width='w-big-button'
-              onClick={handleBtnClick}
-            >
-              채팅방 입장하기
-            </Button>
 
-            <Link to={`/recruits-register/${postDetail.id}`}>
-              <Button fill='border' onClick={handleBtnClick}>
-                신청하기
+          {postDetail.user.id === user?.id && (
+            <div className='flex justify-between p-3.5'>
+              <Button fill='inactiveFill' onClick={handleEventDelete}>
+                삭제하기
               </Button>
-            </Link>
-          </div>
+              <Link to={`/chat/${eventId}`}>
+                <Button
+                  fill='activeFill'
+                  width='w-big-button'
+                  onClick={handleBtnClick}
+                >
+                  채팅방 입장하기
+                </Button>
+              </Link>
+              <Link to='/recruits-edit' state={{ eventId: eventId }}>
+                <Button fill='activeFill' onClick={handleBtnClick}>
+                  수정하기
+                </Button>
+              </Link>
+            </div>
+          )}
+          {postDetail.eventApplies.some((mem) => mem.user.id === user?.id) && (
+            <div className='p-3.5 mx-auto'>
+              <Link to={`/chat/${eventId}`}>
+                <Button
+                  fill='activeFill'
+                  width='w-big-button'
+                  onClick={handleBtnClick}
+                >
+                  채팅방 입장하기
+                </Button>
+              </Link>
+            </div>
+          )}
+          {postDetail.user.id !== user?.id &&
+            !postDetail.eventApplies.some(
+              (mem) => mem.user.id === user?.id,
+            ) && (
+              <div className='p-3.5 mx-auto'>
+                <Link to={`/recruits-register/${postDetail.id}`}>
+                  <Button fill='border' onClick={handleBtnClick}>
+                    신청하기
+                  </Button>
+                </Link>
+              </div>
+            )}
         </div>
       )}
     </>
