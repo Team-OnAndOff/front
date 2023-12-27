@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { FaUserCircle, FaTimes, FaBars } from 'react-icons/fa'
 import Logo from '@/assets/images/Logo.svg'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Category } from '@/types'
 import { fetchGetCategories } from '@/api/category'
 import useAuthStore from '@/store/userStore'
+import { fetchLogout } from '@/api/logout'
 
 interface MenuItem {
   to: string
@@ -18,7 +19,7 @@ export default function Header() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([])
   const location = useLocation()
   const store = useAuthStore()
-
+  const navigate = useNavigate()
   const generateClassName = (
     base: string,
     condition: boolean,
@@ -27,6 +28,14 @@ export default function Header() {
 
   const closeMobileMenu = () => {
     setMenuToggle(false)
+  }
+
+  const handleLogout: React.MouseEventHandler<HTMLAnchorElement> = async () => {
+    const data = await fetchLogout()
+    if (data && data.code === 200) {
+      store.setUserLogout()
+      navigate('/')
+    }
   }
 
   useEffect(() => {
@@ -84,11 +93,12 @@ export default function Header() {
               </NavLink>
             ))}
             <Link
-              to={store.user ? '/logout' : '/login'}
+              to={store.user ? '#' : '/login'}
               className={generateClassName(
                 'py-5 px-3 hover:text-main-color font-light text-gray-600',
                 true,
               )}
+              onClick={store.user ? handleLogout : undefined}
             >
               {store.user ? 'Logout' : 'Login'}
             </Link>

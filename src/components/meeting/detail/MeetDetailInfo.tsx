@@ -2,10 +2,12 @@ import { TiHeartOutline, TiHeartFullOutline } from 'react-icons/ti'
 import { MdPlace, MdAccessTimeFilled } from 'react-icons/md'
 import { FaUser, FaUserCircle } from 'react-icons/fa'
 import { Modal, Tag } from '@/components/common'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HashTag, careerCategory } from '@/types'
 import { LuSiren } from 'react-icons/lu'
 import Declaration from '@/components/common/Declaration'
+import { fetchPutLikePosts } from '@/api/event'
+import useAuthStore from '@/store/userStore'
 
 interface MeetDetailProps {
   startDate?: string
@@ -19,6 +21,8 @@ interface MeetDetailProps {
   parentId?: number
   online: number
   careerCategories: careerCategory[]
+  eventId: number
+  likes: any[]
 }
 
 export default function MeetDetailInfo({
@@ -33,13 +37,30 @@ export default function MeetDetailInfo({
   parentId,
   online,
   careerCategories,
+  eventId,
+  likes,
 }: MeetDetailProps) {
   const [isLike, setIsLike] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { user } = useAuthStore((state) => state)
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
-  const handleLikeClick = () => {
-    setIsLike((prev) => !prev)
+
+  useEffect(() => {
+    const userLikeEvent = likes.some((like) => like.user.id === user?.id)
+    setIsLike(userLikeEvent)
+  }, [likes, user?.id])
+
+  const handleLikeClick = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault()
+    try {
+      await fetchPutLikePosts(eventId)
+      setIsLike((prev) => !prev)
+    } catch (error) {
+      console.error(error)
+    }
   }
   return (
     <>

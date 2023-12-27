@@ -54,6 +54,8 @@ export default function Detail() {
               hashTags={postDetail.hashTags}
               parentId={postDetail.category?.parentId?.id}
               careerCategories={postDetail.careerCategories}
+              eventId={eventId}
+              likes={postDetail.likes}
             />
           </div>
           <div className='mt-6'>
