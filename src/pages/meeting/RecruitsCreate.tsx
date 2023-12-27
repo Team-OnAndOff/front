@@ -24,6 +24,8 @@ import {
   RecruitsSubCategory2,
 } from '@/components/meeting/index'
 import InputHash from '@/components/meeting/mypage/InputHash'
+import Swal, { SweetAlertResult } from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 interface FormData {
   categoryId: number
@@ -48,6 +50,8 @@ interface FormData {
       }
     | string
 }
+
+const MySwal = withReactContent(Swal)
 
 export default function RecruitsCreate() {
   const {
@@ -106,8 +110,24 @@ export default function RecruitsCreate() {
 
     try {
       await fetchPostEvents(formData)
-      alert('등록이 완료되었습니다.')
-      navigate(-1)
+      MySwal.fire({
+        title: '등록 확인',
+        text: '작성하신 내용을 등록하시겠습니까?',
+        icon: 'question',
+        iconColor: '#ff5e2e',
+        footer: `부적절한 내용이 담겨있을 경우, <br/> 관리자에 의해 게시물이 차단되거나 타유저에게 신고 당할 수 있습니다.`,
+        confirmButtonText: '확인',
+        showCancelButton: true,
+        cancelButtonText: '취소',
+      }).then((result: SweetAlertResult) => {
+        if (result.isConfirmed) {
+          MySwal.fire('등록 성공', '모임등록이 완료되었습니다.', 'success')
+          setTimeout(() => {
+            MySwal.close()
+            navigate(-2)
+          }, 1500)
+        }
+      })
     } catch (error) {
       console.error('Error:', error)
     }
@@ -217,7 +237,15 @@ export default function RecruitsCreate() {
           alert('태그는 3개까지만 입력할 수 있습니다.')
         }
       } else {
-        console.log('이미 존재하는 값입니다.')
+        MySwal.fire({
+          title: '이미 존재하는 값입니다.',
+          text: '다른 해시태그를 입력해주세요.',
+          icon: 'warning',
+          iconColor: '#ff5e2e',
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 1500,
+        })
       }
     }
   }
@@ -481,7 +509,7 @@ export default function RecruitsCreate() {
                       className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'
                       key={index}
                     >
-                      #{item}{' '}
+                      #{item}
                       <span
                         onClick={() => handleRemoveHash(index)}
                         className='cursor-pointer'

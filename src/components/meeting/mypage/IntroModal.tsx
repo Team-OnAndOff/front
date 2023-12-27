@@ -184,7 +184,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
                     className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'
                     key={index}
                   >
-                    #{item}{' '}
+                    #{item}
                     <span
                       onClick={() => handleRemoveHash(index)}
                       className='cursor-pointer'

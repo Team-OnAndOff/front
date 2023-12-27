@@ -57,13 +57,9 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
     setIsModalOpen(false)
   }
 
-  // useEffect(() => {
-  //   setIsLike(likes.some((like) => like.user.id === store.user?.id))
-  // }, [])
-
   return (
-    <section className='relative flex flex-col gap-y-7'>
-      <h2 className='mb-8 font-bold desktop:m-0 text-size-title break-keep'>
+    <section className='flex flex-col desktop:gap-y-7'>
+      <h2 className='mb-16 font-bold desktop:mb-8 desktop:m-0 text-size-title break-keep'>
         {title}
       </h2>
       {isSlide ? (
@@ -78,25 +74,28 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
                 loop={items.length >= 1}
                 speed={2000}
                 slideToClickedSlide={true}
-                // loopedSlides={2}
-                slidesPerView={3}
                 spaceBetween={30}
+                slidesPerView={1}
                 watchOverflow={true}
                 slidesOffsetBefore={0}
                 autoplay={{
-                  delay: 1000,
+                  delay: 2000,
                   disableOnInteraction: false,
+                  // waitForTransition: true,
+                  // stopOnLastSlide: false,
                 }}
                 breakpoints={{
                   1740: {
                     slidesPerView: 3,
                     spaceBetween: 30,
                     slidesPerGroupSkip: 1,
+                    watchOverflow: false,
                   },
                   1120: {
                     slidesPerView: 2,
                     spaceBetween: 20,
                     slidesPerGroupSkip: 1,
+                    watchOverflow: false,
                   },
                 }}
                 navigation={{

@@ -13,11 +13,18 @@ export default function Footer() {
             />
           </li>
           <li className='mt-6'>
-            <a target='_blank' href='#'>
+            <a
+              target='_blank'
+              href='https://water-vulcanodon-65c.notion.site/73a58d0b9cac4d43a3ddba5cf7567c15?pvs=4'
+            >
               <strong>개인정보처리방침</strong>
             </a>
             &nbsp; &#124; &nbsp;
-            <a target='_blank' href='#' className='hover:underline'>
+            <a
+              target='_blank'
+              href='https://water-vulcanodon-65c.notion.site/1568078dfbad4bb2899df2b15c22e4ce?pvs=4'
+              className='hover:underline'
+            >
               이용약관
             </a>
           </li>

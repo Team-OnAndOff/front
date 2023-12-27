@@ -72,6 +72,9 @@ export default function MeetupList() {
     ) {
       handleTabClick(0)
     }
+    searchParams.delete('search')
+    setSearchInput('')
+
     handleTabClick(hasSubCategory)
     fetchCategoryData()
   }, [categoryId])
@@ -88,11 +91,13 @@ export default function MeetupList() {
     }
   }
 
-  // 모임리스트(검색 기능)
+  // 모임리스트(검색)
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search)
     const hasSubCategory = Number(searchParams.get('subCategoryId'))
     const hasSearch = searchParams.get('search')
+
+    page.current = 1
 
     // 검색어 입력
     const inputSearch = async (searchInput: string) => {
@@ -101,11 +106,16 @@ export default function MeetupList() {
       navigate(`?${searchParams}`)
     }
 
-    // 태그검색
     if (hasSearch) {
       inputSearch(hasSearch)
       setSearchInput(hasSearch)
-      fetchEventData(categoryId, hasSubCategory, hasSearch)
+      fetchEventData(
+        categoryId,
+        hasSubCategory,
+        hasSearch,
+        page.current,
+        perPage,
+      )
     } else {
       // 일반 리스트 가져오기
       if (!searchInput) {
@@ -116,13 +126,9 @@ export default function MeetupList() {
           page.current,
           perPage,
         )
-      } else {
-        // 검색어 입력
-        inputSearch(searchInput)
-        fetchEventData(categoryId, hasSubCategory, searchInput)
       }
     }
-  }, [categoryId, selectedCategoryId, searchInput, location.search])
+  }, [categoryId, selectedCategoryId, location.search])
 
   // 카테고리 API
   const fetchCategoryData = async () => {
@@ -140,6 +146,7 @@ export default function MeetupList() {
     const searchParams = new URLSearchParams(location.search)
 
     if (!subCategoryId) {
+      setSearchInput('')
       searchParams.delete('subCategoryId')
     } else {
       HandleSearchParams(
@@ -148,6 +155,7 @@ export default function MeetupList() {
         subCategoryId.toString(),
       )
     }
+
     setSelectedCategoryId(subCategoryId)
     navigate(`?${searchParams}`)
   }
@@ -179,18 +187,6 @@ export default function MeetupList() {
     }
   }
 
-  // 초기화 버튼
-  const handleResetClick = () => {
-    const searchParams = new URLSearchParams(location.search)
-    searchParams.delete('search')
-    searchParams.delete('subCategoryId')
-
-    handleTabClick(0)
-
-    navigate(`?${searchParams}`)
-    setSearchInput('')
-  }
-
   return (
     <>
       <CategoryHeader
@@ -213,8 +209,7 @@ export default function MeetupList() {
             <SearchInput
               handleKeyPress={handleKeyPress}
               searchInput={searchInput}
-              hasReset={true}
-              handleResetClick={handleResetClick}
+              setSearchInput={setSearchInput}
             />
           </div>
         </div>
