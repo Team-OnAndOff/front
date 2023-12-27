@@ -4,11 +4,11 @@ import SwiperCard from '@/components/meeting/mypage/SwiperCard'
 import TapCard from '@/components/meeting/mypage/Tapcard'
 import { FaUserGear, FaRegFaceGrin } from 'react-icons/fa6'
 import { PiSiren } from 'react-icons/pi'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Modal, Declaration } from '@/components/common'
 import Evaluation from '@/components/meeting/mypage/Evaluation'
 import { useParams, useNavigate } from 'react-router-dom'
+import { userInfo } from '@/api/userinfo'
 
 interface UserData {
   username: string | null
@@ -16,11 +16,13 @@ interface UserData {
     uploadPath: string | null
   }
   introduction: string
+  me?: boolean // me 속성을 선택적으로 지정
 }
 
 export default function MyPage() {
+  const [userMe, setUserMe] = useState<boolean | undefined>(undefined) // 마이페이지가 본인건지 확인.
   const [selectedTab, setSelectedTab] = useState(0) // 탭 기능구현 스테이트
-  const [userData, setUserData] = useState<UserData | null | undefined>(null) //유저 데이터
+  const [userData, setUserData] = useState<UserData | null>(null) //유저 데이터
   const navigate = useNavigate() // 유저없을시 페이지 강제이동
   const handleTabClick = (index: number) => {
     // 탭 기능구현 핸들러
@@ -32,18 +34,18 @@ export default function MyPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:4000/api/users/${userId}/info`,
-        )
-        const data = await response.data.data
-        setUserData(data)
+        const response = await userInfo(userId)
+        if (response) {
+          setUserMe(response?.me)
+          setUserData(response)
+        }
       } catch (error) {
         console.error('에러 발생:', error)
         navigate('/')
       }
     }
     fetchData()
-  }, []) // userData가 변경될 때마다 useEffect 다시 실행
+  }, [navigate, userId]) // userData가 변경될 때마다 useEffect 다시 실행
 
   console.log(userData)
 
@@ -105,38 +107,42 @@ export default function MyPage() {
             </li>
           </ul>
         </div>
-        {/* 온도박스\ 신고,프로필 설정 버튼  */}
+        {/* 온도박스\ 신고,프로필 설정 버튼 e */}
         <div className='flex relative items-center justify-center w-[17.5%] h-full'>
           {/* 프로필 설정 버튼 s */}
-          <div className='absolute z-100 right-[10px] top-[10px]'>
-            <button onClick={() => openModal('profile')}>
-              <FaUserGear style={{ color: 'red' }} />
-            </button>
-            <Modal
-              isOpen={isModalOpen && modalType === 'profile'}
-              closeModal={closeModal}
-            >
-              <IntroModal
+          {userMe && (
+            <div className='absolute z-100 right-[10px] top-[10px]'>
+              <button onClick={() => openModal('profile')}>
+                <FaUserGear style={{ color: 'red' }} />
+              </button>
+              <Modal
+                isOpen={isModalOpen && modalType === 'profile'}
                 closeModal={closeModal}
-                userId={userId}
-                myUserData={userData}
-              />
-            </Modal>
-          </div>
+              >
+                <IntroModal
+                  closeModal={closeModal}
+                  userId={userId}
+                  myUserData={userData}
+                />
+              </Modal>
+            </div>
+          )}
           {/* 프로필 설정 버튼 e */}
 
           {/* 신고 s*/}
-          <div className='absolute z-100 right-[10px] top-[30px]'>
-            <button onClick={() => openModal('declaration')}>
-              <PiSiren />
-            </button>
-            <Modal
-              isOpen={isModalOpen && modalType === 'declaration'}
-              closeModal={closeModal}
-            >
-              <Declaration closeModal={closeModal} userId={userId} />
-            </Modal>
-          </div>
+          {!userMe && (
+            <div className='absolute z-100 right-[10px] top-[10px]'>
+              <button onClick={() => openModal('declaration')}>
+                <PiSiren />
+              </button>
+              <Modal
+                isOpen={isModalOpen && modalType === 'declaration'}
+                closeModal={closeModal}
+              >
+                <Declaration closeModal={closeModal} attendeeId={userId} />
+              </Modal>
+            </div>
+          )}
           {/* 신고 e*/}
 
           {/* 평가 s*/}

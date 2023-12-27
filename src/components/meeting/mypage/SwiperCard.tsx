@@ -9,6 +9,7 @@ import { CardData } from '@/types'
 import CardBtn from './CardBtn'
 import { Link } from 'react-router-dom'
 import { IoIosArrowBack } from 'react-icons/io'
+import { userCard } from '@/api/userCard'
 
 interface StateNumber {
   selectedTab: number
@@ -26,6 +27,10 @@ export default function SwiperCard({ selectedTab }: StateNumber) {
         // console.log(jsonData.data)
         // 불러온 데이터를 상태에 설정
         setData(jsonData.data)
+
+        //여기부터 위는 임시용 아래가 사용예정인것
+        const cardData = await userCard()
+        console.log(cardData)
       } catch (error) {
         console.error('Error fetching data:', error)
       }
