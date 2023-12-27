@@ -98,11 +98,18 @@ export const fetchGetRecruitEvents = async (eventId: number) => {
   }
 }
 
-export const fetchPostRecruitEditEvents = async (eventId: number) => {
+export const fetchPostRecruitEditEvents = async (
+  eventData: FormData,
+  eventId: number,
+) => {
   try {
     const url = `/${eventId}`
-    const response = await instance.put<Response<FormData>>(url)
-    return response.data.data
+    const response = await instance.put<Response<null>>(url, eventData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return response.data
   } catch (error) {
     console.error('Error:', error)
     throw error

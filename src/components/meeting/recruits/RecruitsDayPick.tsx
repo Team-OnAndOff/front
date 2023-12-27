@@ -32,6 +32,9 @@ export default function RecruitsDayPick({ onDayClick }: RecruitsDayPickProps) {
           }
         }}
         disabled={isDisabled}
+        modifiers={{
+          highlighted: [new Date()],
+        }}
       />
     </>
   )
