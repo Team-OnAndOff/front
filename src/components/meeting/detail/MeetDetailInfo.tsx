@@ -152,7 +152,7 @@ export default function MeetDetailInfo({
           />
         </div>
         <div className='overflow-y-auto border-2 border-dark-gray-color min-w-[calc(100%-360px)] min-h-[360px] rounded-big-radius'>
-          <p className='p-3.5'>{content}</p>
+          <p className='p-3.5 whitespace-pre'>{content}</p>
         </div>
       </div>
     </>

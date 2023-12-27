@@ -32,7 +32,7 @@ export default function MeetHostInfo({
 
         {/* 방장자기소개 */}
         <div className='w-[calc(100%-200px)] rounded-big-radius overflow-y-auto border-2 border-dark-gray-color'>
-          <p className='p-3.5'>{leaderIntroduce}</p>
+          <p className='p-3.5 whitespace-pre'>{leaderIntroduce}</p>
         </div>
       </div>
     </>
