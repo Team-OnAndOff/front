@@ -24,6 +24,8 @@ import {
   RecruitsSubCategory2,
 } from '@/components/meeting/index'
 import InputHash from '@/components/meeting/mypage/InputHash'
+import Swal, { SweetAlertResult } from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 interface FormData {
   categoryId: number
@@ -47,6 +49,8 @@ interface FormData {
     longitude: number
   }
 }
+
+const MySwal = withReactContent(Swal)
 
 export default function RecruitsEdit() {
   const {
@@ -165,8 +169,24 @@ export default function RecruitsEdit() {
 
     try {
       await fetchPostRecruitEditEvents(formData, eventId)
-      alert('수정이 완료되었습니다.')
-      navigate(-1)
+      MySwal.fire({
+        title: '수정 확인',
+        text: '작성하신 내용으로 수정하시겠습니까?',
+        icon: 'question',
+        iconColor: '#ff5e2e',
+        footer: `부적절한 내용이 담겨있을 경우, <br/> 관리자에 의해 게시물이 차단되거나 타유저에게 신고 당할 수 있습니다.`,
+        confirmButtonText: '확인',
+        showCancelButton: true,
+        cancelButtonText: '취소',
+      }).then((result: SweetAlertResult) => {
+        if (result.isConfirmed) {
+          MySwal.fire('수정 성공', '모임글이 수정되었습니다.', 'success')
+          setTimeout(() => {
+            MySwal.close()
+            navigate(-2)
+          }, 1500)
+        }
+      })
     } catch (error) {
       console.error('Error:', error)
     }
@@ -269,7 +289,15 @@ export default function RecruitsEdit() {
           alert('태그는 3개까지만 입력할 수 있습니다.')
         }
       } else {
-        console.log('이미 존재하는 값입니다.')
+        MySwal.fire({
+          title: '이미 존재하는 값입니다.',
+          text: '다른 해시태그를 입력해주세요.',
+          icon: 'warning',
+          iconColor: '#ff5e2e',
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 1500,
+        })
       }
     }
   }
