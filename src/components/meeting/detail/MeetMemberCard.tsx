@@ -17,7 +17,7 @@ export default function MeetMeberCard({ member }: MemberCardProps) {
     <>
       <div className='flex mr-3 pointer flex-col p-1.5 border-2 border-dark-gray-color rounded w-60 h-28'>
         <Link to={`/userinfo/${member?.user.id}`} className='basis-3/4'>
-          <div className='basis-3/4'>
+          <div className='whitespace-pre basis-3/4'>
             <span className='text-size-subbody line-clamp-3'>
               {member?.user.introduction}
             </span>

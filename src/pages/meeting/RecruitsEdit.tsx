@@ -58,6 +58,7 @@ export default function RecruitsEdit() {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -218,12 +219,12 @@ export default function RecruitsEdit() {
 
   const handleStartDayPickClick = () => {
     setShowStartDayPick(!showStartDayPick)
-    setShowEndDayPick(false) // 종료일 선택기는 닫기
+    setShowEndDayPick(false)
   }
 
   const handleEndDayPickClick = () => {
     setShowEndDayPick(!showEndDayPick)
-    setShowStartDayPick(false) // 시작일 선택기는 닫기
+    setShowStartDayPick(false)
   }
   // TODO: 다른 공간 누르면 dayPick 창 닫히게 하기
 
@@ -270,15 +271,14 @@ export default function RecruitsEdit() {
     if (selectedFile) {
       setValue('image', selectedFile)
     }
-    console.log(selectedFile)
+    // console.log(selectedFile)
   }
 
   const onImageDelete = () => {
+    reset({ image: undefined }, { keepDefaultValues: true })
     setMyImage(null)
-    setValue('image', null)
   }
 
-  // 해시태그 추가 로직
   const handleEnter = (value: string) => {
     if (value.trim() !== '') {
       if (!dataArray.includes(value.trim())) {
@@ -521,6 +521,22 @@ export default function RecruitsEdit() {
                 >
                   <GoPlus className='w-10 h-10 m-auto fill-light-gray-color' />
                 </div>
+                {myImage ? (
+                  <div className='relative'>
+                    <div className='relative flex overflow-hidden border-2 cursor-pointer border-light-gray-color rounded-image-radius w-36 h-36'>
+                      <img
+                        className='w-full h-full'
+                        src={URL.createObjectURL(myImage)}
+                      />
+                    </div>
+                    <div
+                      className='absolute top-[-7px] right-[-7px] z-10 cursor-pointer'
+                      onClick={onImageDelete}
+                    >
+                      <IoClose className='w-6 h-6 bg-white border-2 rounded-full fill-main-color border-main-color' />
+                    </div>
+                  </div>
+                ) : null}
                 {watch('showImage') ? (
                   <div className='relative'>
                     <div className='relative flex overflow-hidden border-2 cursor-pointer border-light-gray-color rounded-image-radius w-36 h-36'>

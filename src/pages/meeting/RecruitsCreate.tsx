@@ -59,6 +59,7 @@ export default function RecruitsCreate() {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -159,12 +160,12 @@ export default function RecruitsCreate() {
 
   const handleStartDayPickClick = () => {
     setShowStartDayPick(!showStartDayPick)
-    setShowEndDayPick(false) // 종료일 선택기는 닫기
+    setShowEndDayPick(false)
   }
 
   const handleEndDayPickClick = () => {
     setShowEndDayPick(!showEndDayPick)
-    setShowStartDayPick(false) // 시작일 선택기는 닫기
+    setShowStartDayPick(false)
   }
 
   // const handleDayPickClose = (event: { stopPropagation: () => void }) => {
@@ -220,10 +221,10 @@ export default function RecruitsCreate() {
     if (selectedFile) {
       setValue('image', selectedFile)
     }
-    console.log(selectedFile)
   }
 
   const onImageDelete = () => {
+    reset({ image: undefined }, { keepDefaultValues: true })
     setMyImage(null)
   }
 
