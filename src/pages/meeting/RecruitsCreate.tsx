@@ -60,10 +60,13 @@ export default function RecruitsCreate() {
     defaultValues: {
       hashTag: [],
       challengeStartDate: new Date(),
+      categoryId: 1,
+      online: 1,
     },
   })
   const navigate = useNavigate()
-  const [showDayPick, setShowDayPick] = useState(false)
+  const [showStartDayPick, setShowStartDayPick] = useState(false)
+  const [showEndDayPick, setShowEndDayPick] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<number | null>(1)
   const [selectedOnLine, setSelectedOnLine] = useState<number | null>(1)
   const [myImage, setMyImage] = useState<File | null>(null)
@@ -103,10 +106,11 @@ export default function RecruitsCreate() {
 
     try {
       await fetchPostEvents(formData)
+      alert('등록이 완료되었습니다.')
+      navigate(-1)
     } catch (error) {
       console.error('Error:', error)
     }
-    console.log('FormData', data)
   }
 
   const handleButtonClick = () => {
@@ -125,17 +129,30 @@ export default function RecruitsCreate() {
 
   const handleDateChange = (date: Date) => {
     setValue('challengeStartDate', date)
-    setShowDayPick(false)
+    setShowStartDayPick(false)
   }
 
   const handleEndDateChange = (date: Date) => {
     setValue('challengeEndDate', date)
-    setShowDayPick(false)
+    setShowEndDayPick(false)
   }
 
-  const handleDayPickClick = () => {
-    setShowDayPick(!showDayPick)
+  const handleStartDayPickClick = () => {
+    setShowStartDayPick(!showStartDayPick)
+    setShowEndDayPick(false) // 종료일 선택기는 닫기
   }
+
+  const handleEndDayPickClick = () => {
+    setShowEndDayPick(!showEndDayPick)
+    setShowStartDayPick(false) // 시작일 선택기는 닫기
+  }
+
+  // const handleDayPickClose = (event: { stopPropagation: () => void }) => {
+  //   event.stopPropagation()
+  //   if (showDayPick) {
+  //     setShowDayPick(!showDayPick)
+  //   }
+  // }
   // TODO: 다른 공간 누르면 dayPick 창 닫히게 하기
 
   const handleCategoryChange = (value: number) => {
@@ -180,15 +197,14 @@ export default function RecruitsCreate() {
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0]
     setMyImage(selectedFile || null)
+    if (selectedFile) {
+      setValue('image', selectedFile)
+    }
+    console.log(selectedFile)
   }
 
   const onImageDelete = () => {
     setMyImage(null)
-    // TODO: image 다시 등록할 때 버그 생기는 것 없애기
-    // setValue('image')
-    // 이미지 업로드 버튼으로 새로 이미지를 넣으면 reset이 되지만, (이미지 삭제버튼 안누르고)
-    // 현재 버그있음 > 이미지를 삭제 버튼을 누르면 로 고정이 되어버림.
-    // 그렇다고, 그냥 이미지를 안보이게 하면, 다른 이미지로 바꿔도 처음 클릭했던 이미지가 들어감
   }
 
   const handleEnter = (value: string) => {
@@ -251,12 +267,12 @@ export default function RecruitsCreate() {
                 <div>
                   <div
                     className='flex p-2.5 px-3 border-2 rounded-small-radius cursor-pointer'
-                    onClick={handleDayPickClick}
+                    onClick={handleStartDayPickClick}
                   >
                     <CiCalendar />
                     {currentStartDate}
                   </div>
-                  {showDayPick && (
+                  {showStartDayPick && (
                     <RecruitsDayPick onDayClick={handleDateChange} />
                   )}
                 </div>
@@ -264,12 +280,12 @@ export default function RecruitsCreate() {
                 <div>
                   <div
                     className='flex p-2.5 px-3 border-2 rounded-small-radius cursor-pointer '
-                    onClick={handleDayPickClick}
+                    onClick={handleEndDayPickClick}
                   >
                     <CiCalendar />
                     {currentEndDate}
                   </div>
-                  {showDayPick && (
+                  {showEndDayPick && (
                     <RecruitsDayPick onDayClick={handleEndDateChange} />
                   )}
                 </div>
@@ -282,12 +298,12 @@ export default function RecruitsCreate() {
               <div>
                 <div
                   className='flex items-center gap-1 p-2.5 px-3 border-2 rounded-small-radius cursor-pointer w-fit'
-                  onClick={handleDayPickClick}
+                  onClick={handleStartDayPickClick}
                 >
                   <CiCalendar />
                   {currentStartDate}
                 </div>
-                {showDayPick && (
+                {showStartDayPick && (
                   <RecruitsDayPick onDayClick={handleDateChange} />
                 )}
               </div>
