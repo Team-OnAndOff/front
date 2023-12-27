@@ -9,6 +9,7 @@ import { Modal, Declaration } from '@/components/common'
 import Evaluation from '@/components/meeting/mypage/Evaluation'
 import { useParams, useNavigate } from 'react-router-dom'
 import { userInfo } from '@/api/userinfo'
+import { userCard } from '@/api/userCard'
 
 interface UserData {
   username: string | null
@@ -19,10 +20,24 @@ interface UserData {
   me?: boolean // me 속성을 선택적으로 지정
 }
 
+interface CardNumType {
+  id: number
+  event: {
+    id: number
+    image: {
+      uploadPath: string | null
+    }
+    title: string
+  }
+}
+
 export default function MyPage() {
   const [userMe, setUserMe] = useState<boolean | undefined>(undefined) // 마이페이지가 본인건지 확인.
   const [selectedTab, setSelectedTab] = useState(0) // 탭 기능구현 스테이트
+  const [tapNumData, setTapNumData] = useState<number[]>([])
   const [userData, setUserData] = useState<UserData | null>(null) //유저 데이터
+  const [data, setData] = useState()
+  const [swiperData, setSwiperData] = useState('pending')
   const navigate = useNavigate() // 유저없을시 페이지 강제이동
   const handleTabClick = (index: number) => {
     // 탭 기능구현 핸들러
@@ -48,6 +63,33 @@ export default function MyPage() {
   }, [navigate, userId]) // userData가 변경될 때마다 useEffect 다시 실행
 
   console.log(userData)
+
+  //모임 데이터 가져오기 이펙트
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        //모임 데이터 가져오기
+        const cardData = await userCard()
+        if (cardData.data) {
+          const { approved, liked, made, pending } = cardData.data
+          const numDataValues = [
+            (approved as CardNumType[]).length,
+            (liked as CardNumType[]).length,
+            (made as CardNumType[]).length,
+            (pending as CardNumType[]).length,
+          ]
+          setTapNumData(numDataValues)
+          const dataName = cardData.data[swiperData]
+          setData(dataName)
+        } else {
+          console.error('Data is null or undefined')
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    }
+    fetchData()
+  }, [swiperData])
 
   // 모달 관련 기능 start
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -174,31 +216,43 @@ export default function MyPage() {
         <div className='flex border-b-2 border-solid border-main-light-color'>
           <TapCard
             name={'대기 중인 모임'}
-            numData={1}
+            numData={tapNumData ? tapNumData[0] : 0}
             isSelected={selectedTab === 0}
-            onClick={() => handleTabClick(0)}
+            onClick={() => {
+              handleTabClick(0)
+              setSwiperData('pending')
+            }}
           />
           <TapCard
             name={'참여 중인 모임'}
-            numData={2}
+            numData={tapNumData ? tapNumData[1] : 0}
             isSelected={selectedTab === 1}
-            onClick={() => handleTabClick(1)}
+            onClick={() => {
+              handleTabClick(1)
+              setSwiperData('approved')
+            }}
           />
           <TapCard
             name={'내가 개설한 모임'}
-            numData={3}
+            numData={tapNumData ? tapNumData[2] : 0}
             isSelected={selectedTab === 2}
-            onClick={() => handleTabClick(2)}
+            onClick={() => {
+              handleTabClick(2)
+              setSwiperData('made')
+            }}
           />
           <TapCard
             name={'내가 찜한 모임'}
-            numData={4}
+            numData={tapNumData ? tapNumData[3] : 0}
             isSelected={selectedTab === 3}
-            onClick={() => handleTabClick(3)}
+            onClick={() => {
+              handleTabClick(3)
+              setSwiperData('liked')
+            }}
           />
         </div>
         <div>
-          <SwiperCard selectedTab={selectedTab} />
+          <SwiperCard selectedTab={selectedTab} swiperData={data} />
         </div>
       </section>
       {/* 모임 개설 탭 end */}
