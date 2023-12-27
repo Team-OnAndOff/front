@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { FaQuestion } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { fetchGetEventDetail } from '@/api/eventDetail'
+import { fetchGetEventDetail } from '@/api/event'
 import { EventDetailData } from '@/types'
 import { fetchPostRecruitRegister } from '@/api/event'
 export interface DataProps {
