@@ -42,7 +42,6 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
 
   // 폼 서밋 핸들러
   const onSubmit: SubmitHandler<FormData> = async (data, event) => {
-    console.log(data, '엑시오스쪽')
     if (event) {
       event.preventDefault()
     }
