@@ -9,6 +9,7 @@ interface SelectBoxProps {
   textSize: 'size-body' | 'size-title' | 'size-subbody'
   register: UseFormRegisterReturn
   onClick?: (value: number) => void
+  value?: number | null
 }
 
 export default function SelectBox({
@@ -17,10 +18,13 @@ export default function SelectBox({
   textSize,
   register,
   onClick,
+  value,
   placeholder = '카테고리를 선택하세요',
 }: SelectBoxProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedValue, setSelectedValue] = useState<number | null>(null)
+  const [selectedValue, setSelectedValue] = useState<number | null>(
+    value || null,
+  )
   const selectBoxRef = useRef<HTMLDivElement>(null)
 
   const selectStyle = (bgColor: string, textSize: string) => {
@@ -52,6 +56,11 @@ export default function SelectBox({
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
+
+  useEffect(() => {
+    // value prop이 변경될 때마다 selectedValue를 업데이트
+    setSelectedValue(value || null)
+  }, [value])
 
   return (
     <div className='relative inline-block' ref={selectBoxRef}>

@@ -1,8 +1,5 @@
 import { useState, useEffect, ChangeEvent } from 'react'
-import {
-  fetchGetRecruitEvents,
-  // , fetchPostRecruitEditEvents
-} from '@/api/event'
+import { fetchGetRecruitEvents, fetchPostRecruitEditEvents } from '@/api/event'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { GoPlus } from 'react-icons/go'
@@ -51,11 +48,7 @@ interface FormData {
   }
 }
 
-// interface RecruitsEditProps {
-//   eventId: number
-// }
 export default function RecruitsEdit() {
-  // { eventId }: RecruitsEditProps
   const eventId = 16
   const {
     register,
@@ -69,7 +62,8 @@ export default function RecruitsEdit() {
       challengeStartDate: new Date(),
     },
   })
-
+  // const location = useLocation()
+  // const eventId = location.state.eventId
   const navigate = useNavigate()
   const [showDayPick, setShowDayPick] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
@@ -77,9 +71,9 @@ export default function RecruitsEdit() {
   const [selectedCareerCategoryId, setSelectedCareerCategoryId] = useState<
     number[]
   >([])
-  // const [selectedSubCategory, setSelectedSubCategory] = useState<number | null>(
-  // null,
-  // )
+  const [selectedSubCategory, setSelectedSubCategory] = useState<number | null>(
+    null,
+  )
   const [myImage, setMyImage] = useState<File | null>(null)
   const [dataArray, setDataArray] = useState<string[]>([])
   const currentStartDate = dayjs(watch('challengeStartDate')).format(
@@ -91,12 +85,11 @@ export default function RecruitsEdit() {
     const fetchData = async () => {
       try {
         const recruitGetEvents = await fetchGetRecruitEvents(eventId)
-        // console.log(recruitGetEvents)
         if (recruitGetEvents) {
           setValue('categoryId', recruitGetEvents.category.parentId!.id)
           setSelectedCategory(recruitGetEvents.category.parentId!.id)
           setValue('subCategoryId', recruitGetEvents.category.id)
-          // setSelectedSubCategory(recruitGetEvents.category.id)
+          setSelectedSubCategory(recruitGetEvents.category.id)
           const careerCategoryIds = recruitGetEvents.careerCategories.map(
             (category: { id: number }) => category.id,
           )
@@ -162,15 +155,19 @@ export default function RecruitsEdit() {
     } else {
       formData.append('challengeEndDate', '')
     }
-    formData.append('address', JSON.stringify(data.address))
+    if (data.address) {
+      formData.append('address', JSON.stringify(data.address))
+    } else {
+      formData.append('address', '')
+    }
 
-    // try {
-    //   await fetchPostRecruitEditEvents(formData)
-    //   console.log('formData', formData)
-    //   console.log('FormData', data)
-    // } catch (error) {
-    //   console.error('Error:', error)
-    // }
+    try {
+      await fetchPostRecruitEditEvents(formData, eventId)
+      console.log('formData', formData)
+      console.log('FormData', data)
+    } catch (error) {
+      console.error('Error:', error)
+    }
     console.log('FormData', data)
   }
 
@@ -258,11 +255,11 @@ export default function RecruitsEdit() {
   const handleEnter = (value: string) => {
     if (value.trim() !== '') {
       if (!dataArray.includes(value.trim())) {
-        if (dataArray.length < 10) {
+        if (dataArray.length < 3) {
           setDataArray((prevArray) => [...prevArray, value.trim()])
           setValue('hashTag', [...dataArray, value.trim()])
         } else {
-          alert('태그는 10개까지만 입력할 수 있습니다.')
+          alert('태그는 3개까지만 입력할 수 있습니다.')
         }
       } else {
         console.log('이미 존재하는 값입니다.')
@@ -366,6 +363,7 @@ export default function RecruitsEdit() {
                 options={subCategoryId1}
                 register={register('subCategoryId', { required: true })}
                 onClick={handleValueClick}
+                value={selectedSubCategory}
               />
             )}
             {selectedCategory === 2 && (
@@ -375,6 +373,7 @@ export default function RecruitsEdit() {
                 options={subCategoryId2}
                 register={register('subCategoryId', { required: true })}
                 onClick={handleValueClick}
+                value={selectedSubCategory}
               />
             )}
             {getErrorMessage('subCategoryId')}
@@ -487,13 +486,26 @@ export default function RecruitsEdit() {
                 >
                   <GoPlus className='w-10 h-10 m-auto fill-light-gray-color' />
                 </div>
-                {myImage ? (
+                {/* {myImage ? (
                   <div className='relative'>
                     <div className='relative flex overflow-hidden border-2 cursor-pointer border-light-gray-color rounded-image-radius w-36 h-36'>
                       <img
                         className='w-full h-full'
                         src={URL.createObjectURL(myImage)}
                       />
+                    </div>
+                    <div
+                      className='absolute top-[-7px] right-[-7px] z-10 cursor-pointer'
+                      onClick={onImageDelete}
+                    >
+                      <IoClose className='w-6 h-6 bg-white border-2 rounded-full fill-main-color border-main-color' />
+                    </div>
+                  </div>
+                ) : null} */}
+                {watch('showImage') ? (
+                  <div className='relative'>
+                    <div className='relative flex overflow-hidden border-2 cursor-pointer border-light-gray-color rounded-image-radius w-36 h-36'>
+                      <img className='w-full h-full' src={watch('showImage')} />
                     </div>
                     <div
                       className='absolute top-[-7px] right-[-7px] z-10 cursor-pointer'
@@ -522,11 +534,14 @@ export default function RecruitsEdit() {
                 onEnter={(value) => handleEnter(value)}
                 register={register('hashTag')}
               />
+              <div className='mt-3 text-size-subbody text-sub-color'>
+                해시태그는 최대 3개까지 입력 가능합니다.
+              </div>
               <div>
                 <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
                   {dataArray.map((item, index) => (
                     <li
-                      className='p-1 px-3 my-1 rounded-md bg-main-light-color w-fit text-subbody text-black-color'
+                      className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'
                       key={index}
                     >
                       #{item}{' '}
@@ -560,7 +575,9 @@ export default function RecruitsEdit() {
                 해당 모임 가입 요청 시, 유저가 답변하게 될 질문 글입니다.
                 <br />
                 모임과 무관하거나 사생활 등 민감한 질문은 피해주시길 바랍니다.
-                <br />본 질문은 추후에 수정이 불가하니 신중하게 작성 바랍니다.
+                <br />
+                취지에 어긋나는 모임의 경우 작성자의 허락없이 관리자에 의해
+                모임이 임의 삭제될 수 있습니다.
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ interface RadioButtonsProps {
   name: string
   clickChange: (value: number) => void
   selectedValue?: number | null
+  // defaultSelectedValue?: number | null
   disabled?: boolean
 }
 
@@ -11,6 +12,7 @@ export default function RadioButtons({
   data,
   clickChange,
   selectedValue,
+  // defaultSelectedValue,
 }: RadioButtonsProps) {
   return (
     <div className='flex items-center'>

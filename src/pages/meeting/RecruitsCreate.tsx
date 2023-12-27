@@ -38,13 +38,15 @@ interface FormData {
   online: number
   challengeStartDate: Date
   challengeEndDate: Date | null
-  address: {
-    zipCode: number
-    detail1: string
-    detail2: string
-    latitude: number
-    longitude: number
-  }
+  address:
+    | {
+        zipCode: number
+        detail1: string
+        detail2: string
+        latitude: number
+        longitude: number
+      }
+    | string
 }
 
 export default function RecruitsCreate() {
@@ -62,8 +64,8 @@ export default function RecruitsCreate() {
   })
   const navigate = useNavigate()
   const [showDayPick, setShowDayPick] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
-  const [selectedOnLine, setSelectedOnLine] = useState<number | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(1)
+  const [selectedOnLine, setSelectedOnLine] = useState<number | null>(1)
   const [myImage, setMyImage] = useState<File | null>(null)
   const [dataArray, setDataArray] = useState<string[]>([])
   const currentStartDate = dayjs(watch('challengeStartDate')).format(
@@ -93,7 +95,11 @@ export default function RecruitsCreate() {
     } else {
       formData.append('challengeEndDate', '')
     }
-    formData.append('address', JSON.stringify(data.address))
+    if (data.address) {
+      formData.append('address', JSON.stringify(data.address))
+    } else {
+      formData.append('address', '')
+    }
 
     try {
       await fetchPostEvents(formData)
@@ -140,6 +146,10 @@ export default function RecruitsCreate() {
   const handleOnLineChange = (value: number) => {
     setSelectedOnLine(value)
     setValue('online', value)
+
+    if (value === 1) {
+      setValue('address', '')
+    }
   }
 
   const handleValueClick = (value: number) => {
@@ -177,19 +187,18 @@ export default function RecruitsCreate() {
     // TODO: image 다시 등록할 때 버그 생기는 것 없애기
     // setValue('image')
     // 이미지 업로드 버튼으로 새로 이미지를 넣으면 reset이 되지만, (이미지 삭제버튼 안누르고)
-    // 현재 버그있음 > 이미지를 삭제 버튼을 누르면 undefined로 고정이 되어버림.
+    // 현재 버그있음 > 이미지를 삭제 버튼을 누르면 로 고정이 되어버림.
     // 그렇다고, 그냥 이미지를 안보이게 하면, 다른 이미지로 바꿔도 처음 클릭했던 이미지가 들어감
   }
 
-  // 해시태그 추가 로직
   const handleEnter = (value: string) => {
     if (value.trim() !== '') {
       if (!dataArray.includes(value.trim())) {
-        if (dataArray.length < 10) {
+        if (dataArray.length < 3) {
           setDataArray((prevArray) => [...prevArray, value.trim()])
           setValue('hashTag', [...dataArray, value.trim()])
         } else {
-          alert('태그는 10개까지만 입력할 수 있습니다.')
+          alert('태그는 3개까지만 입력할 수 있습니다.')
         }
       } else {
         console.log('이미 존재하는 값입니다.')
@@ -446,6 +455,9 @@ export default function RecruitsCreate() {
                 onEnter={(value) => handleEnter(value)}
                 register={register('hashTag')}
               />
+              <div className='mt-3 text-size-subbody text-sub-color'>
+                해시태그는 최대 3개까지 입력 가능합니다.
+              </div>
               <div>
                 <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
                   {dataArray.map((item, index) => (
@@ -484,7 +496,9 @@ export default function RecruitsCreate() {
                 해당 모임 가입 요청 시, 유저가 답변하게 될 질문 글입니다.
                 <br />
                 모임과 무관하거나 사생활 등 민감한 질문은 피해주시길 바랍니다.
-                <br />본 질문은 추후에 수정이 불가하니 신중하게 작성 바랍니다.
+                <br />
+                취지에 어긋나는 모임의 경우 작성자의 허락없이 관리자에 의해
+                모임이 임의 삭제될 수 있습니다.
               </div>
             </div>
           </div>
