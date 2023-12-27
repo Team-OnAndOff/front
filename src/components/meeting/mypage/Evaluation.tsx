@@ -9,9 +9,10 @@ interface EvaluationForm {
 
 interface Props {
   closeModal: () => void
+  username?: string
 }
 
-const Evaluation = ({ closeModal }: Props) => {
+const Evaluation = ({ closeModal, username }: Props) => {
   const { setValue, control, handleSubmit } = useForm<EvaluationForm>()
 
   // 평가 아이콘에 대한 데이터를 제출하는 함수
@@ -19,7 +20,7 @@ const Evaluation = ({ closeModal }: Props) => {
     // 선택된 점수 데이터를 사용하여 추가적인 처리 수행
     console.log('선택된 점수:', data)
     // 여기에 선택된 점수 데이터를 활용하는 로직을 추가할 수 있습니다.
-    // 예를 들어, API로 데이터를 전송하거나 부모 컴포넌트의 상태를 업데이트할 수 있습니다.
+    // 예를 들어, API로데이터를 전송하거나 부모 컴포넌트의 상태를 업데이트할 수 있습니다.
   }
 
   // 각 아이콘에 대한 값(watch) 추적
@@ -32,7 +33,9 @@ const Evaluation = ({ closeModal }: Props) => {
     <>
       <div className='w-[40rem] relative'>
         <h4 className='flex items-start justify-center'>
-          <p className='font-bold text-size-body'>님을 평가해주세요</p>
+          <p className='font-bold text-size-body'>
+            {username}님을 평가해주세요!
+          </p>
         </h4>
         <button className='absolute top-0 right-0' onClick={closeModal}>
           <FaTimes fill='#666' />
