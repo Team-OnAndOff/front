@@ -85,6 +85,7 @@ export default function ImageSlide() {
   const pagination = {
     clickable: true,
     renderBullet: function (index: number, className: string) {
+      console.log(index)
       return `<span class="${className}"></span>`
     },
   }

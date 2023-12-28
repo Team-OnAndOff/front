@@ -1,31 +1,25 @@
-import { useState, useEffect } from 'react'
-import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react'
+// import { useState } from 'react'
+// import { SwiperClass } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/pagination'
-import { FreeMode, Pagination, Navigation } from 'swiper/modules'
-import { CardData } from '@/types'
-import CardBtn from './CardBtn'
-import { Link } from 'react-router-dom'
-import { IoIosArrowBack } from 'react-icons/io'
 
 interface StateNumber {
-  selectedTab: number
+  // selectedTab: number
   swiperData: string[] | undefined
 }
 
-export default function SwiperCard({ selectedTab, swiperData }: StateNumber) {
-  const [data, setData] = useState()
-  const [swiper, setSwiper] = useState<SwiperClass | null>(null)
+export default function SwiperCard({ swiperData }: StateNumber) {
+  // const [swiper] = useState<SwiperClass | null>(null)
 
   console.log(swiperData, `swiperData`)
   // 이전, 다음 버튼 이벤트핸들러
-  const handlePrev = () => {
-    swiper?.slidePrev()
-  }
-  const handleNext = () => {
-    swiper?.slideNext()
-  }
+  // const handlePrev = () => {
+  //   swiper?.slidePrev()
+  // }
+  // const handleNext = () => {
+  //   swiper?.slideNext()
+  // }
 
   // return (
   //   <>

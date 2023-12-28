@@ -1,6 +1,6 @@
 import Betsy from '@/components/meeting/mypage/Betsy'
 import IntroModal from '@/components/meeting/mypage/IntroModal'
-import SwiperCard from '@/components/meeting/mypage/SwiperCard'
+// import SwiperCard from '@/components/meeting/mypage/SwiperCard'
 import TapCard from '@/components/meeting/mypage/Tapcard'
 import { FaUserGear } from 'react-icons/fa6'
 import { PiSiren } from 'react-icons/pi'
@@ -42,7 +42,8 @@ export default function MyPage() {
   const [tapNumData, setTapNumData] = useState<number[]>([])
   const [userData, setUserData] = useState<UserData | null>(null) //유저 데이터
   const [badges, setBadges] = useState<BadgeType | null>()
-  const [data, setData] = useState() //스와이프  모임 데이터
+  // const [data, setData] = useState() //스와이프  모임 데이터
+  const [, setData] = useState() //스와이프  모임 데이터
   const [swiperData, setSwiperData] = useState('pending')
   const navigate = useNavigate() // 유저없을시 페이지 강제이동
 
@@ -275,7 +276,7 @@ export default function MyPage() {
           />
         </div>
         <div>
-          <SwiperCard selectedTab={selectedTab} swiperData={data} />
+          {/* <SwiperCard selectedTab={selectedTab} swiperData={data} /> */}
         </div>
       </section>
       {/* 모임 개설 탭 end */}

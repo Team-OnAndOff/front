@@ -37,7 +37,7 @@ export function RecruitsSubCategory1() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchGetCategory('1')
+        const data = await fetchGetCategory(1)
 
         const subcategoryId =
           data?.subCategories?.map((subCategory: Category) => ({
@@ -64,7 +64,7 @@ export function RecruitsSubCategory2() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchGetCategory('2')
+        const data = await fetchGetCategory(2)
 
         const subcategoryId =
           data?.subCategories?.map((subCategory: Category) => ({
