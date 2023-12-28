@@ -103,7 +103,10 @@ export default function Detail() {
                 </span>
               </div>
             ) : (
-              <MeetMemberList participatedMem={postDetail.eventApplies} />
+              <MeetMemberList
+                eventId={eventId}
+                participatedMem={postDetail.eventApplies}
+              />
             )}
           </div>
 

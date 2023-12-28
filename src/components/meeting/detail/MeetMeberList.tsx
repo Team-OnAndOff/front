@@ -9,9 +9,12 @@ import 'swiper/css/pagination'
 import 'swiper/css/bundle'
 import { EventAppliesUser } from '@/types'
 import { IoIosArrowBack } from 'react-icons/io'
+import { Modal } from '@/components/common'
+import Evaluation from '../mypage/Evaluation'
 
 interface MeetMemberListProps {
   participatedMem: EventAppliesUser[]
+  eventId: number
 }
 
 import swipercore from 'swiper'
@@ -19,6 +22,7 @@ swipercore.use([Autoplay])
 
 export default function MeetMemberList({
   participatedMem,
+  eventId,
 }: MeetMemberListProps) {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null)
 
@@ -41,6 +45,12 @@ export default function MeetMemberList({
     swiper?.slideNext()
   }
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [attendeeId, setAttendeeId] = useState(0)
+  const [username, setUserName] = useState('')
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
+
   return (
     <>
       <div
@@ -49,46 +59,73 @@ export default function MeetMemberList({
         onMouseLeave={handleMouseLeave}
       >
         <div className='flex mt-3'>
-          <Swiper
-            slidesPerView={1}
-            slideToClickedSlide={true}
-            spaceBetween={10}
-            speed={2000}
-            autoplay={{ delay: 2500, disableOnInteraction: false }}
-            loop={participatedMem.length >= 1}
-            breakpoints={{
-              1740: {
-                slidesPerView: 6.5,
-                slidesPerGroupSkip: 1,
-              },
-              1120: {
-                slidesPerView: 4.5,
-                slidesPerGroupSkip: 1,
-              },
-              768: {
-                slidesPerView: 3,
-                slidesPerGroupSkip: 1,
-              },
-              520: {
-                slidesPerView: 2,
-                slidesPerGroupSkip: 1,
-              },
-            }}
-            navigation={{
-              prevEl: '#prev_slide',
-              nextEl: '#next_slide',
-            }}
-            onSwiper={(e) => {
-              setSwiper(e)
-              swiperRef.current = e
-            }}
-          >
-            {participatedMem?.map((member, index) => (
-              <SwiperSlide key={index}>
-                <MeetMemberCard member={member} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {isModalOpen && (
+            <Modal isOpen={isModalOpen} closeModal={closeModal}>
+              <Evaluation
+                username={username}
+                attendeeId={attendeeId}
+                eventId={eventId}
+                closeModal={closeModal}
+              />
+            </Modal>
+          )}
+          {participatedMem && participatedMem.length > 4 ? (
+            <Swiper
+              slidesPerView={1}
+              slideToClickedSlide={true}
+              spaceBetween={10}
+              speed={2000}
+              autoplay={{ delay: 2500, disableOnInteraction: false }}
+              loop={participatedMem.length >= 1}
+              breakpoints={{
+                1740: {
+                  slidesPerView: 6.5,
+                  slidesPerGroupSkip: 1,
+                },
+                1120: {
+                  slidesPerView: 4.5,
+                  slidesPerGroupSkip: 1,
+                },
+                768: {
+                  slidesPerView: 3,
+                  slidesPerGroupSkip: 1,
+                },
+                520: {
+                  slidesPerView: 2,
+                  slidesPerGroupSkip: 1,
+                },
+              }}
+              navigation={{
+                prevEl: '#prev_slide',
+                nextEl: '#next_slide',
+              }}
+              onSwiper={(e) => {
+                setSwiper(e)
+                swiperRef.current = e
+              }}
+            >
+              {participatedMem?.map((member, index) => (
+                <SwiperSlide key={index}>
+                  <MeetMemberCard
+                    findUserName={setUserName}
+                    findAttendeeId={setAttendeeId}
+                    member={member}
+                    openModal={openModal}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            participatedMem?.map((member, index) => (
+              <MeetMemberCard
+                findUserName={setUserName}
+                findAttendeeId={setAttendeeId}
+                key={index}
+                member={member}
+                openModal={openModal}
+              />
+            ))
+          )}
         </div>
         {/* 이전, 다음 버튼 커스텀 */}
         <button className='absolute top-1/2 -left-[50px]' onClick={handlePrev}>
