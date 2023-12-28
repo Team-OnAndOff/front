@@ -32,8 +32,8 @@ interface FormData {
   subCategoryId: number
   careerCategoryId: number[]
   hashTag: string[]
-  image: File
-  showImage: string
+  image: File | null
+  showImage: string | undefined
   title: string
   content: string
   recruitment: number
@@ -58,7 +58,6 @@ export default function RecruitsEdit() {
     handleSubmit,
     watch,
     setValue,
-    setError,
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
@@ -69,13 +68,14 @@ export default function RecruitsEdit() {
   const location = useLocation()
   const eventId = location.state.eventId
   const navigate = useNavigate()
+  const [flag, setFlag] = useState(0)
   const [showStartDayPick, setShowStartDayPick] = useState(false)
   const [showEndDayPick, setShowEndDayPick] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
   const [selectedOnLine, setSelectedOnLine] = useState<number | null>(null)
-  const [selectedCareerCategoryId, setSelectedCareerCategoryId] = useState<
-    number[]
-  >([])
+  // const [selectedCareerCategoryId, setSelectedCareerCategoryId] = useState<
+  //   number[]
+  // >([])
   const [selectedSubCategory, setSelectedSubCategory] = useState<number | null>(
     null,
   )
@@ -102,7 +102,7 @@ export default function RecruitsEdit() {
           )
 
           setValue('careerCategoryId', careerCategoryIds)
-          setSelectedCareerCategoryId(careerCategoryIds)
+          // setSelectedCareerCategoryId(careerCategoryIds)
           const hashTags = recruitGetEvents.hashTags.map(
             (hashTag: { hashtag: string }) => hashTag.hashtag,
           )
@@ -143,29 +143,6 @@ export default function RecruitsEdit() {
     fetchData()
   }, [eventId, setValue])
 
-  const errorHandleEvent = () => {
-    if (!watch('careerCategoryId')) {
-      setError('careerCategoryId', {
-        message: '*필수로 선택해주세요.',
-      })
-    }
-    if (!watch('showImage') && !watch('image')) {
-      setError('image', {
-        message: '*이미지를 필수로 선택해주세요.',
-      })
-    }
-    if (watch('online') === 0 && !watch('address')) {
-      setError('address', {
-        message: '*오프라인 주소를 필수로 입력해주세요.',
-      })
-    }
-    if (watch('online') === 0 && !watch('address.detail2')) {
-      setError('address.detail2', {
-        message: '*상세 주소를 필수로 입력해주세요.',
-      })
-    }
-  }
-
   const onSubmit: SubmitHandler<FormData> = async (data, event) => {
     if (event) {
       event.preventDefault()
@@ -176,7 +153,9 @@ export default function RecruitsEdit() {
     formData.append('subCategoryId', data.subCategoryId.toString())
     formData.append('careerCategoryId', data.careerCategoryId.toString())
     formData.append('hashTag', data.hashTag.toString())
-    formData.append('image', data.image)
+    if (data.image) {
+      formData.append('image', data.image)
+    }
     formData.append('title', data.title)
     formData.append('content', data.content)
     formData.append('recruitment', data.recruitment.toString())
@@ -199,20 +178,29 @@ export default function RecruitsEdit() {
         text: '작성하신 내용으로 수정하시겠습니까?',
         icon: 'question',
         iconColor: '#ff5e2e',
+        confirmButtonColor: '#ff5e2e',
+        cancelButtonColor: '#3a823f',
         footer: `부적절한 내용이 담겨있을 경우, <br/> 관리자에 의해 게시물이 차단되거나 타유저에게 신고 당할 수 있습니다.`,
         confirmButtonText: '확인',
         showCancelButton: true,
         cancelButtonText: '취소',
+        timer: 2000,
       })
 
       if (result.isConfirmed) {
         await fetchPostRecruitEditEvents(formData, eventId)
 
-        MySwal.fire('수정 성공', '모임글이 수정되었습니다.', 'success')
+        MySwal.fire({
+          title: '수정 성공',
+          text: '모임글이 수정되었습니다.',
+          icon: 'success',
+          confirmButtonColor: '#ff5e2e',
+        })
+
         setTimeout(() => {
+          navigate(`/details/${eventId}`)
           MySwal.close()
-          navigate(-1)
-        }, 1500)
+        }, 2000)
       }
     } catch (error) {
       console.error('Error:', error)
@@ -263,11 +251,11 @@ export default function RecruitsEdit() {
     }
   }
 
-  const handleOnLineChange = (value: number) => {
-    if (!selectedOnLine) {
-      setSelectedOnLine(value)
-    }
-  }
+  // const handleOnLineChange = (value: number) => {
+  //   if (!selectedOnLine) {
+  //     setSelectedOnLine(value)
+  //   }
+  // }
 
   const handleValueClick = (value: number) => {
     setValue('subCategoryId', value)
@@ -302,9 +290,8 @@ export default function RecruitsEdit() {
     }
   }
   const onImageDelete = () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    setValue('showImage', null)
+    setValue('image', null)
+    setValue('showImage', undefined)
     setMyImage(null)
   }
 
@@ -358,7 +345,7 @@ export default function RecruitsEdit() {
         <form className='flex flex-col gap-16 my-20'>
           <div className='flex'>
             <RecruitsTitle>카테고리 설정</RecruitsTitle>
-            <div className='flex flex-col cursor-pointer'>
+            <div className='flex flex-col'>
               <RadioButtons
                 data={category}
                 name='category'
@@ -366,6 +353,9 @@ export default function RecruitsEdit() {
                 selectedValue={selectedCategory}
                 disabled={!!selectedCategory}
               />
+              <p className='block mt-2 text-red-500 text-size-subbody'>
+                *카테고리는 수정이 불가능합니다.
+              </p>
               {getErrorMessage('categoryId')}
             </div>
           </div>
@@ -447,7 +437,6 @@ export default function RecruitsEdit() {
                 value={selectedSubCategory}
               />
             )}
-            {getErrorMessage('subCategoryId')}
           </div>
           <div className='flex'>
             <RecruitsTitle>모집 대상</RecruitsTitle>
@@ -458,9 +447,15 @@ export default function RecruitsEdit() {
                 onChange={(selectedValues) => {
                   setValue('careerCategoryId', selectedValues)
                 }}
-                selectedValues={selectedCareerCategoryId}
+                selectedValues={watch('careerCategoryId')}
               />
-              {getErrorMessage('careerCategoryId')}
+              {flag === 1 &&
+                (!watch('careerCategoryId') ||
+                  watch('careerCategoryId').length === 0) && (
+                  <p className='block mt-2 text-red-500 text-size-subbody'>
+                    *필수로 선택해주세요.
+                  </p>
+                )}
             </div>
           </div>
           <div className='flex'>
@@ -514,11 +509,13 @@ export default function RecruitsEdit() {
               <RadioButtons
                 data={online}
                 name='online'
-                clickChange={handleOnLineChange}
+                // clickChange={handleOnLineChange}
                 selectedValue={selectedOnLine}
                 disabled={!!selectedOnLine}
               />
-              {getErrorMessage('online')}
+              <p className='block mt-2 text-red-500 text-size-subbody'>
+                *만남 유형은 변경이 불가능합니다.
+              </p>
             </div>
           </div>
           {selectedOnLine !== 1 && (
@@ -531,8 +528,19 @@ export default function RecruitsEdit() {
                     onChange={handleAddress2}
                     address={watch('address')}
                   />
-                  {getErrorMessage('address')}
-                  {getErrorMessage('address.detail2' as keyof FormData)}
+                  {flag === 1 && watch('online') === 0 && !watch('address') && (
+                    <p className='block mt-2 text-red-500 text-size-subbody'>
+                      *오프라인 선택시 주소는 필수로 입력해주세요.
+                    </p>
+                  )}
+                  {flag === 1 &&
+                    watch('online') === 0 &&
+                    watch('address.detail1') &&
+                    !watch('address.detail2') && (
+                      <p className='block mt-2 text-red-500 text-size-subbody'>
+                        *상세 주소는 필수로 입력해주세요.
+                      </p>
+                    )}
                 </div>
               </div>
             </div>
@@ -588,7 +596,11 @@ export default function RecruitsEdit() {
                   </div>
                 ) : null}
               </div>
-              {getErrorMessage('image')}
+              {flag === 1 && !watch('image') && !watch('showImage') && (
+                <p className='block mt-2 text-red-500 text-size-subbody'>
+                  *이미지는 필수로 등록해주세요.
+                </p>
+              )}
               <div className='mt-3 text-size-subbody text-sub-color'>
                 사진은 한 장 만 등록됩니다. <br />
                 권장 크기: 360*360 이상, 정방형으로 사진이 등록됨을 유의하시길
@@ -609,7 +621,11 @@ export default function RecruitsEdit() {
               <div className='mt-3 text-size-subbody text-sub-color'>
                 해시태그는 최대 3개까지 입력 가능합니다.
               </div>
-              {getErrorMessage('hashTag')}
+              {flag === 1 && watch('hashTag').length === 0 && (
+                <p className='block mt-2 text-red-500 text-size-subbody'>
+                  *해시태그는 필수로 등록해주세요.
+                </p>
+              )}
               <div>
                 <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
                   {dataArray.map((item, index) => (
@@ -662,7 +678,7 @@ export default function RecruitsEdit() {
           <Button
             onClick={() => {
               handleSubmit(onSubmit)()
-              errorHandleEvent()
+              setFlag(1)
             }}
             fill='activeFill'
           >

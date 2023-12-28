@@ -32,7 +32,7 @@ interface FormData2 {
   subCategoryId: number
   careerCategoryId: number[]
   hashTag: string[]
-  image: File
+  image: File | null
   title: string
   content: string
   recruitment: number
@@ -59,7 +59,6 @@ export default function RecruitsCreate() {
     handleSubmit,
     watch,
     setValue,
-    setError,
     formState: { errors },
   } = useForm<FormData2>({
     defaultValues: {
@@ -70,6 +69,7 @@ export default function RecruitsCreate() {
     },
   })
   const navigate = useNavigate()
+  const [flag, setFlag] = useState(0)
   const [showStartDayPick, setShowStartDayPick] = useState(false)
   const [showEndDayPick, setShowEndDayPick] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<number | null>(1)
@@ -82,33 +82,6 @@ export default function RecruitsCreate() {
   const [currentEndDate, setCurrentEndDate] = useState<string>(
     dayjs(watch('challengeEndDate')).format('YYYY-MM-DD'),
   )
-  const errorHandleEvent = () => {
-    if (!watch('careerCategoryId')) {
-      setError('careerCategoryId', {
-        message: '*필수로 선택해주세요.',
-      })
-    }
-    if (!watch('image')) {
-      setError('image', {
-        message: '*이미지를 필수로 선택해주세요.',
-      })
-    }
-    if (watch('online') === 0 && !watch('address')) {
-      setError('address', {
-        message: '*오프라인 주소를 필수로 입력해주세요.',
-      })
-    }
-    if (watch('online') === 0 && !watch('address.detail2')) {
-      setError('address.detail2', {
-        message: '*상세 주소를 필수로 입력해주세요.',
-      })
-    }
-
-    watch('careerCategoryId')
-    watch('image')
-    watch('address')
-    watch('address.detail2')
-  }
 
   const onSubmit: SubmitHandler<FormData2> = async (data, event) => {
     if (event) {
@@ -150,14 +123,25 @@ export default function RecruitsCreate() {
         confirmButtonText: '확인',
         showCancelButton: true,
         cancelButtonText: '취소',
+        confirmButtonColor: '#ff5e2e',
+        cancelButtonColor: '#3a823f',
       })
       if (result.isConfirmed) {
         await fetchPostEvents(formData)
-        MySwal.fire('등록 성공', '모임등록이 완료되었습니다.', 'success')
+        MySwal.fire({
+          title: '등록 성공',
+          text: '모임등록이 완료되었습니다.',
+          icon: 'success',
+          confirmButtonColor: '#ff5e2e',
+        })
         setTimeout(() => {
+          if (watch('categoryId') === 1) {
+            navigate('meetup-lists/1')
+          } else if (watch('categoryId') === 2) {
+            navigate('meetup-lists/2')
+          }
           MySwal.close()
-          navigate(-1)
-        }, 1500)
+        }, 2000)
       }
     } catch (error) {
       console.error('Error:', error)
@@ -254,13 +238,10 @@ export default function RecruitsCreate() {
     if (selectedFile) {
       setValue('image', selectedFile)
     }
-    // console.log(selectedFile)
   }
 
   const onImageDelete = () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
-    setValue('image', undefined)
+    setValue('image', null)
     setMyImage(null)
   }
 
@@ -321,10 +302,8 @@ export default function RecruitsCreate() {
                 clickChange={handleCategoryChange}
                 selectedValue={selectedCategory}
               />
-              {getErrorMessage('categoryId')}
             </div>
           </div>
-          {/* TODO: selectedCategory flag번호로 조회할 수 있도록 하기 */}
           {selectedCategory === 2 && (
             <div className='flex'>
               <RecruitsTitle>챌린지 기간</RecruitsTitle>
@@ -402,7 +381,11 @@ export default function RecruitsCreate() {
                   onClick={handleValueClick}
                 />
               )}
-              {getErrorMessage('subCategoryId')}
+              {flag === 1 && !watch('subCategoryId') && (
+                <p className='block mt-2 text-red-500 text-size-subbody'>
+                  *필수로 선택해주세요.
+                </p>
+              )}
             </div>
           </div>
           <div className='flex'>
@@ -415,7 +398,13 @@ export default function RecruitsCreate() {
                   setValue('careerCategoryId', selectedValues)
                 }}
               />
-              {getErrorMessage('careerCategoryId')}
+              {flag === 1 &&
+                (!watch('careerCategoryId') ||
+                  watch('careerCategoryId').length === 0) && (
+                  <p className='block mt-2 text-red-500 text-size-subbody'>
+                    *필수로 선택해주세요.
+                  </p>
+                )}
             </div>
           </div>
           <div className='flex'>
@@ -484,8 +473,19 @@ export default function RecruitsCreate() {
                     onComplete={handleAddress}
                     onChange={handleAddress2}
                   />
-                  {getErrorMessage('address')}
-                  {getErrorMessage('address.detail2' as keyof FormData2)}
+                  {flag === 1 && watch('online') === 0 && !watch('address') && (
+                    <p className='block mt-2 text-red-500 text-size-subbody'>
+                      *오프라인 선택시 주소는 필수로 입력해주세요.
+                    </p>
+                  )}
+                  {flag === 1 &&
+                    watch('online') === 0 &&
+                    watch('address.detail1') &&
+                    !watch('address.detail2') && (
+                      <p className='block mt-2 text-red-500 text-size-subbody'>
+                        *상세 주소는 필수로 입력해주세요.
+                      </p>
+                    )}
                 </div>
               </div>
             </div>
@@ -537,7 +537,11 @@ export default function RecruitsCreate() {
                   </div>
                 ) : null}
               </div>
-              {getErrorMessage('image')}
+              {flag === 1 && !watch('image') && (
+                <p className='block mt-2 text-red-500 text-size-subbody'>
+                  *이미지는 필수로 등록해주세요.
+                </p>
+              )}
               <div className='mt-3 text-size-subbody text-sub-color'>
                 사진은 한 장 만 등록됩니다. <br />
                 권장 크기: 360*360 이상, 정방형으로 사진이 등록됨을 유의하시길
@@ -560,7 +564,11 @@ export default function RecruitsCreate() {
               <div className='mt-3 text-size-subbody text-sub-color'>
                 해시태그는 최대 3개까지 입력 가능합니다.
               </div>
-              {getErrorMessage('hashTag')}
+              {flag === 1 && watch('hashTag').length === 0 && (
+                <p className='block mt-2 text-red-500 text-size-subbody'>
+                  *해시태그는 필수로 등록해주세요.
+                </p>
+              )}
               <div>
                 <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
                   {dataArray.map((item, index) => (
@@ -613,7 +621,7 @@ export default function RecruitsCreate() {
           <Button
             onClick={() => {
               handleSubmit(onSubmit)()
-              errorHandleEvent()
+              setFlag(1)
             }}
             fill='activeFill'
           >
