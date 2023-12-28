@@ -19,6 +19,18 @@ export const fetchGetChatRooms = async () => {
   }
 }
 
+// 모임
+export const fetchGetChatRoom = async (id: string) => {
+  try {
+    const url = `/rooms/${id}`
+    const response = await userInstance.get<Response<ChatRoom>>(url)
+    return response.data.data
+  } catch (error) {
+    console.error('Error:', error)
+    return null
+  }
+}
+
 // 채팅 유저조회
 export const fetchGetChatUser = async () => {
   try {

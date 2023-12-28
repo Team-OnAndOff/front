@@ -2,54 +2,67 @@ import { useEffect, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import { BsChat } from 'react-icons/bs'
 import socket from '@/utils/socket'
-import { ChatRoom } from '@/types'
-import { fetchGetChatRooms, fetchGetChatUser } from '@/api/chat'
+import { CHAT, ChatRoom } from '@/types'
+import {
+  fetchGetChatRoom,
+  fetchGetChatRooms,
+  fetchGetChatUser,
+} from '@/api/chat'
 import { ChatListCard } from '@/components/chat'
 import useChatStore from '@/hooks/useChatStore'
 
 export default function ChatLayout() {
   const path = useParams()
   const navigate = useNavigate()
-
   const [rooms, setRooms] = useState<ChatRoom[]>([])
   const [selectedRoomId, setSelectedRoomId] = useState(Number(path.roomId) ?? 0)
-  const { room, setUser, setRoom } = useChatStore()
-
-  useEffect(() => {
-    socket.connect()
-    return () => {
-      socket.disconnect()
-    }
-  }, [room])
+  const { setUser, setRoom } = useChatStore()
 
   useEffect(() => {
     const fetchRoomsAndUser = async () => {
-      try {
-        const [rooms, user] = await Promise.all([
-          fetchGetChatRooms(),
-          fetchGetChatUser(),
-        ])
+      const [rooms, user] = await Promise.all([
+        fetchGetChatRooms(),
+        fetchGetChatUser(),
+      ])
 
-        setRooms(rooms)
-        console.log(rooms)
-        if (user) {
-          setUser(user)
-        }
+      if (
+        path.roomId &&
+        !rooms.find((room) => room.room === Number(path.roomId))
+      ) {
+        alert('참여중이지 않은 모임에는 입장할 수 없습니다.')
+        navigate('/')
+      }
 
-        if (
-          path.roomId &&
-          !rooms.find((room) => room.room === Number(path.roomId))
-        ) {
-          alert('참여중이지 않은 모임에는 입장할 수 없습니다.')
-          navigate('/')
-        }
-      } catch (error) {
-        console.error('Error: ', error)
+      setRooms(rooms)
+      if (user) {
+        setUser(user)
       }
     }
 
     fetchRoomsAndUser()
-  }, [setUser, navigate, path])
+  }, [])
+
+  useEffect(() => {
+    const fetchRoom = async () => {
+      if (path.roomId) {
+        const response = await fetchGetChatRoom(path.roomId)
+        setRoom(response)
+      }
+    }
+
+    fetchRoom()
+    const handleSocketConnect = () => {
+      console.log('--> 소켓에 연결되었습니다.', socket.id)
+    }
+
+    socket.connect()
+    socket.on(CHAT.CONNECT, handleSocketConnect)
+
+    return () => {
+      socket.disconnect()
+      socket.off(CHAT.CONNECT, handleSocketConnect)
+    }
+  }, [path, setRoom])
 
   const handleSelectRoom = (id: number) => {
     const room = rooms.find((room) => room.room === id)

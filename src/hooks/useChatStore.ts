@@ -6,7 +6,7 @@ interface ChatProps {
   room: ChatRoom | null
   user: ChatUser | null
   setUser: (user: ChatUser) => void
-  setRoom: (room: ChatRoom) => void
+  setRoom: (room: ChatRoom | null) => void
 }
 
 const useChatStore = create(
@@ -15,7 +15,7 @@ const useChatStore = create(
       user: null,
       room: null,
       setUser: (user: ChatUser) => set({ user }),
-      setRoom: (room: ChatRoom) => set({ room }),
+      setRoom: (room: ChatRoom | null) => set({ room }),
     }),
     {
       name: 'user',

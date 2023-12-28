@@ -27,23 +27,15 @@ export default function Chat() {
   useEffect(() => {
     page.current = 1
     if (room) {
-      const handleSocketConnect = () => {
-        console.log('--> 소켓에 연결되었습니다.')
-      }
-
-      socket.on(CHAT.CONNECT, handleSocketConnect)
       socket.emit(
         CHAT.ROOM_JOIN,
         { roomId: room._id },
         (response: ChatResponse) => {
           console.log(response)
           setIsNext(true)
+          setIsScrollToBottom(true)
         },
       )
-      setIsScrollToBottom(true)
-      return () => {
-        socket.off(CHAT.CONNECT, handleSocketConnect)
-      }
     }
   }, [room])
 
