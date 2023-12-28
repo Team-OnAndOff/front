@@ -226,3 +226,12 @@ export enum CHAT {
   ROOMS = 'rooms',
   USER_INFO = 'userinfo',
 }
+
+export interface ReportProps {
+  createdAt: Date
+  updatedAt: Date
+  id: number
+  reporterId: object
+  reportedId: object
+  description: string
+}

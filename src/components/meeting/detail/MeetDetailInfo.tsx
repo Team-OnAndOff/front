@@ -90,7 +90,12 @@ export default function MeetDetailInfo({
 
       {isModalOpen && (
         <Modal isOpen={isModalOpen} closeModal={closeModal}>
-          <Declaration closeModal={closeModal} />
+          <Declaration
+            type='eventReport'
+            reporterId={user?.id}
+            eventId={eventId}
+            closeModal={closeModal}
+          />
         </Modal>
       )}
 

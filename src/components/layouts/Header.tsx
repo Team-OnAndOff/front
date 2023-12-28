@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { FaUserCircle, FaTimes, FaBars } from 'react-icons/fa'
 import Logo from '@/assets/images/Logo.svg'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { Category } from '@/types'
 import { fetchGetCategories } from '@/api/category'
 import useAuthStore from '@/store/userStore'
@@ -23,7 +23,6 @@ export default function Header() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([])
   const location = useLocation()
   const store = useAuthStore()
-  const navigate = useNavigate()
   const generateClassName = (
     base: string,
     condition: boolean,
@@ -49,7 +48,7 @@ export default function Header() {
         const data = await fetchLogout()
         if (data && data.code === 200) {
           store.setUserLogout()
-          navigate('/')
+          window.location.href = '/'
         }
       }
     })

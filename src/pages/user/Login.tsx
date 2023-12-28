@@ -24,7 +24,7 @@ export default function Login() {
       import.meta.env.VITE_BACKEND_HOST
     }/api/auth/login/kakao?host=${
       import.meta.env.VITE_CLIENT_HOST
-    }&redirectPath=/&profilePath=/userinfo`
+    }&redirectPath=&profilePath=/userinfo`
     window.location.href = url
   }
 
@@ -33,7 +33,7 @@ export default function Login() {
       import.meta.env.VITE_BACKEND_HOST
     }/api/auth/login/google?host=${
       import.meta.env.VITE_CLIENT_HOST
-    }&redirectPath=/&profilePath=/userinfo`
+    }&redirectPath=&profilePath=/userinfo`
     window.location.href = url
   }
 
