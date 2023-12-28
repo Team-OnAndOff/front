@@ -90,7 +90,11 @@ export default function MyPage() {
     const fetchData = async () => {
       try {
         //모임 데이터 가져오기
-        const cardData = await userCard()
+        const cardData = await userCard(attendeeId)
+        if (!userMe) {
+          setSwiperData('made')
+          setSelectedTab(2)
+        }
         if (cardData.data) {
           const { approved, liked, made, pending } = cardData.data
           const numDataValues = [
@@ -212,21 +216,6 @@ export default function MyPage() {
             </div>
           )}
           {/* 신고 e*/}
-
-          {/* 평가 s*/}
-          {/* <div className='absolute z-100 right-[10px] top-[50px]'>
-            <button onClick={() => openModal('evaluation')}>
-              <FaRegFaceGrin />
-            </button>
-            <Modal
-              isOpen={isModalOpen && modalType === 'evaluation'}
-              closeModal={closeModal}
-            >
-              <Evaluation closeModal={closeModal} />
-            </Modal>
-          </div> */}
-          {/* 평가 e*/}
-
           <div className='w-[68px] h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
             <p className='mt-[4px] text-white'>
               36.5
@@ -240,42 +229,57 @@ export default function MyPage() {
       {/* 모임 텝  start*/}
       <section>
         <div className='flex border-b-2 border-solid border-main-light-color'>
-          <TapCard
-            name={'대기 중인 모임'}
-            numData={tapNumData ? tapNumData[0] : 0}
-            isSelected={selectedTab === 0}
-            onClick={() => {
-              handleTabClick(0)
-              setSwiperData('pending')
-            }}
-          />
-          <TapCard
-            name={'참여 중인 모임'}
-            numData={tapNumData ? tapNumData[1] : 0}
-            isSelected={selectedTab === 1}
-            onClick={() => {
-              handleTabClick(1)
-              setSwiperData('approved')
-            }}
-          />
-          <TapCard
-            name={'내가 개설한 모임'}
-            numData={tapNumData ? tapNumData[2] : 0}
-            isSelected={selectedTab === 2}
-            onClick={() => {
-              handleTabClick(2)
-              setSwiperData('made')
-            }}
-          />
-          <TapCard
-            name={'내가 찜한 모임'}
-            numData={tapNumData ? tapNumData[3] : 0}
-            isSelected={selectedTab === 3}
-            onClick={() => {
-              handleTabClick(3)
-              setSwiperData('liked')
-            }}
-          />
+          {userMe && (
+            <>
+              <TapCard
+                name={'대기 중인 모임'}
+                numData={tapNumData ? tapNumData[0] : 0}
+                isSelected={selectedTab === 0}
+                onClick={() => {
+                  handleTabClick(0)
+                  setSwiperData('pending')
+                }}
+              />
+              <TapCard
+                name={'참여 중인 모임'}
+                numData={tapNumData ? tapNumData[1] : 0}
+                isSelected={selectedTab === 1}
+                onClick={() => {
+                  handleTabClick(1)
+                  setSwiperData('approved')
+                }}
+              />
+              <TapCard
+                name={'내가 개설한 모임'}
+                numData={tapNumData ? tapNumData[2] : 0}
+                isSelected={selectedTab === 2}
+                onClick={() => {
+                  handleTabClick(2)
+                  setSwiperData('made')
+                }}
+              />
+              <TapCard
+                name={'내가 찜한 모임'}
+                numData={tapNumData ? tapNumData[3] : 0}
+                isSelected={selectedTab === 3}
+                onClick={() => {
+                  handleTabClick(3)
+                  setSwiperData('liked')
+                }}
+              />
+            </>
+          )}
+          {!userMe && (
+            <TapCard
+              name={'내가 개설한 모임'}
+              numData={tapNumData ? tapNumData[2] : 0}
+              isSelected={selectedTab === 2}
+              onClick={() => {
+                handleTabClick(2)
+                setSwiperData('made')
+              }}
+            />
+          )}
         </div>
         <div>
           <SwiperCard
