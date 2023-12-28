@@ -3,6 +3,7 @@ import { useForm, SubmitHandler, useWatch } from 'react-hook-form'
 import { FaTimes } from 'react-icons/fa'
 import { Button, TextArea } from '@/components/common'
 import { UserAssessData, fetchUserAssess } from '@/api/user'
+import Swal from 'sweetalert2'
 
 interface EvaluationForm {
   score: number
@@ -28,7 +29,13 @@ const Evaluation = ({ closeModal, eventId, attendeeId, username }: Props) => {
     }
     const data = await fetchUserAssess(evaluationData)
     if (data && data.code === 200) {
-      alert('평가완료')
+      Swal.fire({
+        icon: 'success',
+        title: '유저 평가 완료!',
+        text: '소중한 평가 감사합니다!',
+        timer: 2000,
+        confirmButtonColor: '#ff5e2e',
+      })
     }
   }
 

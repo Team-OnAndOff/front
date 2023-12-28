@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { VITE_BACKEND_HOST } from '@/assets/config'
 import { ReportProps, Response } from '@/types'
+import Swal from 'sweetalert2'
 
 export interface EventReportDataProps {
   description: string
@@ -27,7 +28,6 @@ export const fetchEventReport = async (
       '/reports-event',
       eventReportData,
     )
-    console.log(response)
     return response.data
   } catch (error) {
     console.error(error)
@@ -45,7 +45,13 @@ export const fetchUserReports = async (userReportData: UserReportDataProps) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 400) {
-        alert('최소 10자 이상 입력해주세요!')
+        Swal.fire({
+          icon: 'error',
+          title: '유저 신고 실패!',
+          text: '최소 10자 이상 입력해주세요!',
+          timer: 2000,
+          confirmButtonColor: '#ff5e2e',
+        })
       }
     }
   }
