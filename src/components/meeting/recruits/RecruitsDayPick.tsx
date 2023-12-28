@@ -1,18 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { DayPicker } from 'react-day-picker'
 import 'react-day-picker/dist/style.css'
 
 interface RecruitsDayPickProps {
   onDayClick: (date: Date) => void
   selectedStartDate?: Date | undefined
+  selectedEndDate?: Date | null
 }
 
 export default function RecruitsDayPick({
   onDayClick,
   selectedStartDate,
+  selectedEndDate,
 }: RecruitsDayPickProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const today = new Date()
+
+  useEffect(() => {
+    if (selectedEndDate) {
+      setSelectedDate(selectedEndDate)
+    } else if (selectedStartDate) {
+      setSelectedDate(selectedStartDate)
+    } else {
+      setSelectedDate(selectedDate)
+    }
+  }, [selectedStartDate, selectedEndDate, selectedDate])
 
   const handleDayClick = (day: Date) => {
     setSelectedDate(day)
@@ -27,12 +39,28 @@ export default function RecruitsDayPick({
 
   const modifiersStyles = {
     today: {
-      color: '#ff5e2e',
+      color: 'white',
+      backgroundColor: '#ff5e2e',
     },
     selected: {
       color: 'white',
       backgroundColor: '#ff5e2e',
     },
+  }
+
+  const dayPickerStyles: React.CSSProperties = {
+    '--rdp-background-color': '#FFDED4',
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } as any
+
+  let defaultMonthDate: Date
+
+  if (selectedEndDate) {
+    defaultMonthDate = selectedEndDate
+  } else if (selectedStartDate) {
+    defaultMonthDate = selectedStartDate
+  } else {
+    defaultMonthDate = today
   }
 
   return (
@@ -43,12 +71,7 @@ export default function RecruitsDayPick({
       showOutsideDays
       selected={selectedDate}
       defaultMonth={
-        selectedStartDate
-          ? new Date(
-              selectedStartDate.getFullYear(),
-              selectedStartDate.getMonth(),
-            )
-          : new Date(today.getFullYear(), today.getMonth())
+        new Date(defaultMonthDate!.getFullYear(), defaultMonthDate!.getMonth())
       }
       onDayClick={handleDayClick}
       disabled={
@@ -56,6 +79,7 @@ export default function RecruitsDayPick({
       }
       modifiers={modifiers}
       modifiersStyles={modifiersStyles}
+      style={dayPickerStyles}
     />
   )
 }
