@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react'
+import { useState, useRef, ChangeEvent } from 'react'
 import { fetchPostEvents } from '@/api/event'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
@@ -88,6 +88,15 @@ export default function RecruitsCreate() {
       event.preventDefault()
     }
 
+    if (watch('address') && !watch('address.detail2')) {
+      const detail2Locate = document.querySelector('.detail2Locate')
+      if (detail2Locate) {
+        detail2Locate.scrollIntoView({
+          behavior: 'smooth',
+        })
+      }
+      return
+    }
     const formData = new FormData()
     formData.append('categoryId', data.categoryId.toString())
     formData.append('subCategoryId', data.subCategoryId.toString())
@@ -136,9 +145,9 @@ export default function RecruitsCreate() {
         })
         setTimeout(() => {
           if (watch('categoryId') === 1) {
-            navigate('meetup-lists/1')
+            navigate('/meetup-lists/1')
           } else if (watch('categoryId') === 2) {
-            navigate('meetup-lists/2')
+            navigate('/meetup-lists/2')
           }
           MySwal.close()
         }, 2000)
@@ -184,14 +193,6 @@ export default function RecruitsCreate() {
     setShowEndDayPick(!showEndDayPick)
     setShowStartDayPick(false)
   }
-
-  // const handleDayPickClose = (event: { stopPropagation: () => void }) => {
-  //   event.stopPropagation()
-  //   if (showDayPick) {
-  //     setShowDayPick(!showDayPick)
-  //   }
-  // }
-  // TODO: 다른 공간 누르면 dayPick 창 닫히게 하기
 
   const handleCategoryChange = (value: number) => {
     setSelectedCategory(value)
@@ -239,10 +240,13 @@ export default function RecruitsCreate() {
       setValue('image', selectedFile)
     }
   }
-
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
   const onImageDelete = () => {
     setValue('image', null)
     setMyImage(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
   }
 
   const handleEnter = (value: string) => {
@@ -457,7 +461,7 @@ export default function RecruitsCreate() {
               {getErrorMessage('recruitment')}
             </div>
           </div>
-          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
+          <div className='flex flex-col gap-4 detail2Locate desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>만남 유형</RecruitsTitle>
             <div>
               <RadioButtons
@@ -500,6 +504,7 @@ export default function RecruitsCreate() {
             <div className='flex flex-col gap-2'>
               <div className='flex gap-3'>
                 <input
+                  ref={(ref) => (fileInputRef.current = ref)}
                   id='picture'
                   type='file'
                   className='hidden'
@@ -517,7 +522,11 @@ export default function RecruitsCreate() {
                   className='flex border-2 cursor-pointer border-light-gray-color rounded-image-radius w-36 h-36'
                   onClick={() => {
                     if (watch('image')) {
-                      alert('사진은 한 장 만 등록됩니다.')
+                      MySwal.fire({
+                        title: '사진은 한 장만 등록됩니다.',
+                        icon: 'error',
+                        confirmButtonColor: '#ff5e2e',
+                      })
                     } else {
                       document.getElementById('picture')?.click()
                     }

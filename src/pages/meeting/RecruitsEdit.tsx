@@ -73,9 +73,6 @@ export default function RecruitsEdit() {
   const [showEndDayPick, setShowEndDayPick] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null)
   const [selectedOnLine, setSelectedOnLine] = useState<number | null>(null)
-  // const [selectedCareerCategoryId, setSelectedCareerCategoryId] = useState<
-  //   number[]
-  // >([])
   const [selectedSubCategory, setSelectedSubCategory] = useState<number | null>(
     null,
   )
@@ -253,7 +250,6 @@ export default function RecruitsEdit() {
     setShowEndDayPick(!showEndDayPick)
     setShowStartDayPick(false)
   }
-  // TODO: 다른 공간 누르면 dayPick 창 닫히게 하기
 
   const handleCategoryChange = (value: number) => {
     if (!selectedCategory) {
@@ -574,8 +570,12 @@ export default function RecruitsEdit() {
                 <div
                   className='flex border-2 cursor-pointer border-light-gray-color rounded-image-radius w-36 h-36'
                   onClick={() => {
-                    if (watch('showImage')) {
-                      alert('사진은 한 장만 등록됩니다.')
+                    if (watch('showImage') || watch('image')) {
+                      MySwal.fire({
+                        title: '사진은 한 장만 등록됩니다.',
+                        icon: 'error',
+                        confirmButtonColor: '#ff5e2e',
+                      })
                     } else {
                       document.getElementById('picture')?.click()
                     }
