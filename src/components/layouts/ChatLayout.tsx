@@ -63,12 +63,12 @@ export default function ChatLayout() {
           <span>채팅</span>
         </h1>
         {rooms.length === 0 && (
-          <div className='flex justify-center h-[900px] border-[1px] my-2 items-center'>
+          <div className='flex justify-center h-[calc(100vh-240px)] border-[1px] my-2 items-center'>
             참여중인 모임이 없습니다.
           </div>
         )}
         {rooms.length > 0 && (
-          <div className='grid grid-cols-1 lg:grid-cols-3 h-[900px] border-[1px] my-2'>
+          <div className='grid grid-cols-1 lg:grid-cols-3 border-[1px] my-2 h-[calc(100vh-240px)]'>
             <div className='flex flex-col w-full border-r-[1px] overflow-y-auto'>
               {rooms.map((room) => (
                 <ChatListCard
