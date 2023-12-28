@@ -77,8 +77,6 @@ export const CardBtn = ({
             fill='border'
             onClick={() => chatClick()}
           />
-          {/* <Link to={`/chat/${data?.event.id}`}>채팅방 입장</Link> */}
-
           <Button
             children='모임 나가기'
             width='w-[120px]  font-bold m-1'
