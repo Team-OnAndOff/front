@@ -6,19 +6,22 @@ import {
   ChatRoomMessage,
   ChatRoomTitle,
 } from '@/components/chat'
-import { CHAT, ChatMessage, ChatResponse } from '@/types'
+import { CHAT, ChatMessage, ChatResponse, ChatRoom } from '@/types'
 import useChatStore from '@/hooks/useChatStore'
 import socket from '@/utils/socket'
 import { useIntersectionObserver } from '@/hooks'
-import { fetchGetChatPrevMessages } from '@/api/chat'
+import { fetchGetChatPrevMessages, fetchGetChatRoom } from '@/api/chat'
 import { formatDate } from '@/utils'
+import { useParams } from 'react-router-dom'
 
 export default function Chat() {
+  const path = useParams()
   const messageEndRef = useRef<HTMLDivElement>(null)
   const [message, setMessage] = useState('')
   const [items, setItems] = useState<ChatMessage[]>([])
+  const [room, setRoom] = useState<ChatRoom | null>(null)
 
-  const { user, room } = useChatStore()
+  const { user } = useChatStore()
   const [isLoading, setIsLoading] = useState(false)
   const [isNext, setIsNext] = useState(false)
   const [isScrollToBottom, setIsScrollToBottom] = useState(false)
@@ -26,35 +29,40 @@ export default function Chat() {
 
   useEffect(() => {
     page.current = 1
-    if (room) {
-      socket.emit(
-        CHAT.ROOM_JOIN,
-        { roomId: room._id },
-        (response: ChatResponse) => {
-          console.log('ROOM_JOIN', response)
-          setIsNext(true)
-          setIsScrollToBottom(true)
-        },
-      )
+    const fetchRoom = async () => {
+      if (path.roomId) {
+        const response = await fetchGetChatRoom(path.roomId)
+        if (response) {
+          setRoom(response)
+          socket.emit(
+            CHAT.ROOM_JOIN,
+            { roomId: response?._id },
+            (response: ChatResponse) => {
+              console.log('ROOM_JOIN', response)
+              setIsNext(true)
+              setIsScrollToBottom(true)
+            },
+          )
+        }
+      }
     }
-  }, [room])
+
+    fetchRoom()
+  }, [path])
 
   useEffect(() => {
     socket.on(
       CHAT.PREV_MESSAGES,
       ({ messages }: { messages: ChatMessage[] }) => {
-        console.log('PREV_MESSAGES: ', messages)
         setItems(messages)
       },
     )
 
     socket.on(CHAT.MESSAGE, ({ message }: { message: ChatMessage }) => {
-      console.log('MESSAGE', message)
       setItems((prev) => [message, ...prev])
     })
 
     socket.on(CHAT.USER_JOIN, ({ message }: { message: ChatMessage }) => {
-      console.log('USER_JOIN', message)
       setItems((prev) => [message, ...prev])
     })
   }, [])
@@ -83,7 +91,6 @@ export default function Chat() {
     { isIntersecting },
   ]) => {
     if (room && isIntersecting && !isLoading && isNext) {
-      console.log('onIntersect: ')
       setIsLoading(true)
       const messages = await fetchGetChatPrevMessages(room?._id, page.current)
       page.current += 1
@@ -105,7 +112,7 @@ export default function Chat() {
       messageEndRef.current.scrollIntoView()
     }
   }, [items, isScrollToBottom])
-  console.log(items)
+
   return (
     <>
       {room && user && (

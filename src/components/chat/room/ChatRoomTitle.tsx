@@ -2,7 +2,7 @@ import { HiOutlineChevronLeft } from 'react-icons/hi'
 import { ChatRoomIcon, DropDownItems } from '@/components/chat'
 import { Link } from 'react-router-dom'
 import { FaEllipsisVertical } from 'react-icons/fa6'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChatRoom } from '@/types'
 
 interface ChatRoomTitleProps {
@@ -11,6 +11,10 @@ interface ChatRoomTitleProps {
 
 export default function ChatRoomTitle({ room }: ChatRoomTitleProps) {
   const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    setIsOpen(false)
+  }, [room])
 
   return (
     <div className='flex items-center border-b-2 border-neutral-200 relative h-16'>
@@ -25,7 +29,7 @@ export default function ChatRoomTitle({ room }: ChatRoomTitleProps) {
           icon={FaEllipsisVertical}
           onClick={() => setIsOpen((prev) => !prev)}
         />
-        <DropDownItems isOpen={isOpen} items={room.users} />
+        <DropDownItems isOpen={isOpen} room={room} />
       </div>
     </div>
   )

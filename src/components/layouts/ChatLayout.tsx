@@ -3,11 +3,7 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import { BsChat } from 'react-icons/bs'
 import socket from '@/utils/socket'
 import { CHAT, ChatRoom } from '@/types'
-import {
-  fetchGetChatRoom,
-  fetchGetChatRooms,
-  fetchGetChatUser,
-} from '@/api/chat'
+import { fetchGetChatRooms, fetchGetChatUser } from '@/api/chat'
 import { ChatListCard } from '@/components/chat'
 import useChatStore from '@/hooks/useChatStore'
 
@@ -15,8 +11,7 @@ export default function ChatLayout() {
   const path = useParams()
   const navigate = useNavigate()
   const [rooms, setRooms] = useState<ChatRoom[]>([])
-  const [selectedRoomId, setSelectedRoomId] = useState(Number(path.roomId) ?? 0)
-  const { setUser, setRoom } = useChatStore()
+  const { setUser } = useChatStore()
 
   useEffect(() => {
     const fetchRoomsAndUser = async () => {
@@ -43,14 +38,6 @@ export default function ChatLayout() {
   }, [])
 
   useEffect(() => {
-    const fetchRoom = async () => {
-      if (path.roomId) {
-        const response = await fetchGetChatRoom(path.roomId)
-        setRoom(response)
-      }
-    }
-
-    fetchRoom()
     const handleSocketConnect = () => {
       console.log('--> 소켓에 연결되었습니다.', socket.id)
     }
@@ -62,15 +49,9 @@ export default function ChatLayout() {
       socket.disconnect()
       socket.off(CHAT.CONNECT, handleSocketConnect)
     }
-  }, [path, setRoom])
+  }, [path])
 
   const handleSelectRoom = (id: number) => {
-    const room = rooms.find((room) => room.room === id)
-    if (room) {
-      setRoom(room)
-    }
-
-    setSelectedRoomId(id)
     navigate(`/chat/${id}`)
   }
 
@@ -93,7 +74,7 @@ export default function ChatLayout() {
                 <ChatListCard
                   key={room._id}
                   room={room}
-                  selected={room.room === selectedRoomId}
+                  selected={room.room === Number(path.roomId)}
                   onClick={handleSelectRoom}
                 />
               ))}
