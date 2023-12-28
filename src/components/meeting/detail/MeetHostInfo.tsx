@@ -34,11 +34,7 @@ export default function MeetHostInfo({
 
         {/* 방장자기소개 */}
         <div className='tablet:w-[calc(100%-180px)] w-full rounded-big-radius overflow-y-auto border-2 border-sub-color tablet:h-auto h-40'>
-          <p className='p-3.5 h- whitespace-pre-wrap h-40'>
-            {leaderIntroduce}
-            {leaderIntroduce}
-            {leaderIntroduce}
-          </p>
+          <p className='p-3.5 h- whitespace-pre-wrap h-40'>{leaderIntroduce}</p>
         </div>
       </div>
     </>

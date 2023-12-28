@@ -25,8 +25,6 @@ export default function App() {
         <NewPageScrollToTop />
         <Routes>
           <Route path='/' element={<Layout />}>
-            {/* 공통컴포넌트 샘플 */}
-            {/* <Route path='/' element={<Example />} /> */}
             <Route path='/' element={<Main />} />
             <Route path='/meetup-lists/:categoryId' element={<MeetupList />} />
             <Route path='/details/:postId' element={<Detail />} />

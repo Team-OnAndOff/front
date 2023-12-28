@@ -158,13 +158,6 @@ export default function Card({ data }: CardProps) {
     setIsMenuVisible(false)
   }
 
-  // 이미지 로더
-  const [isUserImageLoaded, setIsUserImageLoaded] = useState(false)
-
-  const handleUserImageLazyLoad = () => {
-    setIsUserImageLoaded(true)
-  }
-
   // 신고모달
   const openModal = () => {
     setIsModalOpen(true)
@@ -197,7 +190,6 @@ export default function Card({ data }: CardProps) {
                 alt={title}
                 className='object-cover w-full h-full min-w-[230px] cursor-pointer rounded-image-radius'
                 loading='lazy'
-                onLazyLoad={handleUserImageLazyLoad}
               />
             </Link>
           </div>
