@@ -81,9 +81,6 @@ export default function RecruitsEdit() {
   const currentStartDate = dayjs(watch('challengeStartDate')).format(
     'YYYY-MM-DD',
   )
-  const [currentEndDate, setCurrentEndDate] = useState<string>(
-    dayjs(watch('challengeEndDate')).format('YYYY-MM-DD'),
-  )
 
   useEffect(() => {
     const fetchData = async () => {
@@ -227,17 +224,16 @@ export default function RecruitsEdit() {
       </p>
     ) : null
   }
+  const endDateShow = dayjs(watch('challengeEndDate')).format('YYYY-MM-DD')
 
   const handleDateChange = (date: Date) => {
     setValue('challengeStartDate', date)
     setValue('challengeEndDate', date)
     setShowStartDayPick(false)
-    setCurrentEndDate(dayjs(date).format('YYYY-MM-DD'))
   }
 
   const handleEndDateChange = (date: Date) => {
     setValue('challengeEndDate', date)
-    setCurrentEndDate(dayjs(date).format('YYYY-MM-DD'))
     setShowEndDayPick(false)
   }
 
@@ -376,7 +372,10 @@ export default function RecruitsEdit() {
                     {currentStartDate}
                   </div>
                   {showStartDayPick && (
-                    <RecruitsDayPick onDayClick={handleDateChange} />
+                    <RecruitsDayPick
+                      onDayClick={handleDateChange}
+                      selectedStartDate={watch('challengeStartDate')}
+                    />
                   )}
                 </div>
                 <p className='pt-2 font-bold'>~</p>
@@ -386,12 +385,13 @@ export default function RecruitsEdit() {
                     onClick={handleEndDayPickClick}
                   >
                     <CiCalendar />
-                    {currentEndDate}
+                    {endDateShow}
                   </div>
                   {showEndDayPick && (
                     <RecruitsDayPick
                       onDayClick={handleEndDateChange}
                       selectedStartDate={watch('challengeStartDate')}
+                      selectedEndDate={watch('challengeEndDate')}
                     />
                   )}
                 </div>
@@ -410,7 +410,10 @@ export default function RecruitsEdit() {
                   {currentStartDate}
                 </div>
                 {showStartDayPick && (
-                  <RecruitsDayPick onDayClick={handleDateChange} />
+                  <RecruitsDayPick
+                    onDayClick={handleDateChange}
+                    selectedStartDate={watch('challengeStartDate')}
+                  />
                 )}
               </div>
             </div>

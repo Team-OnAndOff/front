@@ -196,6 +196,8 @@ export default function RecruitsCreate() {
 
   const handleCategoryChange = (value: number) => {
     setSelectedCategory(value)
+    setValue('challengeStartDate', new Date())
+    setCurrentEndDate(dayjs(new Date()).format('YYYY-MM-DD'))
     setValue('categoryId', value)
   }
 
@@ -325,7 +327,10 @@ export default function RecruitsCreate() {
                     {currentStartDate}
                   </div>
                   {showStartDayPick && (
-                    <RecruitsDayPick onDayClick={handleDateChange} />
+                    <RecruitsDayPick
+                      onDayClick={handleDateChange}
+                      selectedStartDate={watch('challengeStartDate')}
+                    />
                   )}
                 </div>
                 <p className='pt-2 font-bold'>~</p>
@@ -341,6 +346,7 @@ export default function RecruitsCreate() {
                     <RecruitsDayPick
                       onDayClick={handleEndDateChange}
                       selectedStartDate={watch('challengeStartDate')}
+                      selectedEndDate={watch('challengeEndDate')}
                     />
                   )}
                 </div>
@@ -359,7 +365,10 @@ export default function RecruitsCreate() {
                   {currentStartDate}
                 </div>
                 {showStartDayPick && (
-                  <RecruitsDayPick onDayClick={handleDateChange} />
+                  <RecruitsDayPick
+                    onDayClick={handleDateChange}
+                    selectedStartDate={watch('challengeStartDate')}
+                  />
                 )}
               </div>
             </div>
