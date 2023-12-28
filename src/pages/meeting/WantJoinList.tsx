@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 
 interface UserData {
+  id: number
   answer: string
   user: {
+    id: number
     username: string[]
     image: {
       uploadPath: string[] | null
@@ -15,6 +17,7 @@ interface UserData {
 
 const UserCard = () => {
   const [userData, setUserData] = useState<UserData[]>([])
+  const [newLoad, setNewLoad] = useState(true)
   const { meetingId } = useParams()
   const navigate = useNavigate()
   useEffect(() => {
@@ -29,7 +32,7 @@ const UserCard = () => {
     }
 
     fetchData()
-  }, [meetingId, navigate])
+  }, [meetingId, navigate, newLoad])
   console.log(userData)
 
   //수락버튼
@@ -37,15 +40,17 @@ const UserCard = () => {
     meetingUserId: number,
     userId: number,
     status: number,
-    meetingId: number,
+    meetingId: string,
   ) => {
     console.log(meetingUserId, userId, status, meetingId, '미팅/유저아이디')
-    const formData = new FormData()
-    formData.append('status', status.toString())
-    formData.append('userId', userId.toString())
+    const formData = {
+      status: status,
+      userId: userId,
+    }
 
     try {
       await statusPut(formData, meetingUserId, meetingId)
+      setNewLoad((prev) => !prev)
     } catch {
       console.log('데이터 전달오류')
     }
@@ -53,6 +58,9 @@ const UserCard = () => {
 
   return (
     <>
+      {userData.length === 0 && (
+        <h4 className='mt-5 text-size-title'>신청자가 없습니다....</h4>
+      )}
       {userData.map((item, index) => (
         <section
           key={index}
@@ -81,13 +89,25 @@ const UserCard = () => {
               children='거절'
               width='w-[70%] h-[40px]'
               fill='border'
-              onClick={() => alert('거절')}
+              onClick={() => {
+                if (meetingId) {
+                  userSec(item.id, item.user.id, 1, meetingId)
+                } else {
+                  console.error('meetingId is undefined')
+                }
+              }}
             />
             <Button
               children='수락'
               width='w-[70%]'
               fill='activeFill'
-              onClick={userSec(item.id, item.user.id, 1, meetingId)}
+              onClick={() => {
+                if (meetingId) {
+                  userSec(item.id, item.user.id, 3, meetingId)
+                } else {
+                  console.error('meetingId is undefined')
+                }
+              }}
             />
           </div>
         </section>
@@ -100,7 +120,7 @@ const WantJoinList = () => {
   return (
     <>
       <div className='text-center min-h-[33rem]'>
-        <h4 className='font-bold text-size-title'>
+        <h4 className='font-bold mt-14 text-size-title'>
           Crew / Challenge 신청자 관리
         </h4>
         <UserCard />
