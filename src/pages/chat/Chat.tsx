@@ -1,75 +1,111 @@
-import { fetchGetRecruitEvents } from '@/api/event'
+import { useEffect, useRef, useState } from 'react'
 import {
   ChatBadge,
   ChatRoomInput,
   ChatRoomMessage,
   ChatRoomTitle,
 } from '@/components/chat'
-import useAuthStore from '@/store/userStore'
-
-import { CHAT, ChatMessage, RecruitData } from '@/types'
+import { CHAT, ChatMessage, ChatResponse } from '@/types'
+import useChatStore from '@/hooks/useChatStore'
 import socket from '@/utils/socket'
-import { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useIntersectionObserver } from '@/hooks'
+import { fetchGetChatPrevMessages } from '@/api/chat'
 
 export default function Chat() {
-  const { user } = useAuthStore()
-  const params = useParams()
-  const roomId = params.roomId
-  // const users = [1, 2, 3, 4, 12]
-
-  const chatContainerRef = useRef<HTMLDivElement>(null)
   const messageEndRef = useRef<HTMLDivElement>(null)
   const [message, setMessage] = useState('')
   const [items, setItems] = useState<ChatMessage[]>([])
-  const [item, setItem] = useState<RecruitData | null>(null)
+
+  const { user, room } = useChatStore()
+  const [isLoading, setIsLoading] = useState(false)
+  const [isNext, setIsNext] = useState(false)
+  const [isScrollToBottom, setIsScrollToBottom] = useState(false)
+  const page = useRef(1)
+
   useEffect(() => {
-    const fetchGetRoom = async () => {
-      if (roomId) {
-        const data = await fetchGetRecruitEvents(Number(roomId))
-        setItem(data)
+    page.current = 1
+    if (room) {
+      const handleSocketConnect = () => {
+        console.log('--> 소켓에 연결되었습니다.')
+      }
+
+      socket.on(CHAT.CONNECT, handleSocketConnect)
+      socket.emit(
+        CHAT.ROOM_JOIN,
+        { roomId: room._id },
+        (response: ChatResponse) => {
+          console.log(response)
+          setIsNext(true)
+        },
+      )
+
+      return () => {
+        socket.off(CHAT.CONNECT, handleSocketConnect)
       }
     }
-    fetchGetRoom()
-  }, [roomId])
+  }, [room])
 
   useEffect(() => {
     socket.on(
-      CHAT.ENTERED,
-      (response: { roomId: string; messages: ChatMessage[] }) => {
-        setItems(response.messages)
+      CHAT.PREV_MESSAGES,
+      ({ messages }: { messages: ChatMessage[] }) => {
+        setItems(messages)
       },
     )
 
-    socket.on(CHAT.MESSAGE, (response: ChatMessage) => {
-      console.log('zz')
-      setItems((prev) => [...prev, response])
-    })
-
-    socket.on('read', (data) => {
-      const { messages } = data
-      setItems((prev) => [...messages, ...prev])
+    socket.on(CHAT.MESSAGE, ({ message }: { message: ChatMessage }) => {
+      console.log('message', message)
+      setItems((prev) => [message, ...prev])
     })
   }, [])
 
-  useEffect(() => {
-    socket.emit(CHAT.JOIN_ROOM, { roomId })
-  }, [roomId])
-
   const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (!message) {
+      return
+    }
+
     setMessage('')
-    socket.emit(CHAT.MESSAGE, { message })
+    setIsScrollToBottom(true)
+    if (user && room) {
+      socket.emit(
+        CHAT.SEND_MESSAGE,
+        { userId: user._id, roomId: room._id, message },
+        (response: ChatResponse) => {
+          console.log('send message: ', response)
+        },
+      )
+    }
   }
+
+  const onIntersect: IntersectionObserverCallback = async ([
+    { isIntersecting },
+  ]) => {
+    if (room && isIntersecting && !isLoading && isNext) {
+      setIsLoading(true)
+      const messages = await fetchGetChatPrevMessages(room?._id, page.current)
+      page.current += 1
+      if (messages.length === 0) {
+        setIsNext(false)
+      } else {
+        setIsNext(true)
+      }
+      setIsScrollToBottom(false)
+      setIsLoading(false)
+      setItems((prev) => [...prev, ...messages])
+    }
+  }
+
+  const { setTarget } = useIntersectionObserver({ onIntersect, threshold: 0.8 })
 
   useEffect(() => {
     document.body.style.cssText = `
-    position: fixed; 
+    position: fixed;
     top: -${window.scrollY}px;
     overflow-y: scroll;
     width: 100%;`
-
-    if (messageEndRef.current) {
+    if (messageEndRef.current && isScrollToBottom) {
       messageEndRef.current.scrollIntoView()
     }
     return () => {
@@ -77,33 +113,35 @@ export default function Chat() {
       document.body.style.cssText = ''
       window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
     }
-  }, [items])
-
-  const test = () => {
-    socket.emit('read', { roomId, message: items[0] })
-  }
+  }, [items, isScrollToBottom])
 
   return (
     <>
-      {item && (
-        <div className='flex-col h-screen overflow-y-auto lg:h-full p-2 lg:flex lg:col-span-2 z-50 '>
-          <ChatRoomTitle title={item.title} />
-          <div
-            ref={chatContainerRef}
-            className='flex flex-1 p-1 overflow-auto gap-2 sm:p-4 flex-col'
-          >
+      {room && user && (
+        <div className='flex-col h-screen overflow-y-auto lg:h-full p-2 lg:flex lg:col-span-2 z-50 relative'>
+          <ChatRoomTitle title={room.name} />
+          <div className='flex flex-1 overflow-auto gap-2 sm:p-4 flex-col-reverse h-full relative'>
+            <div ref={messageEndRef}></div>
             {items.map((item, index) => (
               <div key={index}>
-                {/* {item.type === 'system' ? (
-                <ChatBadge text={item.message} />
-              ) : ( */}
-                <ChatRoomMessage item={item} />
-                {/* )} */}
-                <div ref={messageEndRef}></div>
+                {item.type === 'system' ? (
+                  <ChatBadge text={item.message} />
+                ) : (
+                  <ChatRoomMessage
+                    item={item}
+                    isSelf={item.user?._id === user?._id}
+                  />
+                )}
               </div>
             ))}
+            <div ref={setTarget} className='flex h-[60px] flex-shrink-0'>
+              {isLoading && (
+                <span className='block w-full text-center text-sm text-neutral-500'>
+                  Loading.....
+                </span>
+              )}
+            </div>
           </div>
-          <button onClick={test}>이전</button>
           <ChatRoomInput
             message={message}
             setMessage={setMessage}

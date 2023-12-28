@@ -3,6 +3,7 @@ import { IconType } from 'react-icons'
 interface ChatRoomIconProps {
   icon: IconType
   className?: string
+  onClick?: () => void
 }
 
 export default function ChatRoomIcon({

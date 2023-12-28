@@ -1,5 +1,7 @@
-import { ChatMessageCount } from '@/components/chat'
-import { ChatRoom } from '@/types'
+import { useEffect, useState } from 'react'
+import socket from '@/utils/socket'
+import { ChatBadge, ChatMessageCount } from '@/components/chat'
+import { CHAT, ChatRoom } from '@/types'
 
 interface ChatListCardProps {
   room: ChatRoom
@@ -12,32 +14,45 @@ export default function ChatListCard({
   selected,
   onClick,
 }: ChatListCardProps) {
+  const [item, setItem] = useState(room)
+
+  useEffect(() => {
+    socket.on(CHAT.ROOMS, ({ room }: { room: ChatRoom }) => {
+      if (item._id.toString() === room._id.toString()) {
+        setItem(room)
+      }
+    })
+  }, [item])
+
   return (
     <div
       className={`flex flex-row gap-2 py-4 px-2 justify-start items-center border-b-[1px]  cursor-pointer relative ${
         selected ? 'bg-orange-200' : 'hover:bg-main-light-color'
       }`}
-      onClick={() => onClick(room.id)}
+      onClick={() => onClick(item.room)}
     >
       <div className='relative'>
         <img
-          src={room.event.image.uploadPath}
+          src={item.image}
           className='object-cover h-12 w-12 rounded-full'
           alt='image'
         />
-        {/* {item.category.parentId?.name && (
+        {item.category && (
           <span className='absolute bottom-[-10px] w-full'>
-            <ChatBadge text={item.category.parentId?.name} xs />
+            <ChatBadge text={item.category} xs />
           </span>
-        )} */}
+        )}
       </div>
-      <div className='flex flex-col max-w-xs'>
+      <div className='flex flex-col max-w-xs w-full'>
         <div className='text-sm sm:text-size-body font-semibold truncate'>
-          {room.event.title}
+          <div>{item.name}</div>
         </div>
         <span className='text-neutral-500 text-xs font-semibold truncate'>
-          마지막 메세지 내용
+          {item.lastMessage}
         </span>
+      </div>
+      <div className='absolute top-2 right-2 inline-block text-xs text-neutral-500'>
+        {item.users.length}명 참여중
       </div>
       <ChatMessageCount count={1000} />
     </div>

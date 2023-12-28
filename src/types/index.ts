@@ -183,8 +183,9 @@ export interface careerCategory {
 export interface ChatUser {
   _id: string
   userId: number
-  socketId: string
   online: boolean
+  username: string
+  image: string
   createdAt: Date
   updatedAt: Date
 }
@@ -192,31 +193,36 @@ export interface ChatMessage {
   _id: string
   type: 'text' | 'image' | 'link' | 'system'
   message: string
-  date: Date
-  user: any
+  user: ChatUser
+  createdAt: Date
 }
 
 export interface ChatRoom {
-  id: number
-  event: {
-    id: number
-    title: string
-    image: { uploadPath: string }
-  }
+  _id: string
+  room: number
+  name: string
+  image: string
+  category: string
+  lastMessage?: string
+  createdAt: Date
+  updatedAt: Date
+  users: ChatUser[]
 }
 
-export interface ChatResponse<T> {
+export interface ChatResponse {
+  connect?: boolean
   code: number
-  data?: T
+  message: string
 }
 
 export enum CHAT {
-  CONNECT = 'first',
-  JOIN_ROOM = 'room',
-  ENTERED = 'entered',
-  LOGIN = 'login',
-  ROOMS = 'rooms',
+  CONNECT = 'connect',
+  ROOM_JOIN = 'room',
   PREV_MESSAGES = 'getPrevMessages',
   SEND_MESSAGE = 'sendMessage',
   MESSAGE = 'message',
+  MESSAGES = 'read',
+  DISCONNECT = 'disconnect',
+  ROOMS = 'rooms',
+  USER_INFO = 'userinfo',
 }
