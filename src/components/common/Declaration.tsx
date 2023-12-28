@@ -1,35 +1,58 @@
-import { userReports } from '@/api/userReports'
+import {
+  EventReportDataProps,
+  UserReportDataProps,
+  fetchEventReport,
+  fetchUserReports,
+} from '@/api/reports'
 import { Button } from '@/components/common'
 import { useForm, SubmitHandler } from 'react-hook-form'
 interface FormData {
   description: string
   attendeeId?: number
+  eventId?: number
 }
 interface Props {
   closeModal: () => void
-  attendeeId?: string
+  attendeeId?: number
+  reporterId?: number
+  eventId?: number
+  type: 'userReport' | 'eventReport'
 }
 
-const Declaration = ({ closeModal, attendeeId }: Props) => {
+const Declaration = ({
+  closeModal,
+  attendeeId,
+  eventId,
+  type,
+  reporterId,
+}: Props) => {
   const { register, handleSubmit } = useForm<FormData>()
-
   // 폼 서밋 핸들러
   const onSubmit: SubmitHandler<FormData> = async (data, event) => {
-    console.log(attendeeId, '유저아이디')
     if (event) {
-      event?.preventDefault()
+      event.preventDefault()
     }
 
-    const repotData = {
+    const userReportData: UserReportDataProps = {
       description: data.description,
-      attendeeId:
-        attendeeId !== undefined ? parseInt(attendeeId, 10) : undefined,
+      attendeeId: attendeeId,
     }
 
-    try {
-      await userReports(repotData)
-    } catch (error) {
-      console.log('데이터 전달오류', error)
+    const eventReportData: EventReportDataProps = {
+      description: data.description,
+      eventId: eventId,
+      reporterId: reporterId,
+    }
+    if (type === 'userReport') {
+      const data = await fetchUserReports(userReportData)
+      if (data && data.code === 200) {
+        alert('유저 신고 완료')
+      }
+    } else if (type === 'eventReport') {
+      const data = await fetchEventReport(eventReportData)
+      if (data && data.code === 201) {
+        alert('모임 신고 완료')
+      }
     }
   }
 

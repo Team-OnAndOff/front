@@ -44,7 +44,7 @@ export default function MyPage() {
     setSelectedTab(index)
   }
   const { userId } = useParams()
-
+  const attendeeId = Number(userId)
   //유저 데이터 가져오기
   useEffect(() => {
     const fetchData = async () => {
@@ -181,7 +181,11 @@ export default function MyPage() {
                 isOpen={isModalOpen && modalType === 'declaration'}
                 closeModal={closeModal}
               >
-                <Declaration closeModal={closeModal} attendeeId={userId} />
+                <Declaration
+                  type='userReport'
+                  closeModal={closeModal}
+                  attendeeId={attendeeId}
+                />
               </Modal>
             </div>
           )}
