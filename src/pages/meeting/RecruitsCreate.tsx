@@ -141,7 +141,6 @@ export default function RecruitsCreate() {
     }
 
     try {
-      await fetchPostEvents(formData)
       const result = await MySwal.fire({
         title: '등록 확인',
         text: '작성하신 내용을 등록하시겠습니까?',
