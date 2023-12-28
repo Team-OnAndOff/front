@@ -1,44 +1,63 @@
-import { Outlet, useNavigate } from 'react-router-dom'
-import { BsChat } from 'react-icons/bs'
 import { useEffect, useState } from 'react'
+import { Outlet, useNavigate, useParams } from 'react-router-dom'
+import { BsChat } from 'react-icons/bs'
 import socket from '@/utils/socket'
-import { CHAT, ChatRoom } from '@/types'
+import { ChatRoom } from '@/types'
+import { fetchGetChatRooms, fetchGetChatUser } from '@/api/chat'
 import { ChatListCard } from '@/components/chat'
-import { fetchGetChatRooms } from '@/api/chat'
-import useAuthStore from '@/store/userStore'
+import useChatStore from '@/hooks/useChatStore'
 
 export default function ChatLayout() {
-  const { user } = useAuthStore()
-  const [rooms, setRooms] = useState<ChatRoom[]>([])
-  const [selectedRoomId, setSelectedRoomId] = useState(0)
-
+  const path = useParams()
   const navigate = useNavigate()
+
+  const [rooms, setRooms] = useState<ChatRoom[]>([])
+  const [selectedRoomId, setSelectedRoomId] = useState(Number(path.roomId) ?? 0)
+  const { room, setUser, setRoom } = useChatStore()
+
   useEffect(() => {
-    if (!user) {
-      return
-    }
-
-    const fetchRooms = async () => {
-      const rooms = await fetchGetChatRooms(user.id)
-      if (rooms) {
-        setRooms(rooms)
-      }
-    }
-
     socket.connect()
-    socket.on(CHAT.CONNECT, (response) => {
-      if (response.connect) {
-        console.log('--> 소켓에 연결되었습니다.')
-      }
-    })
 
-    fetchRooms()
     return () => {
-      socket.close()
+      socket.disconnect()
     }
-  }, [user])
+  }, [room])
+
+  useEffect(() => {
+    const fetchRoomsAndUser = async () => {
+      try {
+        const [rooms, user] = await Promise.all([
+          fetchGetChatRooms(),
+          fetchGetChatUser(),
+        ])
+
+        setRooms(rooms)
+        console.log(rooms)
+        if (user) {
+          setUser(user)
+        }
+
+        if (
+          path.roomId &&
+          !rooms.find((room) => room.room === Number(path.roomId))
+        ) {
+          alert('참여중이지 않은 모임에는 입장할 수 없습니다.')
+          navigate('/')
+        }
+      } catch (error) {
+        console.error('Error: ', error)
+      }
+    }
+
+    fetchRoomsAndUser()
+  }, [setUser, navigate, path])
 
   const handleSelectRoom = (id: number) => {
+    const room = rooms.find((room) => room.room === id)
+    if (room) {
+      setRoom(room)
+    }
+
     setSelectedRoomId(id)
     navigate(`/chat/${id}`)
   }
@@ -52,7 +71,7 @@ export default function ChatLayout() {
         </h1>
         {rooms.length === 0 && (
           <div className='flex justify-center h-[900px] border-[1px] my-2 items-center'>
-            채팅방이 없습니다.
+            참여중인 모임이 없습니다.
           </div>
         )}
         {rooms.length > 0 && (
@@ -60,9 +79,9 @@ export default function ChatLayout() {
             <div className='flex flex-col w-full border-r-[1px] overflow-y-auto'>
               {rooms.map((room) => (
                 <ChatListCard
-                  key={room.id}
+                  key={room._id}
                   room={room}
-                  selected={room.id === selectedRoomId}
+                  selected={room.room === selectedRoomId}
                   onClick={handleSelectRoom}
                 />
               ))}

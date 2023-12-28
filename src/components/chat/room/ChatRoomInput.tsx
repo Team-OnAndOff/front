@@ -23,7 +23,7 @@ export default function ChatRoomInput({
         <input
           type='text'
           placeholder='채팅 내용을 입력해주세요...'
-          className='w-full focus:outline-none focus:placeholder-neutral-400 text-neutral-600 placeholder-neutral-600 pl-4 bg-neutral-200 rounded-md py-3'
+          className='w-full pr-20 lg:pr-52 focus:outline-none focus:placeholder-neutral-400 text-neutral-600 placeholder-neutral-600 pl-4 bg-neutral-200 rounded-md py-3'
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
