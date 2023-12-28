@@ -2,14 +2,14 @@ import Betsy from '@/components/meeting/mypage/Betsy'
 import IntroModal from '@/components/meeting/mypage/IntroModal'
 import SwiperCard from '@/components/meeting/mypage/SwiperCard'
 import TapCard from '@/components/meeting/mypage/Tapcard'
-import { FaUserGear, FaRegFaceGrin } from 'react-icons/fa6'
+import { FaUserGear } from 'react-icons/fa6'
 import { PiSiren } from 'react-icons/pi'
 import { useEffect, useState } from 'react'
 import { Modal, Declaration } from '@/components/common'
-import Evaluation from '@/components/meeting/mypage/Evaluation'
 import { useParams, useNavigate } from 'react-router-dom'
 import { userInfo } from '@/api/userinfo'
 import { userCard } from '@/api/userCard'
+import { badgesData } from '@/api/user'
 
 interface UserData {
   username: string | null
@@ -30,15 +30,22 @@ interface CardNumType {
     title: string
   }
 }
+interface BadgeType {
+  challenges: { count: number | null }
+  crew: { count: number | null }
+  made: { count: number | null }
+}
 
 export default function MyPage() {
   const [userMe, setUserMe] = useState<boolean | undefined>(undefined) // 마이페이지가 본인건지 확인.
   const [selectedTab, setSelectedTab] = useState(0) // 탭 기능구현 스테이트
   const [tapNumData, setTapNumData] = useState<number[]>([])
   const [userData, setUserData] = useState<UserData | null>(null) //유저 데이터
-  const [data, setData] = useState()
+  const [badges, setBadges] = useState<BadgeType | null>()
+  const [data, setData] = useState() //스와이프  모임 데이터
   const [swiperData, setSwiperData] = useState('pending')
   const navigate = useNavigate() // 유저없을시 페이지 강제이동
+
   const handleTabClick = (index: number) => {
     // 탭 기능구현 핸들러
     setSelectedTab(index)
@@ -55,16 +62,27 @@ export default function MyPage() {
           setUserData(response)
         }
       } catch (error) {
-        console.error('에러 발생:', error)
+        console.error('에러 발생: 유저 데이터', error)
         navigate('/')
       }
     }
     fetchData()
+
+    const badges = async () => {
+      try {
+        const response = await badgesData(userId)
+        console.log(response)
+        setBadges(response)
+      } catch (error) {
+        console.error('에러 발생: 배찌 데이터', error)
+      }
+    }
+    badges()
   }, [navigate, userId]) // userData가 변경될 때마다 useEffect 다시 실행
 
   console.log(userData)
 
-  //모임 데이터 가져오기 이펙트
+  //슬라이드 모임 데이터 가져오기 이펙트
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -73,10 +91,11 @@ export default function MyPage() {
         if (cardData.data) {
           const { approved, liked, made, pending } = cardData.data
           const numDataValues = [
-            (approved as CardNumType[]).length,
-            (liked as CardNumType[]).length,
-            (made as CardNumType[]).length,
+            //배열위치로 데이터 위치가 바뀝니다.
             (pending as CardNumType[]).length,
+            (approved as CardNumType[]).length,
+            (made as CardNumType[]).length,
+            (liked as CardNumType[]).length,
           ]
           setTapNumData(numDataValues)
           const dataName = cardData.data[swiperData]
@@ -112,7 +131,7 @@ export default function MyPage() {
 
       {/* 프로필 카드 start */}
       <section
-        className='flex flex-row items-center h-[12.5rem] w-full rounded-big-radius
+        className=' flex flex-row items-center h-[12.5rem] w-full rounded-big-radius
       border border-solid border-light-gray-color mt-7 shadow-md justify-between'
       >
         {/* 이미지박스 */}
@@ -192,7 +211,7 @@ export default function MyPage() {
           {/* 신고 e*/}
 
           {/* 평가 s*/}
-          <div className='absolute z-100 right-[10px] top-[50px]'>
+          {/* <div className='absolute z-100 right-[10px] top-[50px]'>
             <button onClick={() => openModal('evaluation')}>
               <FaRegFaceGrin />
             </button>
@@ -202,7 +221,7 @@ export default function MyPage() {
             >
               <Evaluation closeModal={closeModal} />
             </Modal>
-          </div>
+          </div> */}
           {/* 평가 e*/}
 
           <div className='w-[68px] h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
@@ -264,7 +283,12 @@ export default function MyPage() {
         <h4 className='font-bold mt-14 text-size-title'>획득한 배지</h4>
       </div>
       <section className='pb-10'>
-        <Betsy attend={9} open={100} success={20} bestValse={[1, 0, 1]} />
+        <Betsy
+          attend={badges?.crew.count}
+          open={badges?.made.count}
+          success={badges?.challenges.count}
+          bestValse={[1, 0, 1]}
+        />
       </section>
     </>
   )

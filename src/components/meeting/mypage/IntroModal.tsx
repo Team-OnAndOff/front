@@ -4,6 +4,8 @@ import Swal from 'sweetalert2'
 import InputHash from './InputHash'
 import { Button } from '@/components/common'
 import { userEdit } from '@/api/userEdit'
+import { userEsc } from '@/api/userEsx'
+import useAuthStore from '@/store/userStore'
 
 // 폼 데이터 타입 정의
 interface FormData {
@@ -32,6 +34,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
   const { register, handleSubmit, getValues, setValue } = useForm<FormData>()
   const [dataArray, setDataArray] = useState<string[]>([])
   const [myImage, setMyImage] = useState<File | null>(null)
+  const { setUserLogout } = useAuthStore((state) => state)
   const formData = getValues()
   // 이미지 변경 핸들러
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -93,18 +96,23 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
   }
 
   // 탈퇴 버튼 클릭 이벤트
-  const quit = () => {
-    const 삭제할_ID_값 = '블랙 목티남'
-    Swal.fire({
+  const quit = async () => {
+    const 삭제할_ID_값 = `${myUserData?.username}`
+    await Swal.fire({
       icon: 'warning',
       title: `[${삭제할_ID_값}] 님`,
       text: `탈퇴 하시겠습니까?`,
       showCancelButton: true,
       confirmButtonText: '탈퇴',
       cancelButtonText: '취소',
-    }).then((res) => {
+    }).then(async (res) => {
       if (res.isConfirmed) {
-        console.log('탈퇴 요청 처리')
+        const response = await userEsc()
+        console.log(response)
+        if (response?.status === 200) {
+          setUserLogout()
+          window.location.href = '/'
+        }
       } else {
         console.log('취소')
       }
@@ -157,7 +165,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
                 </div>
                 {!myImage && (
                   <p className='ml-2 text-size-subbody text-main-color'>
-                    기준 사이즈 정사각형
+                    기준 정방형 사이즈
                   </p>
                 )}
                 {myImage && (
