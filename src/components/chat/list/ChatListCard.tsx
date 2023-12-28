@@ -17,7 +17,7 @@ export default function ChatListCard({
   const [item, setItem] = useState(room)
 
   useEffect(() => {
-    socket.on(CHAT.ROOMS, ({ room }: { room: ChatRoom }) => {
+    socket.on(CHAT.ROOM_INFO, ({ room }: { room: ChatRoom }) => {
       if (item._id.toString() === room._id.toString()) {
         setItem(room)
       }

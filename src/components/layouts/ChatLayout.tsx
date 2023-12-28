@@ -17,7 +17,6 @@ export default function ChatLayout() {
 
   useEffect(() => {
     socket.connect()
-
     return () => {
       socket.disconnect()
     }
