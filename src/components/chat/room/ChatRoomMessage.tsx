@@ -1,8 +1,6 @@
 import { ChatRoomImage, ChatRoomTime } from '@/components/chat'
-import { CHAT, ChatMessage, ChatUser } from '@/types'
-import { useEffect, useState } from 'react'
+import { ChatMessage } from '@/types'
 import { formatDateTime } from '@/utils'
-import socket from '@/utils/socket'
 
 interface ChatRoomMessageProps {
   isSelf: boolean
@@ -13,20 +11,20 @@ export default function ChatRoomMessage({
   item,
   isSelf,
 }: ChatRoomMessageProps) {
-  const [user, setUser] = useState(item.user)
-  useEffect(() => {
-    socket.on(CHAT.USER_INFO, (response: ChatUser) => {
-      if (user._id.toString() === response._id.toString()) {
-        setUser(response)
-      }
-    })
-  }, [])
+  // const [user, setUser] = useState(item.user)
+  // useEffect(() => {
+  //   socket.on(CHAT.USER_INFO, (response: ChatUser) => {
+  //     if (user._id.toString() === response._id.toString()) {
+  //       setUser(response)
+  //     }
+  //   })
+  // }, [])
 
   return (
     <div className='chat-message'>
       <div className={`flex items-end ${isSelf && 'justify-end'}`}>
         <div className='flex flex-col space-y-1 text-xs max-w-xs mx-2 items-start order-2'>
-          {!isSelf && <span>{user.username}</span>}
+          {!isSelf && <span>{item.user.username}</span>}
           <div className='flex gap-1 items-end'>
             <div
               className={`px-4 py-2 rounded-lg inline-block ${
@@ -52,7 +50,7 @@ export default function ChatRoomMessage({
         </div>
         {!isSelf && (
           <div className='relative'>
-            <ChatRoomImage user={user} />
+            <ChatRoomImage user={item.user} />
           </div>
         )}
       </div>
