@@ -70,8 +70,6 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
                 autoplay={{
                   delay: 2000,
                   disableOnInteraction: false,
-                  // waitForTransition: true,
-                  // stopOnLastSlide: false,
                 }}
                 breakpoints={{
                   1740: {

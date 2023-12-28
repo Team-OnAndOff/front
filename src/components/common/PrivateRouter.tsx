@@ -25,7 +25,10 @@ export default function PrivateRouter() {
         if (result.isConfirmed) {
           navigate('/login')
         } else {
-          if (window.location.pathname === '/chat') {
+          if (
+            window.location.pathname === '/chat' ||
+            window.location.pathname === '/userinfo'
+          ) {
             navigate('/')
           }
         }

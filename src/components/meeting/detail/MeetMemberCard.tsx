@@ -1,6 +1,7 @@
 import { EventAppliesUser } from '@/types'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { FaRegSmile } from 'react-icons/fa'
+
 interface MemberCardProps {
   member: EventAppliesUser
   openModal: () => void
@@ -19,21 +20,30 @@ export default function MeetMeberCard({
     findAttendeeId(member.user.id)
     findUserName(member.user.username)
   }
+  const navigate = useNavigate()
+
+  const handleClickUser = () => {
+    navigate(`/userinfo/${member.user.id}`)
+  }
+
   return (
     <>
       {member && (
         <>
           <div className='flex mr-3 pointer flex-col p-1.5 border-2 border-dark-gray-color rounded w-full h-28'>
-            <Link to={`/userinfo/${member.user.id}`} className='basis-3/4'>
-              <div className='w-20 whitespace-pre '>
-                <div className='w-full text-size-subbody line-clamp-3'>
+            <button
+              onClick={handleClickUser}
+              className='flex w-full white basis-3/4'
+            >
+              <div className='space-pre '>
+                <span className=' text-size-subbody line-clamp-3'>
                   {member.user.introduction}
-                </div>
+                </span>
               </div>
-            </Link>
+            </button>
 
             <div className='flex items-center justify-between'>
-              <Link to={`/userinfo/${member.user.id}`}>
+              <button onClick={handleClickUser}>
                 <div className='flex items-center'>
                   <img
                     alt={member.user.username}
@@ -44,7 +54,7 @@ export default function MeetMeberCard({
                     {member.user.username}
                   </span>
                 </div>
-              </Link>
+              </button>
               <div className='flex'>
                 <button
                   className='cursor-pointer hover:scale-105'
