@@ -32,7 +32,6 @@ export default function App() {
             <Route path='meetup-lists/:categoryId' element={<MeetupList />} />
             <Route path='details/:postId' element={<Detail />} />
             <Route element={<PrivateRouter />}>
-              <Route path='userinfo/:userId' element={<MyPage />} />
               <Route path='recruits-create' element={<RecruitsCreate />} />
               <Route path='recruits-edit' element={<RecruitsEdit />} />
               <Route path='want-join/:meetingId' element={<WantJoinList />} />
@@ -44,6 +43,7 @@ export default function App() {
                 <Route path=':roomId' element={<Chat />} />
               </Route>
             </Route>
+            <Route path='userinfo/:userId' element={<MyPage />} />
             <Route path='login' element={<Login />} />
           </Route>
           <Route path='*' element={<NotFound />} />

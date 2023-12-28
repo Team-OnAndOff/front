@@ -13,8 +13,7 @@ export default function PrivateRouter() {
   useEffect(() => {
     if (!user) {
       MySwal.fire({
-        title: '로그인이 필요합니다',
-        text: '로그인 후에 채팅방에 입장하실 수 있습니다.',
+        title: '로그인이 필요한 기능입니다!',
         icon: 'warning',
         iconColor: '#ff5e2e',
         footer: '로그인 페이지로 이동하시겠습니까?',
@@ -22,15 +21,11 @@ export default function PrivateRouter() {
         showCancelButton: true,
         cancelButtonText: '취소',
       }).then((result: SweetAlertResult) => {
-        if (result.isConfirmed) {
+        if (result.isDismissed) {
+          MySwal.close()
+          navigate(-1)
+        } else if (result.isConfirmed) {
           navigate('/login')
-        } else {
-          if (
-            window.location.pathname === '/chat' ||
-            window.location.pathname === '/userinfo'
-          ) {
-            navigate('/')
-          }
         }
       })
       return
