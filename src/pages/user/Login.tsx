@@ -43,10 +43,11 @@ export default function Login() {
       <h2 className='text-4xl font-bold transition-all duration-1000 ease-in-out desktop:text-5xl break-keep text-black-color'>
         Login
       </h2>
-      <h4 className='font-bold select-none text-size-title break-keep text-black-color'>
-        우리의 성장은 함께하는 여정에서 비로소 의미를 찾는다
+      <h4 className='font-bold select-none text-size-body break-keep text-black-color'>
+        우리의 성장은 함께하는 여정에서 비로소 의미를 찾는다.
       </h4>
 
+      {/* 로그인 버튼 */}
       <div className='flex flex-col items-center w-full mt-10 transition-all duration-1000 ease-in-out desktop:gap-y-5 gap-y-3'>
         <button className='rounded-button-radius' onClick={handleKakaoBtnClick}>
           <img
@@ -66,6 +67,29 @@ export default function Login() {
           />
         </button>
       </div>
+
+      {/* 푸터 */}
+      <footer className='flex flex-col items-center border-dark-color w-80'>
+        <div className='border-y'>
+          로그인하거나 회원으로 가입하시면 당사
+          <a
+            target='_blank'
+            href='https://water-vulcanodon-65c.notion.site/1568078dfbad4bb2899df2b15c22e4ce?pvs=4'
+          >
+            이용약관
+          </a>
+          및
+          <a
+            target='_blank'
+            href='https://water-vulcanodon-65c.notion.site/73a58d0b9cac4d43a3ddba5cf7567c15?pvs=4'
+          >
+            개인정보 보호정책
+          </a>
+          에 동의하시는 것으로 간주됩니다. All rights reserved.
+          <br />
+          Copyright (2006 - 2023) - Booking.com™
+        </div>
+      </footer>
     </div>
   )
 }

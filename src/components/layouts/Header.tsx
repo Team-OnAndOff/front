@@ -78,14 +78,14 @@ export default function Header() {
   }, [])
 
   return (
-    <nav className='w-full sticky top-0 z-[999] bg-white border-b shadow-sm'>
+    <nav className='w-full sticky top-0 z-[999] bg-white border-b shadow-sm py-2'>
       <div className='relative z-[999] w-3/4 desktop:w-8/12 max-w-common-screen-width mx-auto bg-transparent transition-all duration-1000'>
         <div className='flex justify-between'>
           <div className='flex space-x-4'>
             <Link
               to='/'
               className={generateClassName(
-                'flex items-center px-2 py-5 text-gray-700',
+                'flex items-center text-gray-700',
                 true,
               )}
             >
@@ -162,6 +162,14 @@ export default function Header() {
             {item.text}
           </NavLink>
         ))}
+
+        <NavLink
+          to={store.user ? '#' : '/login'}
+          className='block px-4 py-2 text-sm hover:bg-main-light-color'
+          onClick={store.user ? handleLogout : closeMobileMenu}
+        >
+          {store.user ? 'Logout' : 'Login'}
+        </NavLink>
       </div>
     </nav>
   )

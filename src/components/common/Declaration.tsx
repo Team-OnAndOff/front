@@ -6,6 +6,9 @@ import {
 } from '@/api/reports'
 import { Button } from '@/components/common'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 interface FormData {
   description: string
   attendeeId?: number
@@ -18,6 +21,8 @@ interface Props {
   eventId?: number
   type: 'userReport' | 'eventReport'
 }
+
+const MySwal = withReactContent(Swal)
 
 const Declaration = ({
   closeModal,
@@ -46,12 +51,26 @@ const Declaration = ({
     if (type === 'userReport') {
       const data = await fetchUserReports(userReportData)
       if (data && data.code === 200) {
-        alert('유저 신고 완료')
+        MySwal.fire(
+          '유저 신고 성공',
+          '신고 내용을 검토한 후,<br/>관리자에 의해 조치가 취해질 예정입니다.',
+          'success',
+        )
+        setTimeout(() => {
+          MySwal.close()
+        }, 1500)
       }
     } else if (type === 'eventReport') {
       const data = await fetchEventReport(eventReportData)
       if (data && data.code === 201) {
-        alert('모임 신고 완료')
+        MySwal.fire(
+          '모임 신고 성공',
+          '신고 내용을 검토한 후,<br/>관리자에 의해 조치가 취해질 예정입니다.',
+          'success',
+        )
+        setTimeout(() => {
+          MySwal.close()
+        }, 1500)
       }
     }
   }
@@ -66,7 +85,7 @@ const Declaration = ({
           신고 사유
         </p>
         <textarea
-          className='w-full p-4 mb-4 overflow-hidden font-medium border-2 border-solid resize-none text-size-body rounded-button-radius border-main-color h-60'
+          className='w-full p-4 mb-4 overflow-hidden font-medium border-2 border-solid resize-none text-size-body rounded-button-radius focus:border-main-color border-dark-gray-color h-60 focus:outline-none'
           {...register('description')}
           maxLength={200}
           placeholder='신고 내용을 적어주세요'

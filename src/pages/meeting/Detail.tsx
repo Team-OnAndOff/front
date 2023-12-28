@@ -82,7 +82,7 @@ export default function Detail() {
           />
           <div className='mt-12'>
             <h3 className='text-xl font-semibold text-black-color'>
-              방장님을 소개합니다!
+              👉 방장님을 소개합니다!
             </h3>
             <MeetHostInfo
               leaderName={postDetail.user.username}
@@ -94,7 +94,7 @@ export default function Detail() {
 
           <div className='mt-12'>
             <h3 className='text-xl font-semibold text-black-color'>
-              우리 멤버를 소개합니다!
+              👉 우리 멤버를 소개합니다!
             </h3>
             {postDetail.eventApplies.length === 0 ? (
               <div className='flex mt-3 justify-center items-center rounded-big-radius border-2 border-dark-gray-color min-h-[120px]'>
@@ -109,7 +109,9 @@ export default function Detail() {
 
           {!postDetail.online && (
             <div className='mt-6'>
-              <h3 className='text-size-title'>모임 장소</h3>
+              <h3 className='text-xl font-semibold text-black-color'>
+                👉 모임 장소
+              </h3>
               <MeetPlace address={postDetail.address.detail1} />
             </div>
           )}
