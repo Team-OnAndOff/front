@@ -35,7 +35,7 @@ const UserCard = () => {
   }, [meetingId, navigate, newLoad])
   console.log(userData)
 
-  //수락버튼
+  //수락,거절버튼 //취소 스테이터스 2
   const userSec = async (
     meetingUserId: number,
     userId: number,

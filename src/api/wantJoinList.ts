@@ -31,7 +31,7 @@ export const statusPut = async (
 ) => {
     console.log(meetingId, meetingUserId);
     try {
-        const url = `/${meetingId}/applies/${meetingUserId}/status`;
+        const url = `${meetingId}/applies/${meetingUserId}/status`;
         console.log(url);
 
         // 직접 객체를 전달하고 Content-Type은 'application/json'으로 설정
