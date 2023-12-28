@@ -1,4 +1,4 @@
-import { Button } from '@/components/common'
+import { Button, BreadCrumb } from '@/components/common'
 import {
   MeetDetailInfo,
   MeetHostInfo,
@@ -6,7 +6,6 @@ import {
   MeetPlace,
 } from '@/components/meeting'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { FaRegLightbulb } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 import { fetchDeleteEvent, fetchGetEventDetail } from '@/api/event'
 import { EventDetailData } from '@/types'
@@ -64,32 +63,27 @@ export default function Detail() {
   return (
     <>
       {postDetail && (
-        <div className='flex flex-col'>
-          <div className='flex items-center mt-6'>
-            <i>
-              <FaRegLightbulb fill='#ff5e2e' size={24} />
-            </i>
-            <h3 className='mt-1 text-size-title'>{postDetail.category.name}</h3>
-          </div>
-          <div className='mt-6'>
-            <MeetDetailInfo
-              online={postDetail.online}
-              startDate={postDetail.challengeStartDate}
-              endDate={postDetail.challengeEndDate}
-              title={postDetail.title}
-              content={postDetail.content}
-              place={postDetail.address?.detail1}
-              memNum={postDetail.recruitment}
-              postImageUrl={postDetail.image.uploadPath}
-              hashTags={postDetail.hashTags}
-              parentId={postDetail.category?.parentId?.id}
-              careerCategories={postDetail.careerCategories}
-              eventId={eventId}
-              likes={postDetail.likes}
-            />
-          </div>
-          <div className='mt-6'>
-            <h3 className='text-size-title'>방장님을 소개합니다!</h3>
+        <div className='flex flex-col py-14 gap-y-8'>
+          <BreadCrumb category={postDetail.category} />
+          <MeetDetailInfo
+            online={postDetail.online}
+            startDate={postDetail.challengeStartDate}
+            endDate={postDetail.challengeEndDate}
+            title={postDetail.title}
+            content={postDetail.content}
+            place={postDetail.address?.detail1}
+            memNum={postDetail.recruitment}
+            postImageUrl={postDetail.image.uploadPath}
+            hashTags={postDetail.hashTags}
+            parentId={postDetail.category?.parentId?.id}
+            careerCategories={postDetail.careerCategories}
+            eventId={eventId}
+            likes={postDetail.likes}
+          />
+          <div className='mt-12'>
+            <h3 className='text-xl font-semibold text-black-color'>
+              방장님을 소개합니다!
+            </h3>
             <MeetHostInfo
               leaderName={postDetail.user.username}
               leaderImageUrl={postDetail.user.image.uploadPath}
@@ -98,12 +92,14 @@ export default function Detail() {
             />
           </div>
 
-          <div className='mt-6'>
-            <h3 className='text-size-title'>우리 멤버를 소개합니다!</h3>
+          <div className='mt-12'>
+            <h3 className='text-xl font-semibold text-black-color'>
+              우리 멤버를 소개합니다!
+            </h3>
             {postDetail.eventApplies.length === 0 ? (
               <div className='flex mt-3 justify-center items-center rounded-big-radius border-2 border-dark-gray-color min-h-[120px]'>
                 <span className='text-size-body text-dark-gray-color'>
-                  현재 참여 중인 멤버가 없습니다..
+                  현재 참여 중인 멤버가 없습니다.
                 </span>
               </div>
             ) : (

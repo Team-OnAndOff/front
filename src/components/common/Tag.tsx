@@ -17,7 +17,7 @@ export default function Tag({ options, parentId }: TagProps) {
             <Link
               to={`/meetup-lists/${parentId}?search=${option.hashtag}`}
               key={index}
-              className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit desktop:text-size-subbody text-[0.5rem] text-dark-gray-color break-keep'
+              className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit desktop:text-size-subbody text-[0.62rem] transition-all duration-1000 text-dark-gray-color break-keep'
             >{`#${option.hashtag}`}</Link>
           ))}
       </div>

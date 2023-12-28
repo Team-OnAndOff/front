@@ -58,38 +58,37 @@ const Declaration = ({
 
   return (
     <>
-      <div>
-        <div className='flex items-start justify-between'>
-          <p className='font-bold text-size-body'>신고 사유</p>
-        </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <textarea
-            className='resize-none overflow-hidden p-[10px] text-size-body font-medium rounded-button-radius mt-[11px] border-2 border-solid border-main-color '
-            {...register('description')}
-            rows={7}
-            cols={80}
-            maxLength={200}
-            placeholder='신고 내용을 적어주세요'
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='flex flex-col items-center justify-between gap-y-4'
+      >
+        <p className='self-start font-bold text-size-body text-black-color'>
+          신고 사유
+        </p>
+        <textarea
+          className='w-full p-4 mb-4 overflow-hidden font-medium border-2 border-solid resize-none text-size-body rounded-button-radius border-main-color h-60'
+          {...register('description')}
+          maxLength={200}
+          placeholder='신고 내용을 적어주세요'
+        />
+        <div className='flex justify-center gpa-3'>
+          <Button
+            children='취소'
+            width='w-[160px] h-[40px] mr-4'
+            fill='border'
+            onClick={closeModal}
           />
-          <div className='flex justify-center gpa-3 mt-[11px]'>
-            <Button
-              children='취소'
-              width='w-[160px] h-[40px] mr-4'
-              fill='border'
-              onClick={closeModal}
-            />
-            <Button
-              children='신고하기'
-              width='w-[160px]'
-              fill='activeFill'
-              onClick={handleSubmit((data, event) => {
-                onSubmit(data, event) //신고
-                closeModal() //닫기
-              })}
-            />
-          </div>
-        </form>
-      </div>
+          <Button
+            children='신고하기'
+            width='w-[160px]'
+            fill='activeFill'
+            onClick={handleSubmit((data, event) => {
+              onSubmit(data, event) //신고
+              closeModal() //닫기
+            })}
+          />
+        </div>
+      </form>
     </>
   )
 }

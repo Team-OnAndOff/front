@@ -3,7 +3,7 @@ import { Logo } from '@/assets/images'
 export default function Footer() {
   return (
     <footer className='bottom-0 flex justify-center w-full pt-8 pb-4 border-t border-light-gray-color bg-main-light-color'>
-      <div className='w-3/4 desktop:w-8/12 max-w-common-screen-width'>
+      <div className='w-3/4 transition-all duration-1000 desktop:w-8/12 max-w-common-screen-width'>
         <ul className='flex flex-col pb-4 text-sm text-left border-b gap-y-1 border-light-gray-color'>
           <li>
             <img
