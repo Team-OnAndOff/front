@@ -25,26 +25,26 @@ export default function App() {
         <NewPageScrollToTop />
         <Routes>
           <Route path='/' element={<Layout />}>
-            <Route path='/' element={<Main />} />
-            <Route path='/home' element={<Navigate replace to='/' />} />
-            <Route path='/main' element={<Navigate replace to='/' />} />
+            <Route path='' element={<Main />} />
+            <Route path='home' element={<Navigate replace to='/' />} />
+            <Route path='main' element={<Navigate replace to='/' />} />
 
-            <Route path='/meetup-lists/:categoryId' element={<MeetupList />} />
-            <Route path='/details/:postId' element={<Detail />} />
+            <Route path='meetup-lists/:categoryId' element={<MeetupList />} />
+            <Route path='details/:postId' element={<Detail />} />
             <Route element={<PrivateRouter />}>
-              <Route path='/userinfo/:userId' element={<MyPage />} />
-              <Route path='/recruits-create' element={<RecruitsCreate />} />
-              <Route path='/recruits-edit' element={<RecruitsEdit />} />
-              <Route path='/want-join/:meetingId' element={<WantJoinList />} />
+              <Route path='userinfo/:userId' element={<MyPage />} />
+              <Route path='recruits-create' element={<RecruitsCreate />} />
+              <Route path='recruits-edit' element={<RecruitsEdit />} />
+              <Route path='want-join/:meetingId' element={<WantJoinList />} />
               <Route
-                path='/recruits-register/:postId'
+                path='recruits-register/:postId'
                 element={<RecruitsRegister />}
               />
-              <Route path='/chat' element={<ChatLayout />}>
+              <Route path='chat' element={<ChatLayout />}>
                 <Route path=':roomId' element={<Chat />} />
               </Route>
             </Route>
-            <Route path='/login' element={<Login />} />
+            <Route path='login' element={<Login />} />
           </Route>
           <Route path='*' element={<NotFound />} />
         </Routes>
