@@ -68,7 +68,10 @@ export interface CardData {
   hashTags: HashTag[]
   likes: any[]
   eventApplies: any[]
+  event: CardData
 }
+
+
 
 export interface CardProps {
   data: CardData

@@ -21,7 +21,6 @@ interface condition {
 }
 
 const Betsy = ({ attend, open, success, bestValse }: condition) => {
-  console.log(attend)
   const [value] = useState([1, 10, 100])
 
   const images = [tree_1, tree_2, tree_3]
@@ -47,7 +46,7 @@ const Betsy = ({ attend, open, success, bestValse }: condition) => {
 
   return (
     <>
-      <div className='flex gap-20 mt-[28px] mb-[55px] flex-col sm:flex-col md:flex-row'>
+      <div className='justify-center flex gap-20 mt-[28px] mb-[55px] flex-col sm:flex-col md:flex-row items-center'>
         <div className='flex gap-8 '>
           {images.map((image, index) => (
             <div key={index} className='flex flex-col items-center'>
@@ -89,7 +88,7 @@ const Betsy = ({ attend, open, success, bestValse }: condition) => {
         </div>
       </div>
 
-      <div className='flex gap-20 mt-[28px] flex-col sm:flex-col md:flex-row'>
+      <div className='justify-center flex gap-20 mt-[28px] flex-col sm:flex-col md:flex-row items-center'>
         <div className='flex gap-8 '>
           {challenge.map((image, index) => (
             <div key={index} className='flex flex-col items-center'>

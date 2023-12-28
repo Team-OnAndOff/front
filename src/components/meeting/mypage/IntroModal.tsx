@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, useCallback } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Swal from 'sweetalert2'
 import InputHash from './InputHash'
@@ -37,11 +37,14 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
   const { setUserLogout } = useAuthStore((state) => state)
   const formData = getValues()
   // 이미지 변경 핸들러
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0]
-    setMyImage(selectedFile || null)
-    console.log('Selected File:', selectedFile)
-  }
+  const handleFileChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const selectedFile = event.target.files?.[0]
+      setMyImage(selectedFile || null)
+      console.log('Selected File:', selectedFile)
+    },
+    [],
+  )
 
   // 폼 서밋 핸들러
   const onSubmit: SubmitHandler<FormData> = async (data, event) => {

@@ -10,6 +10,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { userInfo } from '@/api/userinfo'
 import { userCard } from '@/api/userCard'
 import { badgesData } from '@/api/user'
+import SwiperCard from '@/components/meeting/mypage/SwiperCard'
 
 interface UserData {
   username: string | null
@@ -43,9 +44,10 @@ export default function MyPage() {
   const [userData, setUserData] = useState<UserData | null>(null) //유저 데이터
   const [badges, setBadges] = useState<BadgeType | null>()
   // const [data, setData] = useState() //스와이프  모임 데이터
-  const [, setData] = useState() //스와이프  모임 데이터
+  const [data, setData] = useState() //스와이프  모임 데이터
   const [swiperData, setSwiperData] = useState('pending')
   const navigate = useNavigate() // 유저없을시 페이지 강제이동
+  const [newLoad, setNewLoad] = useState(true) // 컴포넌트 로드
 
   const handleTabClick = (index: number) => {
     // 탭 기능구현 핸들러
@@ -109,7 +111,7 @@ export default function MyPage() {
       }
     }
     fetchData()
-  }, [swiperData])
+  }, [swiperData, newLoad])
 
   // 모달 관련 기능 start
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -276,7 +278,12 @@ export default function MyPage() {
           />
         </div>
         <div>
-          {/* <SwiperCard selectedTab={selectedTab} swiperData={data} /> */}
+          <SwiperCard
+            selectedTab={selectedTab}
+            swiperData={data}
+            userId={userId}
+            setNewLoad={setNewLoad}
+          />
         </div>
       </section>
       {/* 모임 개설 탭 end */}
