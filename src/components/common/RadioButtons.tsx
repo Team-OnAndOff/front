@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react'
 interface RadioButtonsProps {
   data: { text: string; value: number }[]
   name: string
-  clickChange: (value: number) => void
+  clickChange?: (value: number) => void
   selectedValue?: number | null
   // defaultSelectedValue?: number | null
   disabled?: boolean
