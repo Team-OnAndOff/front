@@ -9,6 +9,7 @@ import {
 } from '@/types'
 import { HandleSearchParams } from '@/utils'
 import { DataProps } from '@/pages/meeting/RecruitsRegister'
+import Swal from 'sweetalert2'
 
 const instance = axios.create({
   baseURL: `${VITE_BACKEND_HOST}/api/events`,
@@ -142,9 +143,19 @@ export const fetchPostRecruitRegister = async (
   try {
     const url = `/${eventId}/applies`
     const response = await instance.post(url, data)
-    return response.data.data
+    return response.data
   } catch (error) {
-    console.error(error)
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 500) {
+        Swal.fire({
+          icon: 'error',
+          title: '신청 실패!',
+          text: '이미 신청한 모임입니다!',
+          timer: 2000,
+          confirmButtonColor: '#ff5e2e',
+        })
+      }
+    }
   }
 }
 
@@ -166,6 +177,6 @@ export const fetchDeleteEvent = async (eventId: number) => {
     const response = await instance.delete<Response<null>>(`/${eventId}`)
     return response.data
   } catch (error) {
-    console.log(error)
+    return null
   }
 }

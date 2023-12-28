@@ -51,26 +51,24 @@ const Declaration = ({
     if (type === 'userReport') {
       const data = await fetchUserReports(userReportData)
       if (data && data.code === 200) {
-        MySwal.fire(
-          '유저 신고 성공',
-          '신고 내용을 검토한 후,<br/>관리자에 의해 조치가 취해질 예정입니다.',
-          'success',
-        )
-        setTimeout(() => {
-          MySwal.close()
-        }, 1500)
+        MySwal.fire({
+          title: '유저 신고 성공',
+          html: `신고 내용을 검토한 후, <br>관리자에 의해 조치가 취해질 예정입니다.`,
+          icon: 'success',
+          timer: 2000,
+          confirmButtonColor: '#ff5e2e',
+        })
       }
     } else if (type === 'eventReport') {
       const data = await fetchEventReport(eventReportData)
       if (data && data.code === 201) {
-        MySwal.fire(
-          '모임 신고 성공',
-          '신고 내용을 검토한 후,<br/>관리자에 의해 조치가 취해질 예정입니다.',
-          'success',
-        )
-        setTimeout(() => {
-          MySwal.close()
-        }, 1500)
+        MySwal.fire({
+          title: '모임 신고 성공',
+          html: `신고 내용을 검토한 후, <br>관리자에 의해 조치가 취해질 예정입니다.`,
+          icon: 'success',
+          timer: 2000,
+          confirmButtonColor: '#ff5e2e',
+        })
       }
     }
   }
@@ -106,8 +104,8 @@ const Declaration = ({
             width='w-[160px]'
             fill='activeFill'
             onClick={handleSubmit((data, event) => {
-              onSubmit(data, event) //신고
-              closeModal() //닫기
+              onSubmit(data, event)
+              closeModal()
             })}
           />
         </div>

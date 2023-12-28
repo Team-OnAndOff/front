@@ -7,14 +7,11 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { fetchGetEventDetail } from '@/api/event'
 import { EventDetailData } from '@/types'
 import { fetchPostRecruitRegister } from '@/api/event'
-import Swal, { SweetAlertResult } from 'sweetalert2'
-import withReactContent from 'sweetalert2-react-content'
+import Swal from 'sweetalert2'
 
 export interface DataProps {
   answer: string
 }
-
-const MySwal = withReactContent(Swal)
 
 export default function RecruitsRegister() {
   const [postDetail, setPostDetail] = useState<EventDetailData | null>(null)
@@ -39,31 +36,21 @@ export default function RecruitsRegister() {
   const handleCancelClick = () => {
     navigate(-1)
   }
-  const onSubmit: SubmitHandler<DataProps> = async (data: DataProps) => {
-    try {
-      MySwal.fire({
-        title: '신청 확인',
-        text: '해당 모임에 신청하시겠습니까?',
-        icon: 'question',
-        iconColor: '#ff5e2e',
-        footer:
-          '방장의 승인을 통해 모임이 가입되며, <br/> 상황에 따라 며칠이 소요될 수 있습니다.',
-        confirmButtonText: '확인',
-        showCancelButton: true,
-        cancelButtonText: '취소',
-      }).then((result: SweetAlertResult) => {
-        if (result.isConfirmed) {
-          MySwal.fire('신청 성공', '모임신청이 완료되었습니다.', 'success')
-          setTimeout(() => {
-            MySwal.close()
-            navigate('/')
-          }, 1500)
-        }
+  const onSubmit: SubmitHandler<DataProps> = async (
+    registerData: DataProps,
+  ) => {
+    const data = await fetchPostRecruitRegister(eventId, registerData)
+    if (data && data.code === 200) {
+      Swal.fire({
+        icon: 'success',
+        title: '신청 완료!',
+        text: '방장이 승인할 때 까지 기다려주세요!',
+        confirmButtonColor: '#ff5e2e',
       })
-      const response = await fetchPostRecruitRegister(eventId, data)
-      console.log(response)
-    } catch (error) {
-      console.log(error)
+      setTimeout(() => {
+        Swal.close()
+        navigate('/')
+      }, 2000)
     }
   }
   return (

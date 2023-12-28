@@ -26,28 +26,28 @@ export default function Detail() {
     return
   }
   const handleEventDelete = async () => {
-    const data = await fetchDeleteEvent(eventId)
-    if (data && data.code === 200) {
-      MySwal.fire({
-        title: '삭제 확인',
-        text: '모임을 삭제하시겠습니까?',
-        icon: 'question',
-        iconColor: '#ff5e2e',
-        footer:
-          '모임을 삭제할 경우, <br/> 모임 참가자들에게 반드시 알려주시기 바랍니다.',
-        confirmButtonText: '확인',
-        showCancelButton: true,
-        cancelButtonText: '취소',
-      }).then((result: SweetAlertResult) => {
+    MySwal.fire({
+      title: '삭제 확인',
+      text: '모임을 삭제하시겠습니까?',
+      icon: 'question',
+      iconColor: '#ff5e2e',
+      footer:
+        '모임을 삭제할 경우, <br/> 모임 참가자들에게 반드시 알려주시기 바랍니다.',
+      confirmButtonText: '확인',
+      showCancelButton: true,
+      cancelButtonText: '취소',
+    }).then(async (result: SweetAlertResult) => {
+      const data = await fetchDeleteEvent(eventId)
+      if (data && data.code === 200) {
         if (result.isConfirmed) {
           MySwal.fire('삭제 성공', '모임삭제가 완료되었습니다.', 'success')
           setTimeout(() => {
             MySwal.close()
             navigate('/')
-          }, 1500)
+          }, 2000)
         }
-      })
-    }
+      }
+    })
   }
   useEffect(() => {
     const fetchDetailData = async (eventId: number) => {
