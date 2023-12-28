@@ -1,3 +1,5 @@
+Inputs
+
 import { KeyboardEvent } from 'react'
 import { UseFormRegisterReturn } from 'react-hook-form'
 
@@ -7,6 +9,7 @@ interface InputsProps {
   onEnter?: (value: string) => void
   register?: UseFormRegisterReturn
   type?: string
+  minValue?: number
 }
 
 export default function Inputs({
@@ -15,6 +18,7 @@ export default function Inputs({
   onEnter,
   register,
   type = 'text',
+  minValue = 0,
 }: InputsProps) {
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && onEnter) {
@@ -33,6 +37,7 @@ export default function Inputs({
           placeholder={placeholder}
           {...register}
           onKeyDown={handleKeyPress}
+          min={minValue}
         />
       </div>
     </>

@@ -5,7 +5,9 @@ interface RecruitsTitleProps {
 export default function RecruitsTitle({ children }: RecruitsTitleProps) {
   return (
     <div className='flex items-start'>
-      <span className='w-56 font-bold text-size-title'>{children}</span>
+      <span className='w-56 text-lg font-bold desktop:text-size-title tablet:text-lg'>
+        {children}
+      </span>
     </div>
   )
 }
