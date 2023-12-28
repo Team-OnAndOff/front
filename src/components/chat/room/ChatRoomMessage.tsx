@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react'
-import socket from '@/utils/socket'
+import { useState } from 'react'
 import {
   DropDownItems,
   ChatRoomImage,
   ChatRoomMessageContent,
 } from '@/components/chat'
-import { CHAT, ChatMessage, ChatUser } from '@/types'
+import { ChatMessage } from '@/types'
 
 interface ChatRoomMessageProps {
   isSelf: boolean
@@ -17,31 +16,28 @@ export default function ChatRoomMessage({
   isSelf,
 }: ChatRoomMessageProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [user, setUser] = useState(item.user)
+  // const [user, setUser] = useState(item.user)
 
-  useEffect(() => {
-    socket.on(CHAT.USER_INFO, (response: ChatUser) => {
-      if (user._id.toString() === response._id.toString()) {
-        setUser(response)
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   socket.on(CHAT.USER_INFO, (response: ChatUser) => {
+  //     console.log('Asdf')
+  //     if (user._id.toString() === response._id.toString()) {
+  //       setUser(response)
+  //     }
+  //   })
+  // }, [])
 
   return (
     <div className='chat-message'>
       <div className={`flex items-end ${isSelf && 'justify-end'}`}>
-        <ChatRoomMessageContent
-          isSelf={isSelf}
-          item={item}
-          username={user.username}
-        />
+        <ChatRoomMessageContent isSelf={isSelf} item={item} />
         {!isSelf && (
           <div className='relative'>
             <ChatRoomImage
               onClick={() => {
                 setIsOpen((prev) => !prev)
               }}
-              user={user}
+              user={item.user}
             />
             <DropDownItems isOpen={isOpen} />
           </div>
