@@ -69,25 +69,32 @@ export default function Login() {
       </div>
 
       {/* 푸터 */}
-      <footer className='flex flex-col items-center border-dark-color w-80'>
-        <div className='border-y'>
+      <footer className='flex flex-col items-center font-light border-dark-color w-80 text-size-subbody border-y gap-y-3'>
+        <div className='py-2 text-center border-b'>
           로그인하거나 회원으로 가입하시면 당사
           <a
             target='_blank'
             href='https://water-vulcanodon-65c.notion.site/1568078dfbad4bb2899df2b15c22e4ce?pvs=4'
+            className='font-bold underline'
           >
-            이용약관
+            &nbsp;이용약관
           </a>
-          및
+          &nbsp;및
           <a
             target='_blank'
             href='https://water-vulcanodon-65c.notion.site/73a58d0b9cac4d43a3ddba5cf7567c15?pvs=4'
+            className='font-bold underline'
           >
-            개인정보 보호정책
+            &nbsp;개인정보 보호정책
           </a>
-          에 동의하시는 것으로 간주됩니다. All rights reserved.
-          <br />
-          Copyright (2006 - 2023) - Booking.com™
+          에 동의하시는 것으로 간주됩니다.
+        </div>
+        <div className='pb-2 text-center'>
+          <p>
+            All rights reserved.
+            <br />
+            Copyright (2006 - 2023) - Booking.com™
+          </p>
         </div>
       </footer>
     </div>
