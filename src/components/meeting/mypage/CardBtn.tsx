@@ -10,7 +10,7 @@ const onClick = () => {
   alert('신청취소')
 }
 
-const CardBtn = ({ selectedTab }: StateNumber) => {
+export const CardBtn = ({ selectedTab }: StateNumber) => {
   return (
     <>
       {selectedTab === 0 && (
@@ -68,5 +68,3 @@ const CardBtn = ({ selectedTab }: StateNumber) => {
     </>
   )
 }
-
-export default CardBtn

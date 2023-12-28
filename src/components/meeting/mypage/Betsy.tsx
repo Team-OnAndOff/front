@@ -14,13 +14,14 @@ import {
   best_3,
 } from '@/assets/images'
 interface condition {
-  attend: number
-  open: number
-  success: number
+  attend: number | null | undefined
+  open: number | null | undefined
+  success: number | null | undefined
   bestValse: number[]
 }
 
 const Betsy = ({ attend, open, success, bestValse }: condition) => {
+  console.log(attend)
   const [value] = useState([1, 10, 100])
 
   const images = [tree_1, tree_2, tree_3]
@@ -46,14 +47,18 @@ const Betsy = ({ attend, open, success, bestValse }: condition) => {
 
   return (
     <>
-      <div className='flex gap-20 mt-[28px] mb-[55px]'>
+      <div className='flex gap-20 mt-[28px] mb-[55px] flex-col sm:flex-col md:flex-row'>
         <div className='flex gap-8 '>
           {images.map((image, index) => (
             <div key={index} className='flex flex-col items-center'>
               <img
                 className='w-[140px] h-[140px]'
                 style={
-                  value[index] <= attend ? {} : { filter: 'grayscale(100%)' }
+                  attend !== null &&
+                  attend !== undefined &&
+                  value[index] <= attend
+                    ? {}
+                    : { filter: 'grayscale(100%)' }
                 }
                 src={image}
                 alt={`모임 참여 ${index + 1} 이미지`}
@@ -70,7 +75,9 @@ const Betsy = ({ attend, open, success, bestValse }: condition) => {
               <img
                 className='w-[140px] h-[140px]'
                 style={
-                  value[index] <= open ? {} : { filter: 'grayscale(100%)' }
+                  open !== null && open !== undefined && value[index] <= open
+                    ? {}
+                    : { filter: 'grayscale(100%)' }
                 }
                 src={image}
                 alt={`모임 열기 ${index + 1} 이미지`}
@@ -82,14 +89,18 @@ const Betsy = ({ attend, open, success, bestValse }: condition) => {
         </div>
       </div>
 
-      <div className='flex gap-20 mt-[28px]'>
+      <div className='flex gap-20 mt-[28px] flex-col sm:flex-col md:flex-row'>
         <div className='flex gap-8 '>
           {challenge.map((image, index) => (
             <div key={index} className='flex flex-col items-center'>
               <img
                 className='w-[140px] h-[140px]'
                 style={
-                  value[index] <= success ? {} : { filter: 'grayscale(100%)' }
+                  success !== null &&
+                  success !== undefined &&
+                  value[index] <= success
+                    ? {}
+                    : { filter: 'grayscale(100%)' }
                 }
                 src={image}
                 alt={`챌린지 성공 ${index + 1} 이미지`}

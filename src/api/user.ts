@@ -15,3 +15,12 @@ export const fetchLoginUser = async () => {
     return null
   }
 }
+
+export const badgesData = async (userId?: string) => {
+  try {
+    const response = await instance.get<Response<null>>(`/${userId}/badges`)
+    return response.data.data
+  } catch (error) {
+    return null
+  }
+}
