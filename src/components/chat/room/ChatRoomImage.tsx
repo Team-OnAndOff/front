@@ -2,7 +2,7 @@ import { ChatUser } from '@/types'
 
 interface ChatRoomImageProps {
   user: ChatUser
-  onClick: () => void
+  onClick?: () => void
 }
 
 export default function ChatRoomImage({ user, onClick }: ChatRoomImageProps) {

@@ -1,9 +1,4 @@
-import { useState } from 'react'
-import {
-  DropDownItems,
-  ChatRoomImage,
-  ChatRoomMessageContent,
-} from '@/components/chat'
+import { ChatRoomImage, ChatRoomMessageContent } from '@/components/chat'
 import { ChatMessage } from '@/types'
 
 interface ChatRoomMessageProps {
@@ -15,12 +10,11 @@ export default function ChatRoomMessage({
   item,
   isSelf,
 }: ChatRoomMessageProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  // const [isOpen, setIsOpen] = useState(false)
   // const [user, setUser] = useState(item.user)
 
   // useEffect(() => {
   //   socket.on(CHAT.USER_INFO, (response: ChatUser) => {
-  //     console.log('Asdf')
   //     if (user._id.toString() === response._id.toString()) {
   //       setUser(response)
   //     }
@@ -33,13 +27,7 @@ export default function ChatRoomMessage({
         <ChatRoomMessageContent isSelf={isSelf} item={item} />
         {!isSelf && (
           <div className='relative'>
-            <ChatRoomImage
-              onClick={() => {
-                setIsOpen((prev) => !prev)
-              }}
-              user={item.user}
-            />
-            <DropDownItems isOpen={isOpen} />
+            <ChatRoomImage user={item.user} />
           </div>
         )}
       </div>

@@ -31,7 +31,7 @@ export default function Chat() {
         CHAT.ROOM_JOIN,
         { roomId: room._id },
         (response: ChatResponse) => {
-          console.log(response)
+          console.log('ROOM_JOIN', response)
           setIsNext(true)
           setIsScrollToBottom(true)
         },
@@ -43,12 +43,18 @@ export default function Chat() {
     socket.on(
       CHAT.PREV_MESSAGES,
       ({ messages }: { messages: ChatMessage[] }) => {
+        console.log('PREV_MESSAGES: ', messages)
         setItems(messages)
       },
     )
 
     socket.on(CHAT.MESSAGE, ({ message }: { message: ChatMessage }) => {
-      console.log('message', message)
+      console.log('MESSAGE', message)
+      setItems((prev) => [message, ...prev])
+    })
+
+    socket.on(CHAT.USER_JOIN, ({ message }: { message: ChatMessage }) => {
+      console.log('USER_JOIN', message)
       setItems((prev) => [message, ...prev])
     })
   }, [])
@@ -77,6 +83,7 @@ export default function Chat() {
     { isIntersecting },
   ]) => {
     if (room && isIntersecting && !isLoading && isNext) {
+      console.log('onIntersect: ')
       setIsLoading(true)
       const messages = await fetchGetChatPrevMessages(room?._id, page.current)
       page.current += 1
@@ -94,26 +101,16 @@ export default function Chat() {
   const { setTarget } = useIntersectionObserver({ onIntersect, threshold: 0.8 })
 
   useEffect(() => {
-    document.body.style.cssText = `
-    position: fixed;
-    top: -${window.scrollY}px;
-    overflow-y: scroll;
-    width: 100%;`
     if (messageEndRef.current && isScrollToBottom) {
       messageEndRef.current.scrollIntoView()
     }
-    return () => {
-      const scrollY = document.body.style.top
-      document.body.style.cssText = ''
-      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1)
-    }
   }, [items, isScrollToBottom])
-
+  console.log(items)
   return (
     <>
       {room && user && (
-        <div className='flex-col h-screen overflow-y-auto lg:h-full p-2 lg:flex lg:col-span-2 z-50 relative'>
-          <ChatRoomTitle title={room.name} />
+        <div className='flex-col h-screen overflow-y-auto lg:h-full lg:flex lg:col-span-2 z-50 relative'>
+          <ChatRoomTitle room={room} />
           <div className='flex flex-1 overflow-auto gap-2 sm:p-4 flex-col-reverse h-full relative'>
             <div ref={messageEndRef}></div>
             {items.map((item, index, arr) => (

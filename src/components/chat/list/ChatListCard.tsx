@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import socket from '@/utils/socket'
-import { ChatBadge, ChatMessageCount } from '@/components/chat'
+import { ChatBadge } from '@/components/chat'
 import { CHAT, ChatRoom } from '@/types'
 
 interface ChatListCardProps {
@@ -47,14 +47,14 @@ export default function ChatListCard({
         <div className='text-sm sm:text-size-body font-semibold truncate'>
           <div>{item.name}</div>
         </div>
-        <span className='text-neutral-500 text-xs font-semibold truncate'>
+        <span className='text-neutral-500 text-sm font-semibold truncate'>
           {item.lastMessage}
         </span>
       </div>
       <div className='absolute top-2 right-2 inline-block text-xs text-neutral-500'>
         {item.users.length}명 참여중
       </div>
-      <ChatMessageCount count={1000} />
+      {/* <ChatMessageCount count={1000} /> */}
     </div>
   )
 }
