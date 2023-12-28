@@ -93,7 +93,7 @@ export default function Login() {
           <p>
             All rights reserved.
             <br />
-            Copyright (2006 - 2023) - Booking.com™
+            Copyright (2015 - 2023) - ONandOFF.com™
           </p>
         </div>
       </footer>

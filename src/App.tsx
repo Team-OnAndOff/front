@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ChatLayout, Layout } from '@/components/layouts'
 import { Main } from '@/pages/home'
 import { Chat } from '@/pages/chat'
@@ -26,6 +26,9 @@ export default function App() {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route path='/' element={<Main />} />
+            <Route path='/home' element={<Navigate replace to='/' />} />
+            <Route path='/main' element={<Navigate replace to='/' />} />
+
             <Route path='/meetup-lists/:categoryId' element={<MeetupList />} />
             <Route path='/details/:postId' element={<Detail />} />
             <Route element={<PrivateRouter />}>
