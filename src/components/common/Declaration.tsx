@@ -88,7 +88,11 @@ const Declaration = ({
           className='w-full p-4 mb-4 overflow-hidden font-medium border-2 border-solid resize-none text-size-body rounded-button-radius focus:border-main-color border-dark-gray-color h-60 focus:outline-none'
           {...register('description')}
           maxLength={200}
-          placeholder='신고 내용을 적어주세요'
+          placeholder={
+            type === 'userReport'
+              ? '신고 사유를 최소 10자 이상 작성해주세요'
+              : '신고 사유를 작성해주세요!'
+          }
         />
         <div className='flex justify-center gpa-3'>
           <Button

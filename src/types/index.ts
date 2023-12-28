@@ -26,7 +26,7 @@ export interface User {
   id: number
   socialId?: number
   provider: string
-  username?: string
+  username: string
   email: string
   introduction?: string
   image: Image

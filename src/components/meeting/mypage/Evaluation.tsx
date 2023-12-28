@@ -1,29 +1,37 @@
 import { CiFaceFrown, CiFaceSmile, CiFaceMeh } from 'react-icons/ci'
 import { useForm, SubmitHandler, useWatch } from 'react-hook-form'
 import { FaTimes } from 'react-icons/fa'
-import { Button } from '@/components/common'
+import { Button, TextArea } from '@/components/common'
+import { UserAssessData, fetchUserAssess } from '@/api/user'
 
 interface EvaluationForm {
-  score: number | null
+  score: number
+  description: string
 }
 
 interface Props {
   closeModal: () => void
-  username?: string
+  eventId: number
+  attendeeId: number
+  username: string
 }
 
-const Evaluation = ({ closeModal, username }: Props) => {
-  const { setValue, control, handleSubmit } = useForm<EvaluationForm>()
+const Evaluation = ({ closeModal, eventId, attendeeId, username }: Props) => {
+  const { setValue, control, handleSubmit, register } =
+    useForm<EvaluationForm>()
 
-  // 평가 아이콘에 대한 데이터를 제출하는 함수
-  const onSubmit: SubmitHandler<EvaluationForm> = (data) => {
-    // 선택된 점수 데이터를 사용하여 추가적인 처리 수행
-    console.log('선택된 점수:', data)
-    // 여기에 선택된 점수 데이터를 활용하는 로직을 추가할 수 있습니다.
-    // 예를 들어, API로데이터를 전송하거나 부모 컴포넌트의 상태를 업데이트할 수 있습니다.
+  const onSubmit: SubmitHandler<EvaluationForm> = async (evaldata) => {
+    const evaluationData: UserAssessData = {
+      ...evaldata,
+      eventId,
+      attendeeId,
+    }
+    const data = await fetchUserAssess(evaluationData)
+    if (data && data.code === 200) {
+      alert('평가완료')
+    }
   }
 
-  // 각 아이콘에 대한 값(watch) 추적
   const watchedScore = useWatch({
     control,
     name: 'score',
@@ -44,12 +52,21 @@ const Evaluation = ({ closeModal, username }: Props) => {
           <ul className='flex justify-around p-2'>
             <li
               className={`transition-opacity cursor-pointer ${
-                watchedScore === -0.3 ? 'opacity-100' : 'opacity-30'
+                watchedScore === -0.1 ? 'opacity-100' : 'opacity-30'
               } hover:opacity-100 flex flex-col items-center`}
-              onClick={() => setValue('score', -0.3)}
+              onClick={() => setValue('score', -0.1)}
             >
               <CiFaceFrown size={100} />
               <p className='font-bold'>불만</p>
+            </li>
+            <li
+              className={`transition-opacity cursor-pointer ${
+                watchedScore === 0 ? 'opacity-100' : 'opacity-30'
+              } hover:opacity-100 flex flex-col items-center`}
+              onClick={() => setValue('score', 0)}
+            >
+              <CiFaceMeh size={100} />
+              <p className='font-bold'>보통</p>
             </li>
             <li
               className={`transition-opacity cursor-pointer ${
@@ -57,19 +74,14 @@ const Evaluation = ({ closeModal, username }: Props) => {
               } hover:opacity-100 flex flex-col items-center`}
               onClick={() => setValue('score', 0.1)}
             >
-              <CiFaceMeh size={100} />
-              <p className='font-bold'>보통</p>
-            </li>
-            <li
-              className={`transition-opacity cursor-pointer ${
-                watchedScore === 0.3 ? 'opacity-100' : 'opacity-30'
-              } hover:opacity-100 flex flex-col items-center`}
-              onClick={() => setValue('score', 0.3)}
-            >
               <CiFaceSmile size={100} />
               <p className='font-bold'>좋아요</p>
             </li>
           </ul>
+          <TextArea
+            register={register('description')}
+            placeholder='이유를 적어주세요!'
+          />
           <Button
             type='submit'
             children='평가 제출'
