@@ -252,7 +252,11 @@ export default function RecruitsCreate() {
           setDataArray((prevArray) => [...prevArray, value.trim()])
           setValue('hashTag', [...dataArray, value.trim()])
         } else {
-          alert('태그는 3개까지만 입력할 수 있습니다.')
+          MySwal.fire({
+            title: '태그는 3개까지만 입력할 수 있습니다.',
+            icon: 'error',
+            confirmButtonColor: '#ff5e2e',
+          })
         }
       } else {
         MySwal.fire({
@@ -288,12 +292,12 @@ export default function RecruitsCreate() {
 
   return (
     <>
-      <div className='mx-auto my-20'>
+      <div className='w-3/4 mx-auto my-20 desktop:w-full'>
         <div className='flex justify-center mx-auto font-bold text-size-title'>
           나만의 모임 생성
         </div>
         <form className='flex flex-col gap-16 my-20'>
-          <div className='flex'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>카테고리 설정</RecruitsTitle>
             <div className='flex flex-col cursor-pointer'>
               <RadioButtons
@@ -305,7 +309,7 @@ export default function RecruitsCreate() {
             </div>
           </div>
           {selectedCategory === 2 && (
-            <div className='flex'>
+            <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
               <RecruitsTitle>챌린지 기간</RecruitsTitle>
               <div className='flex gap-3'>
                 <div>
@@ -340,7 +344,7 @@ export default function RecruitsCreate() {
             </div>
           )}
           {selectedCategory !== 2 && (
-            <div className='flex'>
+            <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
               <RecruitsTitle>모임 시작일</RecruitsTitle>
               <div>
                 <div
@@ -356,7 +360,7 @@ export default function RecruitsCreate() {
               </div>
             </div>
           )}
-          <div className='flex'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>세부 카테고리</RecruitsTitle>
             <div className='flex flex-col'>
               {selectedCategory !== 2 && (
@@ -388,7 +392,7 @@ export default function RecruitsCreate() {
               )}
             </div>
           </div>
-          <div className='flex'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>모집 대상</RecruitsTitle>
             <div className='flex flex-col'>
               <RecruitsCheckBox
@@ -407,11 +411,11 @@ export default function RecruitsCreate() {
                 )}
             </div>
           </div>
-          <div className='flex'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>모집 제목 글</RecruitsTitle>
-            <div className='flex flex-col w-1/2'>
+            <div className='flex flex-col w-3/4 desktop:w-1/2'>
               <Inputs
-                width='w-3/4'
+                width='w-full desktop:w-3/4'
                 register={register('title', {
                   required: REQUIRED_MESSAGE,
                 })}
@@ -419,9 +423,9 @@ export default function RecruitsCreate() {
               {getErrorMessage('title')}
             </div>
           </div>
-          <div className='flex'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>모집 내용 글</RecruitsTitle>
-            <div className='flex flex-col w-1/2'>
+            <div className='flex flex-col desktop:w-1/2'>
               <TextArea
                 placeholder='모집에 대한 설명을 작성해주세요'
                 width='w-full'
@@ -433,13 +437,14 @@ export default function RecruitsCreate() {
               {getErrorMessage('content')}
             </div>
           </div>
-          <div className='flex'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>모집 할 인원</RecruitsTitle>
             <div className='flex flex-col'>
               <div className='flex items-end gap-3'>
                 <Inputs
                   width='w-12'
                   type='number'
+                  minValue={2}
                   register={register('recruitment', {
                     valueAsNumber: true,
                     required: '*숫자만 입력해주세요.',
@@ -452,7 +457,7 @@ export default function RecruitsCreate() {
               {getErrorMessage('recruitment')}
             </div>
           </div>
-          <div className='flex'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>만남 유형</RecruitsTitle>
             <div>
               <RadioButtons
@@ -465,7 +470,7 @@ export default function RecruitsCreate() {
             </div>
           </div>
           {selectedOnLine !== 1 && (
-            <div className='flex'>
+            <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
               <RecruitsTitle>오프라인 장소</RecruitsTitle>
               <div className='flex flex-col w-1/2'>
                 <div className='flex flex-wrap justify-between gap-5'>
@@ -490,7 +495,7 @@ export default function RecruitsCreate() {
               </div>
             </div>
           )}
-          <div className='flex'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>대표이미지 업로드</RecruitsTitle>
             <div className='flex flex-col gap-2'>
               <div className='flex gap-3'>
@@ -550,12 +555,12 @@ export default function RecruitsCreate() {
               </div>
             </div>
           </div>
-          <div className='flex'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>해시태그</RecruitsTitle>
-            <div className='flex flex-col'>
+            <div className='flex flex-col w-3/4 desktop:w-1/2'>
               <InputHash
                 placeholder='#태그입력'
-                width='w-80'
+                width='w-full desktop:w-3/4'
                 onEnter={(value) => handleEnter(value)}
                 register={register('hashTag', {
                   required: REQUIRED_MESSAGE,
@@ -589,9 +594,9 @@ export default function RecruitsCreate() {
               </div>
             </div>
           </div>
-          <div className='flex'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>신청모집 질문 글</RecruitsTitle>
-            <div className='flex flex-col w-1/2'>
+            <div className='flex flex-col desktop:w-1/2'>
               <TextArea
                 placeholder='모집에 대한 질문을 작성해주세요. &#13;&#10;(Ex. 개발 경험, MBTI, 싫어하는 스터디원 유형 등)'
                 width='w-full'
