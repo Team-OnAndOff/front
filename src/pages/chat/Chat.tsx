@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   ChatBadge,
+  ChatRoomDate,
   ChatRoomInput,
   ChatRoomMessage,
   ChatRoomTitle,
@@ -10,6 +11,7 @@ import useChatStore from '@/hooks/useChatStore'
 import socket from '@/utils/socket'
 import { useIntersectionObserver } from '@/hooks'
 import { fetchGetChatPrevMessages } from '@/api/chat'
+import { formatDate } from '@/utils'
 
 export default function Chat() {
   const messageEndRef = useRef<HTMLDivElement>(null)
@@ -38,7 +40,7 @@ export default function Chat() {
           setIsNext(true)
         },
       )
-
+      setIsScrollToBottom(true)
       return () => {
         socket.off(CHAT.CONNECT, handleSocketConnect)
       }
@@ -122,8 +124,17 @@ export default function Chat() {
           <ChatRoomTitle title={room.name} />
           <div className='flex flex-1 overflow-auto gap-2 sm:p-4 flex-col-reverse h-full relative'>
             <div ref={messageEndRef}></div>
-            {items.map((item, index) => (
+            {items.map((item, index, arr) => (
               <div key={index}>
+                {index === arr.length - 1 && (
+                  <ChatRoomDate date={item.createdAt} />
+                )}
+                {index < arr.length - 1 &&
+                  new Date(formatDate(item.createdAt)) >
+                    new Date(formatDate(arr[index + 1].createdAt)) && (
+                    <ChatRoomDate date={item.createdAt} />
+                  )}
+
                 {item.type === 'system' ? (
                   <ChatBadge text={item.message} />
                 ) : (
