@@ -31,7 +31,7 @@ export default function MeetPlace({ address }: Address) {
           lat: location.y,
           lng: location.x,
         }}
-        className='mt-3 h-[400px] rounded'
+        className='mt-3 tablet:h-[390px] w-full h-[320px] rounded-big-radius transition-all duration-1000'
         level={3}
         marker={true}
       ></StaticMap>

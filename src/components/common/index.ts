@@ -13,7 +13,7 @@ import SearchInput from '@/components/common/SearchInput'
 import Declaration from '@/components/common/Declaration'
 import PrivateRouter from '@/components/common/PrivateRouter'
 import MyPageCard from '@/components/common/MyPageCard'
-
+import BreadCrumb from '@/components/common/BreadCrumb'
 
 export {
   Button,
@@ -30,5 +30,6 @@ export {
   SearchInput,
   Declaration,
   PrivateRouter,
-  MyPageCard
+  MyPageCard,
+  BreadCrumb,
 }

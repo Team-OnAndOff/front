@@ -15,7 +15,7 @@ export default function MeetMeberCard({ member }: MemberCardProps) {
 
   return (
     <>
-      <div className='flex mr-3 pointer flex-col p-1.5 border-2 border-dark-gray-color rounded w-60 h-28'>
+      <div className='flex mr-3 pointer flex-col p-1.5 border-2 border-dark-gray-color rounded w-full h-28'>
         <Link to={`/userinfo/${member?.user.id}`} className='basis-3/4'>
           <div className='whitespace-pre basis-3/4'>
             <span className='text-size-subbody line-clamp-3'>
@@ -26,11 +26,11 @@ export default function MeetMeberCard({ member }: MemberCardProps) {
 
         <div className='flex items-center justify-between'>
           <Link to={`/userinfo/${member?.user.id}`}>
-            <div className='flex items-center min-w-[160px]'>
+            <div className='flex items-center'>
               <img
                 alt={member?.user.username}
                 src={member?.user.image.uploadPath}
-                className='object-cover w-full mr-1 h-full max-w-[24px] max-h-[24px] rounded-big-radius'
+                className='object-cover mr-1 w-[24px] h-[24px] rounded-big-radius'
               />
               <span className='text-size-subbody line-clamp-1'>
                 {member?.user.username}
@@ -38,14 +38,16 @@ export default function MeetMeberCard({ member }: MemberCardProps) {
             </div>
           </Link>
           <div className='flex'>
-            <i
-              className='transition ease-in-out cursor-pointer hover:scale-110'
+            <button
+              className='cursor-pointer hover:scale-105'
               onClick={openModal}
             >
-              <FaRegSmile size={20} />
-            </i>
-            <div className='w-[30px] h-[20px] ml-2 bg-main-color rounded-button-radius p-1'>
-              <p className='font-normal text-center text-white text-size-subbody'>
+              <i>
+                <FaRegSmile size={20} />
+              </i>
+            </button>
+            <div className='p-1 ml-2 bg-main-color rounded-button-radius'>
+              <p className='font-light text-center text-white text-size-subbody'>
                 36.5
               </p>
             </div>
