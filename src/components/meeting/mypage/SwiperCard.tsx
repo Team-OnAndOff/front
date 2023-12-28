@@ -9,7 +9,7 @@ import { FreeMode, Pagination, Navigation } from 'swiper/modules'
 import { CardData } from '@/types'
 import { Link } from 'react-router-dom'
 import { IoIosArrowBack } from 'react-icons/io'
-import MyPageCard from '@/components/common/myPageCard'
+import MyPageCard from '@/components/common/MyPageCard'
 
 interface StateNumber {
   selectedTab: number
