@@ -71,8 +71,6 @@ export interface CardData {
   event: CardData
 }
 
-
-
 export interface CardProps {
   data: CardData
 }
@@ -198,6 +196,7 @@ export interface ChatMessage {
   message: string
   user: ChatUser
   createdAt: Date
+  readUsers: string[]
 }
 
 export interface ChatRoom {
