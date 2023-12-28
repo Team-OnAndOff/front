@@ -302,6 +302,8 @@ export default function RecruitsEdit() {
     }
   }
   const onImageDelete = () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     setValue('showImage', null)
     setMyImage(null)
   }
