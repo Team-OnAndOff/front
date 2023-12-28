@@ -4,9 +4,13 @@ import 'react-day-picker/dist/style.css'
 
 interface RecruitsDayPickProps {
   onDayClick: (date: Date) => void
+  selectedStartDate?: Date | undefined
 }
 
-export default function RecruitsDayPick({ onDayClick }: RecruitsDayPickProps) {
+export default function RecruitsDayPick({
+  onDayClick,
+  selectedStartDate,
+}: RecruitsDayPickProps) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const today = new Date()
 
@@ -38,8 +42,18 @@ export default function RecruitsDayPick({ onDayClick }: RecruitsDayPickProps) {
       required
       showOutsideDays
       selected={selectedDate}
+      defaultMonth={
+        selectedStartDate
+          ? new Date(
+              selectedStartDate.getFullYear(),
+              selectedStartDate.getMonth(),
+            )
+          : new Date(today.getFullYear(), today.getMonth())
+      }
       onDayClick={handleDayClick}
-      disabled={{ before: today }}
+      disabled={
+        selectedStartDate ? { before: selectedStartDate } : { before: today }
+      }
       modifiers={modifiers}
       modifiersStyles={modifiersStyles}
     />

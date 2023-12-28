@@ -24,10 +24,10 @@ import {
   RecruitsSubCategory2,
 } from '@/components/meeting/index'
 import InputHash from '@/components/meeting/mypage/InputHash'
-import Swal, { SweetAlertResult } from 'sweetalert2'
+import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-interface FormData {
+interface FormData2 {
   categoryId: number
   subCategoryId: number
   careerCategoryId: number[]
@@ -59,9 +59,9 @@ export default function RecruitsCreate() {
     handleSubmit,
     watch,
     setValue,
-    reset,
+    setError,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<FormData2>({
     defaultValues: {
       hashTag: [],
       challengeStartDate: new Date(),
@@ -79,9 +79,38 @@ export default function RecruitsCreate() {
   const currentStartDate = dayjs(watch('challengeStartDate')).format(
     'YYYY-MM-DD',
   )
-  const currentEndDate = dayjs(watch('challengeEndDate')).format('YYYY-MM-DD')
+  const [currentEndDate, setCurrentEndDate] = useState<string>(
+    dayjs(watch('challengeEndDate')).format('YYYY-MM-DD'),
+  )
+  const errorHandleEvent = () => {
+    if (!watch('careerCategoryId')) {
+      setError('careerCategoryId', {
+        message: '*필수로 선택해주세요.',
+      })
+    }
+    if (!watch('image')) {
+      setError('image', {
+        message: '*이미지를 필수로 선택해주세요.',
+      })
+    }
+    if (watch('online') === 0 && !watch('address')) {
+      setError('address', {
+        message: '*오프라인 주소를 필수로 입력해주세요.',
+      })
+    }
+    if (watch('online') === 0 && !watch('address.detail2')) {
+      setError('address.detail2', {
+        message: '*상세 주소를 필수로 입력해주세요.',
+      })
+    }
 
-  const onSubmit: SubmitHandler<FormData> = async (data, event) => {
+    watch('careerCategoryId')
+    watch('image')
+    watch('address')
+    watch('address.detail2')
+  }
+
+  const onSubmit: SubmitHandler<FormData2> = async (data, event) => {
     if (event) {
       event.preventDefault()
     }
@@ -91,7 +120,9 @@ export default function RecruitsCreate() {
     formData.append('subCategoryId', data.subCategoryId.toString())
     formData.append('careerCategoryId', data.careerCategoryId.toString())
     formData.append('hashTag', data.hashTag.toString())
-    formData.append('image', data.image)
+    if (data.image) {
+      formData.append('image', data.image)
+    }
     formData.append('title', data.title)
     formData.append('content', data.content)
     formData.append('recruitment', data.recruitment.toString())
@@ -111,7 +142,7 @@ export default function RecruitsCreate() {
 
     try {
       await fetchPostEvents(formData)
-      MySwal.fire({
+      const result = await MySwal.fire({
         title: '등록 확인',
         text: '작성하신 내용을 등록하시겠습니까?',
         icon: 'question',
@@ -120,15 +151,15 @@ export default function RecruitsCreate() {
         confirmButtonText: '확인',
         showCancelButton: true,
         cancelButtonText: '취소',
-      }).then((result: SweetAlertResult) => {
-        if (result.isConfirmed) {
-          MySwal.fire('등록 성공', '모임등록이 완료되었습니다.', 'success')
-          setTimeout(() => {
-            MySwal.close()
-            navigate(-2)
-          }, 1500)
-        }
       })
+      if (result.isConfirmed) {
+        await fetchPostEvents(formData)
+        MySwal.fire('등록 성공', '모임등록이 완료되었습니다.', 'success')
+        setTimeout(() => {
+          MySwal.close()
+          navigate(-2)
+        }, 1500)
+      }
     } catch (error) {
       console.error('Error:', error)
     }
@@ -140,7 +171,7 @@ export default function RecruitsCreate() {
 
   const REQUIRED_MESSAGE = '*필수로 입력해주세요.'
 
-  const getErrorMessage = (field: keyof FormData) => {
+  const getErrorMessage = <T extends keyof FormData2>(field: T) => {
     return errors[field] ? (
       <p className='block mt-2 text-red-500 text-size-subbody'>
         {errors[field]?.message}
@@ -151,10 +182,13 @@ export default function RecruitsCreate() {
   const handleDateChange = (date: Date) => {
     setValue('challengeStartDate', date)
     setShowStartDayPick(false)
+    setValue('challengeEndDate', date)
+    setCurrentEndDate(dayjs(date).format('YYYY-MM-DD'))
   }
 
   const handleEndDateChange = (date: Date) => {
     setValue('challengeEndDate', date)
+    setCurrentEndDate(dayjs(date).format('YYYY-MM-DD'))
     setShowEndDayPick(false)
   }
 
@@ -221,10 +255,11 @@ export default function RecruitsCreate() {
     if (selectedFile) {
       setValue('image', selectedFile)
     }
+    // console.log(selectedFile)
   }
 
   const onImageDelete = () => {
-    reset({ image: undefined }, { keepDefaultValues: true })
+    setValue('image', null)
     setMyImage(null)
   }
 
@@ -315,7 +350,10 @@ export default function RecruitsCreate() {
                     {currentEndDate}
                   </div>
                   {showEndDayPick && (
-                    <RecruitsDayPick onDayClick={handleEndDateChange} />
+                    <RecruitsDayPick
+                      onDayClick={handleEndDateChange}
+                      selectedStartDate={watch('challengeStartDate')}
+                    />
                   )}
                 </div>
               </div>
@@ -340,25 +378,31 @@ export default function RecruitsCreate() {
           )}
           <div className='flex'>
             <RecruitsTitle>세부 카테고리</RecruitsTitle>
-            {selectedCategory !== 2 && (
-              <SelectBox
-                bgColor='white'
-                textSize='size-body'
-                options={subCategoryId1}
-                register={register('subCategoryId', { required: true })}
-                onClick={handleValueClick}
-              />
-            )}
-            {selectedCategory === 2 && (
-              <SelectBox
-                bgColor='white'
-                textSize='size-body'
-                options={subCategoryId2}
-                register={register('subCategoryId', { required: true })}
-                onClick={handleValueClick}
-              />
-            )}
-            {getErrorMessage('subCategoryId')}
+            <div className='flex flex-col'>
+              {selectedCategory !== 2 && (
+                <SelectBox
+                  bgColor='white'
+                  textSize='size-body'
+                  options={subCategoryId1}
+                  register={register('subCategoryId', {
+                    required: REQUIRED_MESSAGE,
+                  })}
+                  onClick={handleValueClick}
+                />
+              )}
+              {selectedCategory === 2 && (
+                <SelectBox
+                  bgColor='white'
+                  textSize='size-body'
+                  options={subCategoryId2}
+                  register={register('subCategoryId', {
+                    required: REQUIRED_MESSAGE,
+                  })}
+                  onClick={handleValueClick}
+                />
+              )}
+              {getErrorMessage('subCategoryId')}
+            </div>
           </div>
           <div className='flex'>
             <RecruitsTitle>모집 대상</RecruitsTitle>
@@ -440,6 +484,7 @@ export default function RecruitsCreate() {
                     onChange={handleAddress2}
                   />
                   {getErrorMessage('address')}
+                  {getErrorMessage('address.detail2' as keyof FormData2)}
                 </div>
               </div>
             </div>
@@ -452,16 +497,25 @@ export default function RecruitsCreate() {
                   id='picture'
                   type='file'
                   className='hidden'
-                  accept='image/*'
+                  accept='image/png, image/jpeg, image/jpg'
                   onChange={(e) => {
                     handleFileChange(e)
                     const file = e.target.files?.[0]
-                    register('image', { value: file })
+                    register('image', {
+                      value: file,
+                      required: REQUIRED_MESSAGE,
+                    })
                   }}
                 />
                 <div
                   className='flex border-2 cursor-pointer border-light-gray-color rounded-image-radius w-36 h-36'
-                  onClick={() => document.getElementById('picture')?.click()}
+                  onClick={() => {
+                    if (watch('image')) {
+                      alert('사진은 한 장 만 등록됩니다.')
+                    } else {
+                      document.getElementById('picture')?.click()
+                    }
+                  }}
                 >
                   <GoPlus className='w-10 h-10 m-auto fill-light-gray-color' />
                 </div>
@@ -481,8 +535,8 @@ export default function RecruitsCreate() {
                     </div>
                   </div>
                 ) : null}
-                {getErrorMessage('image')}
               </div>
+              {getErrorMessage('image')}
               <div className='mt-3 text-size-subbody text-sub-color'>
                 사진은 한 장 만 등록됩니다. <br />
                 권장 크기: 360*360 이상, 정방형으로 사진이 등록됨을 유의하시길
@@ -498,11 +552,14 @@ export default function RecruitsCreate() {
                 placeholder='#태그입력'
                 width='w-80'
                 onEnter={(value) => handleEnter(value)}
-                register={register('hashTag')}
+                register={register('hashTag', {
+                  required: REQUIRED_MESSAGE,
+                })}
               />
               <div className='mt-3 text-size-subbody text-sub-color'>
                 해시태그는 최대 3개까지 입력 가능합니다.
               </div>
+              {getErrorMessage('hashTag')}
               <div>
                 <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
                   {dataArray.map((item, index) => (
@@ -552,7 +609,13 @@ export default function RecruitsCreate() {
           <Button onClick={handleButtonClick} fill='inactiveFill' type='submit'>
             취소
           </Button>
-          <Button onClick={handleSubmit(onSubmit)} fill='activeFill'>
+          <Button
+            onClick={() => {
+              handleSubmit(onSubmit)()
+              errorHandleEvent()
+            }}
+            fill='activeFill'
+          >
             등록
           </Button>
         </div>
