@@ -1,6 +1,13 @@
 import { Logo } from '@/assets/images'
 
 export default function Footer() {
+  // 로그인 페이지나 채팅페이지에서는 안보이도록
+  if (
+    window.location.pathname === '/login' ||
+    window.location.pathname === '/chat'
+  )
+    return null
+
   return (
     <footer className='bottom-0 flex justify-center w-full pt-8 pb-4 border-t border-light-gray-color bg-main-light-color'>
       <div className='w-3/4 transition-all duration-1000 desktop:w-8/12 max-w-common-screen-width'>

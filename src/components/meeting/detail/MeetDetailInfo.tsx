@@ -9,6 +9,9 @@ import Declaration from '@/components/common/Declaration'
 import { fetchPutLikePosts } from '@/api/event'
 import useAuthStore from '@/store/userStore'
 import { FaRegLightbulb } from 'react-icons/fa'
+import Swal, { SweetAlertResult } from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { useNavigate } from 'react-router-dom'
 
 interface MeetDetailProps {
   startDate?: string
@@ -25,6 +28,8 @@ interface MeetDetailProps {
   eventId: number
   likes: any[]
 }
+
+const MySwal = withReactContent(Swal)
 
 export default function MeetDetailInfo({
   startDate,
@@ -46,16 +51,37 @@ export default function MeetDetailInfo({
   const { user } = useAuthStore((state) => state)
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const userLikeEvent = likes.some((like) => like.user.id === user?.id)
     setIsLike(userLikeEvent)
   }, [likes, user?.id])
 
+  // 하트 클릭
   const handleLikeClick = async (
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault()
+
+    // 비회원일 경우
+    if (!user) {
+      MySwal.fire({
+        title: '로그인이 필요합니다',
+        text: '로그인 후에 좋아요를 누르실 수 있습니다.',
+        icon: 'warning',
+        iconColor: '#ff5e2e',
+        footer: '로그인 페이지로 이동하시겠습니까?',
+        confirmButtonText: '확인',
+        showCancelButton: true,
+        cancelButtonText: '취소',
+      }).then((result: SweetAlertResult) => {
+        if (result.isConfirmed) {
+          navigate('/login')
+        }
+      })
+      return
+    }
     try {
       await fetchPutLikePosts(eventId)
       setIsLike((prev) => !prev)
@@ -117,7 +143,7 @@ export default function MeetDetailInfo({
       {/* 모임 장소, 시간, 인원, 해시태그 관련 내용 */}
       <div className='flex flex-col gap-y-3'>
         <h3 className='text-xl font-semibold text-black-color'>
-          모임을 소개합니다!
+          👉 모임을 소개합니다!
         </h3>
         <div className='flex items-center justify-between'>
           <div className='flex -ml-1 gap-x-2'>

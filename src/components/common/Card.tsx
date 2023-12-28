@@ -13,10 +13,11 @@ import { DefaultProfile } from '@/assets/images'
 import Swal, { SweetAlertResult } from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import { useNavigate } from 'react-router-dom'
+import { Modal, Declaration } from '@/components/common'
 
 const MySwal = withReactContent(Swal)
 
-export default function Card({ data, openModal }: CardProps) {
+export default function Card({ data }: CardProps) {
   const {
     image,
     title,
@@ -36,6 +37,8 @@ export default function Card({ data, openModal }: CardProps) {
 
   const [isKebabVisible, setIsKebabVisible] = useState(false)
   const [isMenuVisible, setIsMenuVisible] = useState(false)
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   // 클릭한 게시물에 내가 참가하고 있는지
   const amIParticipant = eventApplies.some(
@@ -107,7 +110,7 @@ export default function Card({ data, openModal }: CardProps) {
   }
 
   // 하트 클릭
-  const handleIconClick: React.MouseEventHandler<HTMLButtonElement> = async (
+  const handleLikeClick: React.MouseEventHandler<HTMLButtonElement> = async (
     e,
   ) => {
     e.stopPropagation()
@@ -160,6 +163,14 @@ export default function Card({ data, openModal }: CardProps) {
 
   const handleUserImageLazyLoad = () => {
     setIsUserImageLoaded(true)
+  }
+
+  // 신고모달
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+  const closeModal = () => {
+    setIsModalOpen(false)
   }
 
   return (
@@ -251,8 +262,8 @@ export default function Card({ data, openModal }: CardProps) {
                       {!isMenuVisible && (
                         <div className='flex'>
                           <button
-                            onClick={handleIconClick}
-                            className='p-2 transition-transform transform active:scale-75 tablet:text-size-title'
+                            onClick={handleLikeClick}
+                            className='p-2 transition-transform transform active:scale-75 tablet:text-size-title hover:scale-105'
                           >
                             <i className='text-size-body tablet:text-size-title'>
                               {isLike ? (
@@ -305,6 +316,16 @@ export default function Card({ data, openModal }: CardProps) {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <Modal isOpen={isModalOpen} closeModal={closeModal}>
+          <Declaration
+            type='eventReport'
+            eventId={id}
+            reporterId={user?.id}
+            closeModal={closeModal}
+          />
+        </Modal>
+      )}
     </>
   )
 }

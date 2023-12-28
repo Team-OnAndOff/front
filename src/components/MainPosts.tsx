@@ -16,12 +16,9 @@ import 'swiper/css/bundle'
 import swipercore from 'swiper'
 swipercore.use([Autoplay])
 
-import { Modal, Declaration } from '@/components/common'
-
 export default function MainPosts({ title, data, isSlide }: PostsProps) {
   const navigate = useNavigate()
   const [swiper, setSwiper] = useState<SwiperClass | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const items = data
 
@@ -47,14 +44,6 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
     if (categoryId !== undefined) {
       navigate(`/meetup-lists/${categoryId}`)
     }
-  }
-
-  // 신고모달
-  const openModal = () => {
-    setIsModalOpen(true)
-  }
-  const closeModal = () => {
-    setIsModalOpen(false)
   }
 
   return (
@@ -109,7 +98,7 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
               >
                 {items.map((item) => (
                   <SwiperSlide key={item.id}>
-                    <Card data={item} openModal={openModal} />
+                    <Card data={item} />
                   </SwiperSlide>
                 ))}
               </Swiper>
@@ -148,14 +137,9 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
       ) : (
         <div className='grid desktop:gap-4 gap-y-14 desktop:grid-cols-3 transition-all duration-[1000ms] ease-in-out'>
           {items.map((item) => (
-            <Card key={item.id} data={item} openModal={openModal} />
+            <Card key={item.id} data={item} />
           ))}
         </div>
-      )}
-      {isModalOpen && (
-        <Modal isOpen={isModalOpen} closeModal={closeModal}>
-          <Declaration closeModal={closeModal} />
-        </Modal>
       )}
     </section>
   )

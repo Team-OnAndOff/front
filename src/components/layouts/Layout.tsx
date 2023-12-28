@@ -7,6 +7,7 @@ import useAuthStore from '@/store/userStore'
 
 export default function Layout() {
   const { setLoginUser } = useAuthStore((state) => state)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,6 +21,9 @@ export default function Layout() {
     }
     fetchData()
   }, [setLoginUser])
+
+  const withoutFooter = window.location.pathname === '/login' || '/chat'
+
   return (
     <div className='flex flex-col items-center h-screen'>
       <Header />
@@ -28,7 +32,11 @@ export default function Layout() {
       </div>
       <FloatingButton />
       <ScrollToTopButton />
-      <Footer />
+      {withoutFooter ? null : (
+        <>
+          <Footer />
+        </>
+      )}
     </div>
   )
 }
