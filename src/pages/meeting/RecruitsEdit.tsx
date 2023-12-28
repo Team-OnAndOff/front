@@ -211,7 +211,7 @@ export default function RecruitsEdit() {
         MySwal.fire('수정 성공', '모임글이 수정되었습니다.', 'success')
         setTimeout(() => {
           MySwal.close()
-          navigate(-2)
+          navigate(-1)
         }, 1500)
       }
     } catch (error) {

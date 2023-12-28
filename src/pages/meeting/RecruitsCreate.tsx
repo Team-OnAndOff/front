@@ -156,7 +156,7 @@ export default function RecruitsCreate() {
         MySwal.fire('등록 성공', '모임등록이 완료되었습니다.', 'success')
         setTimeout(() => {
           MySwal.close()
-          navigate(-2)
+          navigate(-1)
         }, 1500)
       }
     } catch (error) {
