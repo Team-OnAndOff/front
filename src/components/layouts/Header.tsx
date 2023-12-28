@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { FaUserCircle, FaTimes, FaBars } from 'react-icons/fa'
 import Logo from '@/assets/images/Logo.svg'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { Category } from '@/types'
 import { fetchGetCategories } from '@/api/category'
 import useAuthStore from '@/store/userStore'
@@ -22,6 +22,7 @@ export default function Header() {
   const [menuToggle, setMenuToggle] = useState<boolean>(false)
   const [menuItems, setMenuItems] = useState<MenuItem[]>([])
   const location = useLocation()
+  const navigate = useNavigate()
   const store = useAuthStore()
   const generateClassName = (
     base: string,
@@ -31,6 +32,22 @@ export default function Header() {
 
   const closeMobileMenu = () => {
     setMenuToggle(false)
+  }
+
+  const handleBasicInfoClick = () => {
+    MySwal.fire({
+      title: '로그인이 필요한 기능입니다!',
+      icon: 'warning',
+      iconColor: '#ff5e2e',
+      footer: '로그인 페이지로 이동하시겠습니까?',
+      confirmButtonText: '확인',
+      showCancelButton: true,
+      cancelButtonText: '취소',
+    }).then((result: SweetAlertResult) => {
+      if (result.isConfirmed) {
+        navigate('/login')
+      }
+    })
   }
 
   const handleLogout: React.MouseEventHandler<HTMLAnchorElement> = async () => {
@@ -118,12 +135,27 @@ export default function Header() {
             >
               {store.user ? 'Logout' : 'Login'}
             </Link>
-            <Link
-              to={`/userInfo/${store.user?.id}`}
-              className={generateClassName('py-5 px-3', true)}
-            >
-              <FaUserCircle size={24} />
-            </Link>
+
+            {store.user ? (
+              <Link
+                to={`/userinfo/${store.user?.id}`}
+                className={generateClassName('py-5 px-3', true)}
+              >
+                <img
+                  alt='프로필 사진'
+                  className='w-[24px] h-[24px] rounded-full'
+                  src={store.user.image.uploadPath}
+                />
+              </Link>
+            ) : (
+              <Link
+                to='#'
+                onClick={handleBasicInfoClick}
+                className={generateClassName('py-5 px-3', true)}
+              >
+                <FaUserCircle size={24} />
+              </Link>
+            )}
           </div>
 
           {/* mobile */}

@@ -49,7 +49,26 @@ export default function MeetDetailInfo({
   const [isLike, setIsLike] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { user } = useAuthStore((state) => state)
-  const openModal = () => setIsModalOpen(true)
+  const openModal = () => {
+    if (!user) {
+      MySwal.fire({
+        title: '로그인이 필요합니다',
+        text: '로그인 후에 모임 신고를 하실 수 있습니다.',
+        icon: 'warning',
+        iconColor: '#ff5e2e',
+        footer: '로그인 페이지로 이동하시겠습니까?',
+        confirmButtonText: '확인',
+        showCancelButton: true,
+        cancelButtonText: '취소',
+      }).then((result: SweetAlertResult) => {
+        if (result.isConfirmed) {
+          navigate('/login')
+        }
+      })
+    } else {
+      setIsModalOpen(true)
+    }
+  }
   const closeModal = () => setIsModalOpen(false)
   const navigate = useNavigate()
 
