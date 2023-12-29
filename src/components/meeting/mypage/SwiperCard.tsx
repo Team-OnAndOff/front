@@ -5,7 +5,6 @@ import 'swiper/css/free-mode'
 import 'swiper/css/pagination'
 import { CardBtn } from './CardBtn'
 import { FreeMode, Pagination, Navigation } from 'swiper/modules'
-
 import { CardData } from '@/types'
 import { Link } from 'react-router-dom'
 import { IoIosArrowBack } from 'react-icons/io'
@@ -38,7 +37,7 @@ export default function SwiperCard({
   useEffect(() => {
     // swiperData가 변경될 때마다 내부 상태를 업데이트
     setData(swiperData)
-  }, [swiperData])
+  }, [swiperData, selectedTab, userId])
 
   return (
     <>

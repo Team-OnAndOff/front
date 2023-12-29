@@ -115,7 +115,7 @@ export default function MyPage() {
       }
     }
     fetchData()
-  }, [swiperData, newLoad])
+  }, [swiperData, newLoad, userId, userMe])
 
   // 모달 관련 기능 start
   const [isModalOpen, setIsModalOpen] = useState(false)

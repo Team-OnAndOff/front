@@ -170,6 +170,7 @@ export default function MyPageCard({ data }: MyPageCardProps) {
           <div className='w-full h-36 desktop:h-[14vw]'>
             <Link to={`/details/${data.id}`}>
               <LazyImage
+                key={image.uploadPath} // 이미지 URL이 변경될 때마다 key를 업데이트
                 src={image.uploadPath}
                 alt={title}
                 className='object-cover w-full h-full min-w-[230px] cursor-pointer rounded-image-radius'
@@ -184,6 +185,7 @@ export default function MyPageCard({ data }: MyPageCardProps) {
               className='absolute bg-white rounded-full cursor-pointer -bottom-6 drop-shadow-xl right-2 desktop:-bottom-6 desktop:right-5'
             >
               <LazyImage
+                key={user.image.uploadPath || 'default'} // key 속성 추가
                 src={user.image.uploadPath || DefaultProfile}
                 alt={user.username}
                 className='w-12 h-12 rounded-full'
