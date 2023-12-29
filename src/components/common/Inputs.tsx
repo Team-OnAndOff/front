@@ -29,10 +29,10 @@ export default function Inputs({
   return (
     <>
       <div
-        className={`pt-4 pb-1 flex flex-col pl-3 border-b-2 ${width} dark:border-dark-light-color  border-light-gray-color focus-within:border-main-color dark:focus-within:border-white transition-smooth`}
+        className={`pt-4 pb-1 flex flex-col pl-3 border-b-2 ${width} dark:border-dark-light-color  border-light-gray-color focus-within:border-main-color focus-within:dark:border-white transition-smooth`}
       >
         <input
-          className='w-full bg-transparent text-size-body dark:bg-dark-main-color/[0.5] text-black-color dark:text-dark-light-color focus:outline-none transition-smooth'
+          className='w-full bg-white text-size-body dark:bg-dark-main-color/[0.5] text-black-color dark:text-dark-light-color focus:outline-none  transition-smooth'
           type={type}
           placeholder={placeholder}
           {...register}

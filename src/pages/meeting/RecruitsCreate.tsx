@@ -363,7 +363,7 @@ export default function RecruitsCreate() {
               <RecruitsTitle>모임 시작일</RecruitsTitle>
               <div>
                 <div
-                  className='flex items-center gap-1 p-2.5 px-3 border-2 rounded-small-radius cursor-pointer w-fit dark:text-dark-light-color transition-smooth'
+                  className='flex p-2.5 px-3 border-2 border-black-color dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-size-subbody'
                   onClick={handleStartDayPickClick}
                 >
                   <CiCalendar className='fill-black-color dark:fill-dark-light-color transition-smooth' />
@@ -521,7 +521,7 @@ export default function RecruitsCreate() {
                   ref={(ref) => (fileInputRef.current = ref)}
                   id='picture'
                   type='file'
-                  className='hidden dark:border-dark-light-color transition-smooth'
+                  className='hiddenh'
                   accept='image/png, image/jpeg, image/jpg'
                   onChange={(e) => {
                     handleFileChange(e)
