@@ -156,7 +156,7 @@ export default function MyPage() {
           </div>
         </div>
         {/* 소개박스 */}
-        <div className='flex flex-row justify-between w-full'>
+        <div className='flex flex-row justify-between w-full h-full'>
           <div className='relative flex flex-col justify-between w-full h-full gap-2 '>
             {/* 아래로 유저 데이터 넣어야함 */}
             {userData ? (
@@ -204,7 +204,7 @@ export default function MyPage() {
 
             {/* 신고 s*/}
             {!userMe && (
-              <div className='absolute z-100 right-[10px] top-[10px]'>
+              <div className='absolute z-100 right-[10px] top-[0px]'>
                 <button onClick={() => openModal('declaration')}>
                   <PiSiren />
                 </button>
@@ -293,6 +293,7 @@ export default function MyPage() {
             selectedTab={selectedTab}
             swiperData={data}
             userId={userId}
+            userMe={userMe}
             setNewLoad={setNewLoad}
           />
         </div>

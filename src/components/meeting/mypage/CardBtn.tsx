@@ -7,6 +7,7 @@ interface StateNumber {
   selectedTab: number
   userId: number | string | undefined
   data: CardData
+  userMe: boolean | undefined
   setNewLoad: Dispatch<SetStateAction<boolean>>
 }
 // 스테이트와 이펙트로 클릭 버튼마다 이벤트를 만들어서 이펙트의 api를 바꿔서 api불러오기?
@@ -15,6 +16,7 @@ export const CardBtn = ({
   selectedTab,
   data,
   userId,
+  userMe,
   setNewLoad,
 }: StateNumber) => {
   const navigate = useNavigate()
@@ -87,7 +89,7 @@ export const CardBtn = ({
           />
         </div>
       )}
-      {selectedTab === 2 && (
+      {userMe && selectedTab === 2 && (
         <div className='flex justify-center mt-5'>
           <Link to='/recruits-edit' state={{ eventId: data?.event.id }}>
             <Button
