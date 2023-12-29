@@ -15,6 +15,7 @@ import Evaluation from '../mypage/Evaluation'
 interface MeetMemberListProps {
   participatedMem: EventAppliesUser[]
   eventId: number
+  hostId: number
 }
 
 import swipercore from 'swiper'
@@ -25,6 +26,7 @@ swipercore.use([Autoplay])
 export default function MeetMemberList({
   participatedMem,
   eventId,
+  hostId,
 }: MeetMemberListProps) {
   const [swiper, setSwiper] = useState<SwiperClass | null>(null)
 
@@ -55,15 +57,15 @@ export default function MeetMemberList({
     const isParticipated = participatedMem.some(
       (mem) => mem.user.id === user?.id,
     )
-    if (!isParticipated) {
+    if (isParticipated || hostId === user?.id) {
+      setIsModalOpen(true)
+    } else if (!isParticipated) {
       Swal.fire({
         icon: 'error',
         text: '모임에 참여해야만 멤버를 평가할 수 있습니다!',
         timer: 2000,
         confirmButtonColor: '#ff5e2e',
       })
-    } else {
-      setIsModalOpen(true)
     }
   }
   const closeModal = () => setIsModalOpen(false)
