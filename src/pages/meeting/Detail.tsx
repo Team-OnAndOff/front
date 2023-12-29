@@ -107,6 +107,7 @@ export default function Detail() {
               <MeetMemberList
                 eventId={eventId}
                 participatedMem={postDetail.eventApplies}
+                hostId={postDetail.user.id}
               />
             )}
           </div>
