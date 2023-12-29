@@ -12,7 +12,7 @@ import {
   SelectBox,
   Inputs,
   TextArea,
-} from '@/components/common/index'
+} from '@/components/common'
 import {
   RecruitsCheckBox,
   RecruitsTitle,
@@ -22,7 +22,7 @@ import {
   RecruitsCareerCategory,
   RecruitsSubCategory1,
   RecruitsSubCategory2,
-} from '@/components/meeting/index'
+} from '@/components/meeting'
 import InputHash from '@/components/meeting/mypage/InputHash'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -165,7 +165,7 @@ export default function RecruitsCreate() {
 
   const getErrorMessage = <T extends keyof FormData2>(field: T) => {
     return errors[field] ? (
-      <p className='block mt-2 text-red-500 text-size-subbody'>
+      <p className='block mt-2 text-red-500 text-size-subbody dark:text-main-hover-color transition-smooth'>
         {errors[field]?.message}
       </p>
     ) : null
@@ -299,11 +299,11 @@ export default function RecruitsCreate() {
   return (
     <>
       <div className='w-3/4 mx-auto my-20 desktop:w-full'>
-        <div className='flex justify-center mx-auto font-bold text-size-title'>
+        <div className='flex justify-center mx-auto font-bold text-size-title dark:text-dark-light-color transition-smooth'>
           나만의 모임 생성
         </div>
         <form className='flex flex-col gap-16 my-20'>
-          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row transition-smooth'>
             <RecruitsTitle>카테고리 설정</RecruitsTitle>
             <div className='flex flex-col cursor-pointer'>
               <RadioButtons
@@ -315,15 +315,15 @@ export default function RecruitsCreate() {
             </div>
           </div>
           {selectedCategory === 2 && (
-            <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
+            <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row transition-smooth'>
               <RecruitsTitle>챌린지 기간</RecruitsTitle>
               <div className='flex gap-3'>
                 <div>
                   <div
-                    className='flex p-2.5 px-3 border-2 rounded-small-radius cursor-pointer'
+                    className='flex p-2.5 px-3 border-2 border-black-color dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-size-subbody'
                     onClick={handleStartDayPickClick}
                   >
-                    <CiCalendar />
+                    <CiCalendar className='fill-black-color dark:fill-dark-light-color transition-smooth' />
                     {currentStartDate}
                   </div>
                   {showStartDayPick && (
@@ -333,13 +333,15 @@ export default function RecruitsCreate() {
                     />
                   )}
                 </div>
-                <p className='pt-2 font-bold'>~</p>
+                <p className='pt-2 font-bold text-black-color dark:text-dark-light-color'>
+                  ~
+                </p>
                 <div>
                   <div
-                    className='flex p-2.5 px-3 border-2 rounded-small-radius cursor-pointer '
+                    className='flex p-2.5 px-3 border-2 border-black-color dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-size-subbody'
                     onClick={handleEndDayPickClick}
                   >
-                    <CiCalendar />
+                    <CiCalendar className='fill-black-color dark:fill-dark-light-color transition-smooth' />
                     {currentEndDate}
                   </div>
                   {showEndDayPick && (
@@ -358,10 +360,10 @@ export default function RecruitsCreate() {
               <RecruitsTitle>모임 시작일</RecruitsTitle>
               <div>
                 <div
-                  className='flex items-center gap-1 p-2.5 px-3 border-2 rounded-small-radius cursor-pointer w-fit'
+                  className='flex items-center gap-1 p-2.5 px-3 border-2 rounded-small-radius cursor-pointer w-fit dark:text-dark-light-color transition-smooth'
                   onClick={handleStartDayPickClick}
                 >
-                  <CiCalendar />
+                  <CiCalendar className='fill-black-color dark:fill-dark-light-color transition-smooth' />
                   {currentStartDate}
                 </div>
                 {showStartDayPick && (
@@ -399,13 +401,13 @@ export default function RecruitsCreate() {
                 />
               )}
               {flag === 1 && !watch('subCategoryId') && (
-                <p className='block mt-2 text-red-500 text-size-subbody'>
+                <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody transition-smooth'>
                   *필수로 선택해주세요.
                 </p>
               )}
             </div>
           </div>
-          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row transition-smooth'>
             <RecruitsTitle>모집 대상</RecruitsTitle>
             <div className='flex flex-col'>
               <RecruitsCheckBox
@@ -418,7 +420,7 @@ export default function RecruitsCreate() {
               {flag === 1 &&
                 (!watch('careerCategoryId') ||
                   watch('careerCategoryId').length === 0) && (
-                  <p className='block mt-2 text-red-500 text-size-subbody'>
+                  <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody transition-smooth'>
                     *필수로 선택해주세요.
                   </p>
                 )}
@@ -436,9 +438,9 @@ export default function RecruitsCreate() {
               {getErrorMessage('title')}
             </div>
           </div>
-          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row transition-smooth'>
             <RecruitsTitle>모집 내용 글</RecruitsTitle>
-            <div className='flex flex-col desktop:w-1/2'>
+            <div className='flex flex-col transition-smooth desktop:w-1/2'>
               <TextArea
                 placeholder='모집에 대한 설명을 작성해주세요'
                 width='w-full'
@@ -492,7 +494,7 @@ export default function RecruitsCreate() {
                     onChange={handleAddress2}
                   />
                   {flag === 1 && watch('online') === 0 && !watch('address') && (
-                    <p className='block mt-2 text-red-500 text-size-subbody'>
+                    <p className='block mt-2 text-red-500 text-size-subbody dark:text-main-hover-color transition-smooth'>
                       *오프라인 선택시 주소는 필수로 입력해주세요.
                     </p>
                   )}
@@ -500,7 +502,7 @@ export default function RecruitsCreate() {
                     watch('online') === 0 &&
                     watch('address.detail1') &&
                     !watch('address.detail2') && (
-                      <p className='block mt-2 text-red-500 text-size-subbody'>
+                      <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody transition-smooth'>
                         *상세 주소는 필수로 입력해주세요.
                       </p>
                     )}
@@ -516,7 +518,7 @@ export default function RecruitsCreate() {
                   ref={(ref) => (fileInputRef.current = ref)}
                   id='picture'
                   type='file'
-                  className='hidden'
+                  className='hidden dark:border-dark-light-color transition-smooth'
                   accept='image/png, image/jpeg, image/jpg'
                   onChange={(e) => {
                     handleFileChange(e)
@@ -555,13 +557,13 @@ export default function RecruitsCreate() {
                       className='absolute top-[-7px] right-[-7px] z-10 cursor-pointer'
                       onClick={onImageDelete}
                     >
-                      <IoClose className='w-6 h-6 bg-white border-2 rounded-full fill-main-color border-main-color' />
+                      <IoClose className='w-6 h-6 bg-white border-2 rounded-full fill-main-color dark:fill-dark-gray-color dark:border-dark-gray-color transition-smooth border-main-color' />
                     </div>
                   </div>
                 ) : null}
               </div>
               {flag === 1 && !watch('image') && (
-                <p className='block mt-2 text-red-500 text-size-subbody'>
+                <p className='block mt-2 text-red-500 dark:text-main-hover-color transition-smooth text-size-subbody'>
                   *이미지는 필수로 등록해주세요.
                 </p>
               )}
@@ -588,7 +590,7 @@ export default function RecruitsCreate() {
                 해시태그는 최대 3개까지 입력 가능합니다.
               </div>
               {flag === 1 && watch('hashTag').length === 0 && (
-                <p className='block mt-2 text-red-500 text-size-subbody'>
+                <p className='block mt-2 text-red-500 text-size-subbody transition-smooth dark:text-main-hover-color'>
                   *해시태그는 필수로 등록해주세요.
                 </p>
               )}
@@ -596,7 +598,7 @@ export default function RecruitsCreate() {
                 <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
                   {dataArray.map((item, index) => (
                     <li
-                      className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'
+                      className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color dark:bg-dark-light-color w-fit text-subbody text-black-color transition-smooth'
                       key={index}
                     >
                       #{item}
@@ -604,7 +606,7 @@ export default function RecruitsCreate() {
                         onClick={() => handleRemoveHash(index)}
                         className='cursor-pointer'
                       >
-                        ⤫
+                        &nbsp; &#215;
                       </span>
                     </li>
                   ))}

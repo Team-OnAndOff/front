@@ -28,7 +28,7 @@ export default function SelectBox({
   const selectBoxRef = useRef<HTMLDivElement>(null)
 
   const selectStyle = (bgColor: string, textSize: string) => {
-    return `bg-${bgColor} flex justify-between border-2 cursor-pointer focus:bg-main-light-color text-black-color text-${textSize} rounded-button-radius focus:border-main-color block tablet:w-80 desktop:w-80 p-2.5 px-4 items-center`
+    return `bg-${bgColor} flex justify-between border-2 cursor-pointer focus:bg-main-light-color text-black-color text-${textSize} rounded-button-radius focus:border-main-color block tablet:w-80 desktop:w-80 p-2.5 px-4 items-center transition-smooth dark:bg-dark-light-color`
   }
 
   const handleSelect = (value: number) => {
@@ -66,7 +66,7 @@ export default function SelectBox({
     <div className='relative inline-block' ref={selectBoxRef}>
       <div
         className={`${selectStyle(bgColor, textSize)} ${
-          isOpen ? 'border-main-color' : ''
+          isOpen ? 'border-main-color dark:border-dark-light-color' : ''
         }`}
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -76,13 +76,13 @@ export default function SelectBox({
         <IoIosArrowDown />
       </div>
       {isOpen && (
-        <ul className='absolute left-0 w-full p-0 m-0 mt-1 overflow-hidden list-none bg-white border-2 border-main-color rounded-button-radius'>
+        <ul className='absolute left-0 w-full p-0 m-0 mt-1 overflow-hidden list-none bg-white border-2 border-main-color dark:border-dark-light-color rounded-button-radius dark:bg-dark-light-color'>
           {options.map((option) => (
             <li
               key={option.value}
-              className={`p-2.5 px-4 hover:bg-main-light-color cursor-pointer border-main-color border-b last:border-0 ${
+              className={`p-2.5 px-4 hover:bg-main-light-color hover:dark:bg-dark-main-color/[0.2] cursor-pointer border-main-color border-b dark:border-dark-main-color last:border-0 ${
                 selectedValue === option.value
-                  ? 'font-bold bg-main-light-color'
+                  ? 'font-bold bg-main-light-color dark:bg-dark-main-color/[0.2]'
                   : ''
               }`}
               onClick={() => handleSelect(option.value)}
