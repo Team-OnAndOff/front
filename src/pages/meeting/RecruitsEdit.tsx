@@ -405,7 +405,7 @@ export default function RecruitsEdit() {
               <RecruitsTitle>모임 시작일</RecruitsTitle>
               <div>
                 <div
-                  className='flex p-2.5 px-3 border-2 dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-[0.9rem]'
+                  className='flex p-2.5 px-3 w-fit border-2 dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-[0.9rem]'
                   onClick={handleStartDayPickClick}
                 >
                   <CiCalendar className='fill-black-color dark:fill-dark-light-color transition-smooth' />
