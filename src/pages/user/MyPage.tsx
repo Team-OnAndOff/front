@@ -39,7 +39,7 @@ interface BadgeType {
 }
 
 export default function MyPage() {
-  const [userMe, setUserMe] = useState<boolean | undefined>(undefined) // 마이페이지가 본인건지 확인.
+  const [userMe, setUserMe] = useState<boolean | undefined>(true) // 마이페이지가 본인건지 확인.
   const [selectedTab, setSelectedTab] = useState(0) // 탭 기능구현 스테이트
   const [tapNumData, setTapNumData] = useState<number[]>([])
   const [userData, setUserData] = useState<UserData | null>(null) //유저 데이터
@@ -92,7 +92,7 @@ export default function MyPage() {
       try {
         //모임 데이터 가져오기
         const cardData = await userCard(attendeeId)
-        if (!userMe) {
+        if (userMe === false) {
           setSwiperData('made')
           setSelectedTab(2)
         }
