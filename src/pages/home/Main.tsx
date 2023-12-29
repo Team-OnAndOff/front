@@ -1,13 +1,42 @@
 import { useState, useEffect } from 'react'
-import { ImageSlide, MainPosts } from '@/components'
+import { ImageSlide, MainPosts, StartPopup } from '@/components'
 import { fetchGetEvents } from '@/api/event'
 import { CardData, EventQuery } from '@/types'
+import { useCookies } from 'react-cookie'
 
 export default function Main() {
   const [topData, setTopData] = useState<CardData[]>([])
   const [crewData, setCrewData] = useState<CardData[]>([])
   const [challengeData, setChallengeData] = useState<CardData[]>([])
+  const [modal, setModal] = useState(false)
 
+  const [hasCookie, setHasCookie] = useState(true)
+  const [appCookies, setAppCookies] = useCookies()
+  //
+  // 방문이력 조회
+  const getExpiredDate = (days: number) => {
+    const date = new Date()
+    date.setDate(date.getDate() + days)
+    return date
+  }
+
+  const handleClickTodayClose = () => {
+    if (!appCookies) return
+
+    // 하루동안 안보이게
+    const expires = getExpiredDate(1)
+    setAppCookies('MODAL_EXPIRES', true, { path: '/', expires })
+
+    setModal(false)
+  }
+
+  useEffect(() => {
+    if (appCookies['MODAL_EXPIRES']) return
+    console.log(appCookies['MODAL_EXPIRES'])
+    setHasCookie(false)
+  }, [])
+
+  // 카테고리 정보 받아오기
   useEffect(() => {
     const fetchData = async (query: EventQuery) => {
       try {
@@ -26,7 +55,16 @@ export default function Main() {
     fetchData({ sort: 'likes', limit: 3 })
     fetchData({ categoryId: 1, page: 1, perPage: 9 })
     fetchData({ categoryId: 2, page: 1, perPage: 9 })
+    // 페이지 진입 시, 팝업창 보여주기
+    setModal(true)
   }, [])
+
+  // 스크롤 막기
+  // if (modal) {
+  //   document.body.classList.add('overflow-y-hidden')
+  // } else {
+  //   document.body.classList.remove('overflow-y-hidden')
+  // }
 
   return (
     <>
@@ -49,6 +87,13 @@ export default function Main() {
             isSlide={true}
           />
         </article>
+
+        {!hasCookie && modal && (
+          <StartPopup
+            handleClickTodayClose={handleClickTodayClose}
+            setModal={setModal}
+          />
+        )}
       </main>
     </>
   )

@@ -6,6 +6,7 @@ interface ButtonProps {
   onClick: () => void
   fill: 'activeFill' | 'border' | 'inactiveFill'
   width?: string
+  fontSize?: string
 }
 
 const getButtonStyle = (fill: ButtonProps['fill']) => {
@@ -27,6 +28,7 @@ export default function Button({
   onClick,
   fill = 'activeFill',
   width = 'w-small-button',
+  fontSize,
 }: ButtonProps) {
   const [isClicked, setIsClicked] = useState(false)
 
@@ -43,7 +45,7 @@ export default function Button({
     <button
       type={type}
       onClick={handleClick}
-      className={`py-2 px-2 rounded-button-radius ${width} transition-all duration-300 ${
+      className={`py-2 px-2 rounded-button-radius ${width} ${fontSize} transition-all duration-300 ${
         isClicked && 'transform scale-90'
       } ${getButtonStyle(fill)}`}
     >

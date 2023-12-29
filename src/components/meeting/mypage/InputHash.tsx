@@ -36,10 +36,10 @@ const InputHash = ({ placeholder, width = 'w-80', onEnter }: InputsProps) => {
   return (
     <div className='flex flex-col gap-2'>
       <div
-        className={`pt-4 pb-1 flex flex-col pl-3 ${width} border-light-gray-color focus-within:border-main-color dark:focus-within:border-white`}
+        className={`pt-4 pb-1 flex flex-col pl-3 border-b-2 ${width} border-light-gray-color focus-within:border-main-color dark:focus-within:border-white transition-smooth`}
       >
         <input
-          className='w-full border-b-2 text-size-body text-black-color dark:text-dark-light-color focus:outline-none dark:bg-dark-main-color'
+          className='w-full text-size-body text-black-color dark:text-dark-light-color focus:outline-none dark:bg-dark-main-color transition-smooth'
           type='text'
           placeholder={placeholder}
           value={inputValue}

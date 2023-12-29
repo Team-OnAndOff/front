@@ -242,7 +242,7 @@ export default function Card({ data }: CardProps) {
               </Link>
               <div className='h-14'>
                 <Link to={`/details/${data.id}`}>
-                  <h2 className='w-full font-bold line-clamp-2 text-size-body text-black-color dark:text-dark-light-color'>
+                  <h2 className='w-full font-bold line-clamp-2 text-size-body text-black-color dark:text-dark-light-color transition-smooth'>
                     {title}
                   </h2>
                 </Link>
