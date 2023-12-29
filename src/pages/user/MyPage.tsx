@@ -14,6 +14,7 @@ import SwiperCard from '@/components/meeting/mypage/SwiperCard'
 
 interface UserData {
   username: string | null
+  hashtag: string
   image: {
     uploadPath: string | null
   }
@@ -130,6 +131,12 @@ export default function MyPage() {
     setIsModalOpen(false)
   }
 
+  //해시 데이터 가공
+  const tagArray = userData?.hashtag
+    .split(',')
+    .filter(Boolean)
+    .map((item) => `#${item}`)
+
   return (
     <>
       <div className='relative h-auto w-1220 backdrop-blur-0'>
@@ -164,15 +171,14 @@ export default function MyPage() {
             {userData?.introduction}
           </p>
           <ul className='flex gap-3 mb-6'>
-            <li className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'>
-              #테스트
-            </li>
-            <li className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'>
-              #테스트
-            </li>
-            <li className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'>
-              #테스트
-            </li>
+            {tagArray?.map((item) => (
+              <li
+                key={item}
+                className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'
+              >
+                {item}
+              </li>
+            ))}
           </ul>
         </div>
         {/* 온도박스\ 신고,프로필 설정 버튼 e */}
@@ -299,7 +305,7 @@ export default function MyPage() {
           attend={badges?.crew.count}
           open={badges?.made.count}
           success={badges?.challenges.count}
-          bestValse={[1, 0, 1]}
+          bestValse={[0, 0, 0]}
         />
       </section>
     </>
