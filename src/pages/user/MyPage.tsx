@@ -136,7 +136,6 @@ export default function MyPage() {
     ?.split(',')
     .filter(Boolean)
     .map((item) => `#${item}`)
-  console.log(tagArray)
 
   return (
     <>
@@ -184,7 +183,7 @@ export default function MyPage() {
           <div className='flex relative items-center justify-center w-[17.5%]'>
             {/* 프로필 설정 버튼 s */}
             {userMe && (
-              <div className='absolute z-100 right-[10px] top-[5px]'>
+              <div className='absolute z-100 right-[10px] top-[0px]'>
                 <button onClick={() => openModal('profile')}>
                   <FaUserGear style={{ color: 'red' }} />
                 </button>
@@ -222,7 +221,7 @@ export default function MyPage() {
             )}
             {/* 신고 e*/}
             {/* 온도 s */}
-            <div className='absolute right-[4vw] top-[1.5rem] w-[58px] h-[20px] sm:right-0 sm:top-0  sm:relative sm:w-[68px] sm:h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
+            <div className='absolute right-[4vw] top-[1.5rem] w-[58px] h-[20px] sm:right-5 sm:top-0  sm:relative sm:w-[68px] sm:h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
               <p className='mt-[4px] text-white'>
                 36.5
                 <span className='w-[3px] h-[3px] mt-1 ml-0.5 bor absolute rounded-small-radius border border-solid border-white'></span>
@@ -278,7 +277,7 @@ export default function MyPage() {
           )}
           {!userMe && (
             <TapCard
-              name={'내가 개설한 모임'}
+              name={`${userData?.username} 님이 개설한 모임`}
               numData={tapNumData ? tapNumData[2] : 0}
               isSelected={selectedTab === 2}
               onClick={() => {
