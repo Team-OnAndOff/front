@@ -1,17 +1,21 @@
-import { useState, ChangeEvent, useCallback } from 'react'
+import { useState, useRef, ChangeEvent } from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import Swal from 'sweetalert2'
+import { Logo } from '@/assets/images'
+import withReactContent from 'sweetalert2-react-content'
 import InputHash from './InputHash'
 import { Button } from '@/components/common'
 import { userEdit } from '@/api/userEdit'
 import { userEsc } from '@/api/userEsx'
+import { IoClose } from 'react-icons/io5'
 import useAuthStore from '@/store/userStore'
 
 // 폼 데이터 타입 정의
 interface FormData {
   username: string
   introduction: string
-  image: File
+  image: File | null
+  showImage: string | undefined
   hashTags: string[]
 }
 
@@ -28,23 +32,31 @@ interface Props {
   } | null
 }
 
+const MySwal = withReactContent(Swal)
 // 컴포넌트 정의
 export default function IntroModal({ closeModal, myUserData, userId }: Props) {
   // useForm 훅을 사용하여 폼 상태 관리
-  const { register, handleSubmit, getValues, setValue } = useForm<FormData>()
+  const { register, handleSubmit, setValue } = useForm<FormData>()
   const [dataArray, setDataArray] = useState<string[]>([])
   const [myImage, setMyImage] = useState<File | null>(null)
   const { setUserLogout } = useAuthStore((state) => state)
-  const formData = getValues()
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+
+  const onImageDelete = () => {
+    setValue('image', null)
+    setMyImage(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+  }
   // 이미지 변경 핸들러
-  const handleFileChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const selectedFile = event.target.files?.[0]
-      setMyImage(selectedFile || null)
-      console.log('Selected File:', selectedFile)
-    },
-    [],
-  )
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.[0]
+    setMyImage(selectedFile || null)
+    if (selectedFile) {
+      setValue('image', selectedFile)
+    }
+  }
 
   // 폼 서밋 핸들러
   const onSubmit: SubmitHandler<FormData> = async (data, event) => {
@@ -79,11 +91,22 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
           // hashTags 필드의 값을 setValue를 사용하여 업데이트
           setValue('hashTags', [...dataArray, value.trim()])
         } else {
-          alert('태그는 10개까지만 입력할 수 있습니다.')
-          console.log(formData)
+          MySwal.fire({
+            title: '태그는 3개까지만 입력할 수 있습니다.',
+            icon: 'error',
+            confirmButtonColor: '#ff5e2e',
+          })
         }
       } else {
-        console.log('이미 존재하는 값입니다.')
+        MySwal.fire({
+          title: '이미 존재하는 값입니다.',
+          text: '다른 해시태그를 입력해주세요.',
+          icon: 'warning',
+          iconColor: '#ff5e2e',
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 1500,
+        })
       }
     }
   }
@@ -101,30 +124,40 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
   // 탈퇴 버튼 클릭 이벤트
   const quit = async () => {
     const 삭제할_ID_값 = `${myUserData?.username}`
-    await Swal.fire({
+    const result = await Swal.fire({
       icon: 'warning',
-      title: `[${삭제할_ID_값}] 님`,
-      text: `탈퇴 하시겠습니까?`,
+      title: `${삭제할_ID_값} 님`,
+      text: `정말로 탈퇴 하시겠습니까?`,
       showCancelButton: true,
       confirmButtonText: '탈퇴',
       cancelButtonText: '취소',
-    }).then(async (res) => {
-      if (res.isConfirmed) {
-        const response = await userEsc()
-        console.log(response)
-        if (response?.status === 200) {
+      confirmButtonColor: '#ff5e2e',
+      cancelButtonColor: '#3a823f',
+    })
+    if (result.isConfirmed) {
+      const response = await userEsc()
+      if (response?.status === 200) {
+        MySwal.fire({
+          title: '탈퇴 완료',
+          html: `
+            <img src="${Logo}" alt="Logo" style='margin:auto; width: 50%'/>
+            <br/>
+            <div>를 이용해주셔서 감사합니다.</div>
+          `,
+          confirmButtonColor: '#ff5e2e',
+        })
+        setTimeout(() => {
           setUserLogout()
           window.location.href = '/'
-        }
-      } else {
-        console.log('취소')
+          MySwal.close()
+        }, 2000)
       }
-    })
+    }
   }
 
   return (
-    <div className='inset-0 flex items-center justify-center'>
-      <div className='p-4 bg-white rounded-xl w-fit'>
+    <div className='flex items-center justify-center w-fit'>
+      <div className='p-4 bg-white rounded-xl'>
         <div className='flex items-start justify-between'>
           <p className='font-bold text-size-body'>자기 소개를 수정해주세요.</p>
         </div>
@@ -140,7 +173,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
               />
             </div>
             <textarea
-              className='resize-none overflow-hidden p-[10px] text-size-body font-medium rounded-button-radius mt-[10px] border-2 border-solid border-main-color '
+              className='p-4 pl-3 border-2 resize-none overflow-hidden text-size-body font-medium rounded-button-radius mt-[10px] border-solid border-light-gray-color focus-within:border-main-color focus:outline-none'
               {...register('introduction')}
               rows={7}
               cols={80}
@@ -151,27 +184,47 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
             <div className='flex items-start justify-between mt-3 mb-2'>
               <p className='font-bold text-size-body'>프로필 사진 변경</p>
             </div>
-            <div className='flex'>
-              <label className='relative flex flex-row items-center cursor-pointer'>
-                <input
-                  type='file'
-                  onChange={(e) => {
-                    handleFileChange(e)
-                    const file = e.target.files?.[0]
-                    register('image', { value: file })
-                  }}
-                  className='absolute hidden'
-                />
-                <div className='relative flex items-center justify-center p-6 border-2 border-solid border-main-color rounded-button-radius'>
-                  <div className='absolute w-px h-[20px] bg-main-color'></div>
-                  <div className='absolute h-px  w-[20px]  bg-main-color'></div>
-                </div>
-                {!myImage && (
-                  <p className='ml-2 text-size-subbody text-main-color'>
-                    기준 정방형 사이즈
-                  </p>
-                )}
+            <div className='flex flex-col gap-2'>
+              <div className='flex gap-2'>
+                <label className='relative flex flex-row items-center cursor-pointer'>
+                  <input
+                    ref={(ref) => (fileInputRef.current = ref)}
+                    id='picture'
+                    className='hidden'
+                    type='file'
+                    accept='image/png, image/jpeg, image/jpg'
+                    onChange={(e) => {
+                      handleFileChange(e)
+                      const file = e.target.files?.[0]
+                      register('image', { value: file })
+                    }}
+                  />
+                  <div className='relative flex items-center justify-center p-6 border-2 border-solid border-main-color rounded-button-radius'>
+                    <div className='absolute w-px h-[20px] bg-main-color'></div>
+                    <div className='absolute h-px  w-[20px]  bg-main-color'></div>
+                  </div>
+                </label>
                 {myImage && (
+                  <div className='relative'>
+                    <div className='relative flex overflow-hidden border-2 cursor-pointer border-light-gray-color rounded-image-radius w-[50px] h-[50px]'>
+                      <img
+                        className='w-full h-full'
+                        src={URL.createObjectURL(myImage)}
+                      />
+                    </div>
+                    <div
+                      className='absolute top-[-4px] right-[-4px] z-10 cursor-pointer'
+                      onClick={onImageDelete}
+                    >
+                      <IoClose className='w-4 h-4 bg-white border-2 rounded-full fill-main-color border-main-color' />
+                    </div>
+                  </div>
+                )}
+              </div>
+              <p className='ml-2 text-size-subbody text-sub-color'>
+                프로필 이미지는 정방형 사이즈로 등록됩니다.
+              </p>
+              {/* {myImage && (
                   <div className='flex items-center justify-center ml-2 overflow-hidden rounded-full w-[50px] h-[50px]'>
                     <img
                       src={URL.createObjectURL(myImage)}
@@ -179,8 +232,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
                       className='w-auto h-auto max-w-full'
                     />
                   </div>
-                )}
-              </label>
+                )} */}
             </div>
             <InputHash
               placeholder='#태그입력'
