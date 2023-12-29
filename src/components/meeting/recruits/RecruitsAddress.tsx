@@ -66,14 +66,13 @@ const RecruitsAddress = ({
   useEffect(() => {
     setAddress(initialAddress)
   }, [initialAddress])
-  // TODO: 버그 발견, 오프라인으로 등록하려고 했다가, 온라인으로 바꾸면 주소가 저장되어 있음; onLine으로 저장되면 주소가 삭제되도록 기능을 넣어야 할 것 같음.
 
   return (
     <>
       <div className='flex gap-3'>
         <input
           placeholder='우편번호'
-          className='flex pt-4 pb-1 pl-3 border-b-2 focus:outline-none border-light-gray-color'
+          className='flex pt-4 pb-1 pl-3 border-b-2 focus:outline-none border-light-gray-color text-black-color dark:text-dark-light-color dark:bg-dark-main-color'
           value={address ? `${address.zipCode}` : watchedZoneCode}
           readOnly
         />
@@ -83,13 +82,13 @@ const RecruitsAddress = ({
       </div>
       <input
         placeholder='주소'
-        className='flex w-3/4 pt-4 pb-1 pl-3 border-b-2 focus:outline-none border-light-gray-color'
+        className='flex w-3/4 pt-4 pb-1 pl-3 border-b-2 focus:outline-none border-light-gray-color text-black-color dark:text-dark-light-color dark:bg-dark-main-color'
         value={address ? `${address.detail1}` : watchedAddress}
         readOnly
       />
       <input
         placeholder='상세주소'
-        className='flex w-3/4 pt-4 pb-1 pl-3 border-b-2 focus:outline-none border-light-gray-color'
+        className='flex w-3/4 pt-4 pb-1 pl-3 border-b-2 focus:outline-none border-light-gray-color text-black-color dark:text-dark-light-color dark:bg-dark-main-color'
         defaultValue={address ? `${address.detail2}` : ''}
         onChange={(e) => {
           setValue('address2', e.target.value)

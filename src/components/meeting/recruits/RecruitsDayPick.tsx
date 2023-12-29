@@ -38,10 +38,10 @@ export default function RecruitsDayPick({
   }
 
   const modifiersStyles = {
-    today: {
-      color: 'white',
-      backgroundColor: '#ff5e2e',
-    },
+    // today: {
+    //   color: 'white',
+    //   backgroundColor: '#ff5e2e',
+    // },
     selected: {
       color: 'white',
       backgroundColor: '#ff5e2e',
