@@ -77,7 +77,7 @@ const Declaration = ({
     <>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className='flex flex-col items-center justify-between gap-y-4'
+        className='flex flex-col items-center justify-between w-full m-auto gap-y-4'
       >
         <p className='self-start font-bold text-size-body text-black-color'>
           신고 사유
