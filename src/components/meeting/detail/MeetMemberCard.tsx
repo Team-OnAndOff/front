@@ -49,8 +49,8 @@ export default function MeetMeberCard({
               onClick={handleClickUser}
               className='flex w-full white basis-3/4'
             >
-              <div className='space-pre '>
-                <span className='text-size-subbody line-clamp-3'>
+              <div className='space-pre'>
+                <span className='text-size-subbody line-clamp-3 dark:text-dark-light-color smooth-color'>
                   {member.user.introduction}
                 </span>
               </div>
@@ -64,7 +64,7 @@ export default function MeetMeberCard({
                     src={member.user.image.uploadPath}
                     className='object-cover mr-1 w-[24px] h-[24px] rounded-big-radius'
                   />
-                  <span className='text-size-subbody line-clamp-1'>
+                  <span className='text-size-subbody line-clamp-1 dark:text-dark-light-color smooth-color'>
                     {member.user.username}
                   </span>
                 </div>
@@ -75,10 +75,13 @@ export default function MeetMeberCard({
                   onClick={handleIconClick}
                 >
                   <i>
-                    <FaRegSmile size={20} />
+                    <FaRegSmile
+                      size={20}
+                      className='dark:fill-dark-light-color'
+                    />
                   </i>
                 </button>
-                <div className='p-1 ml-2 bg-main-color rounded-button-radius'>
+                <div className='p-1 ml-2 bg-main-color dark:bg-sub-color rounded-button-radius'>
                   <p className='font-light text-center text-white text-size-subbody'>
                     36.5
                   </p>

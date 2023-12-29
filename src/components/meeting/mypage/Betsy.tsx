@@ -62,8 +62,12 @@ const Betsy = ({ attend, open, success, bestValse }: condition) => {
                 src={image}
                 alt={`모임 참여 ${index + 1} 이미지`}
               />
-              <p className='mt-[1rem font-bold'>모임 참여</p>
-              <p className='font-bold'>{value[index]}회</p>
+              <p className='mt-[1rem font-bold dark:text-dark-light-color smooth-color dark:font-light'>
+                모임 참여
+              </p>
+              <p className='font-bold dark:text-dark-light-color smooth-color dark:font-light'>
+                {value[index]}회
+              </p>
             </div>
           ))}
         </div>
@@ -81,8 +85,12 @@ const Betsy = ({ attend, open, success, bestValse }: condition) => {
                 src={image}
                 alt={`모임 열기 ${index + 1} 이미지`}
               />
-              <p className='mt-[1rem font-bold'>모임 열기</p>
-              <p className='font-bold'>{value[index]}회</p>
+              <p className='mt-[1rem font-bold dark:text-dark-light-color smooth-color dark:font-light'>
+                모임 열기
+              </p>
+              <p className='font-bold dark:text-dark-light-color smooth-color dark:font-light'>
+                {value[index]}회
+              </p>
             </div>
           ))}
         </div>
@@ -104,8 +112,12 @@ const Betsy = ({ attend, open, success, bestValse }: condition) => {
                 src={image}
                 alt={`챌린지 성공 ${index + 1} 이미지`}
               />
-              <p className='mt-[1rem font-bold'>챌린지 성공</p>
-              <p className='font-bold'>{value[index]}회</p>
+              <p className='mt-[1rem font-bold dark:text-dark-light-color smooth-color dark:font-light'>
+                챌린지 성공
+              </p>
+              <p className='font-bold dark:text-dark-light-color smooth-color dark:font-light'>
+                {value[index]}회
+              </p>
             </div>
           ))}
         </div>
@@ -119,8 +131,12 @@ const Betsy = ({ attend, open, success, bestValse }: condition) => {
                 src={image.img}
                 alt={`베스트 모임 선정 ${index + 1} 이미지`}
               />
-              <p className='mt-[1rem font-bold'>{image.text}</p>
-              <p className='font-bold'>모임 선정</p>
+              <p className='mt-[1rem font-bold dark:text-dark-light-color smooth-color dark:font-light'>
+                {image.text}
+              </p>
+              <p className='font-bold dark:text-dark-light-color smooth-color dark:font-light'>
+                모임 선정
+              </p>
             </div>
           ))}
         </div>

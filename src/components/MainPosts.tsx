@@ -107,16 +107,16 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
               className='absolute top-1/2 -left-[50px]'
               onClick={handlePrev}
             >
-              <i className='text-size-title desktop:text-[2rem] text-black-color'>
-                <IoIosArrowBack />
+              <i className='text-size-title desktop:text-[2rem] '>
+                <IoIosArrowBack className='dark:fill-dark-light-color smooth-color' />
               </i>
             </button>
             <button
               className='absolute top-1/2 -right-[50px]'
               onClick={handleNext}
             >
-              <i className='text-size-title desktop:text-[2rem] text-black-color'>
-                <IoIosArrowBack className='rotate-180' />
+              <i className='text-size-title desktop:text-[2rem] text-black-color dark:text-dark-light-color transition-colors'>
+                <IoIosArrowBack className='rotate-180 dark:fill-dark-light-color smooth-color' />
               </i>
             </button>
           </div>

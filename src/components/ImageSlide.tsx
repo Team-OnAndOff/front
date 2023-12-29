@@ -106,12 +106,12 @@ export default function ImageSlide() {
       {/* 이전, 다음 버튼 커스텀 */}
       <button className='absolute z-10 left-2 top-1/2' onClick={handlePrev}>
         <i className='text-size-title tablet:text-[2.5rem] smooth-color'>
-          <IoIosArrowBack fill='#111' />
+          <IoIosArrowBack className='dark:fill-dark-light-color smooth-color' />
         </i>
       </button>
       <button className='absolute z-10 right-2 top-1/2' onClick={handleNext}>
         <i className='text-size-title tablet:text-[2.5rem] smooth-color'>
-          <IoIosArrowBack className='rotate-180' fill='#111' />
+          <IoIosArrowBack className='rotate-180 dark:fill-dark-light-color smooth-color' />
         </i>
       </button>
 
