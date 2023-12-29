@@ -52,7 +52,9 @@ export default function MeetMemberList({
   const [username, setUserName] = useState('')
   const { user } = useAuthStore((state) => state)
   const openModal = () => {
-    const isParticipated = participatedMem.some((mem) => mem.id === user?.id)
+    const isParticipated = participatedMem.some(
+      (mem) => mem.user.id === user?.id,
+    )
     if (!isParticipated) {
       Swal.fire({
         icon: 'error',
