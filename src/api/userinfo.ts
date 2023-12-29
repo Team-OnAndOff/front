@@ -3,6 +3,7 @@ import { VITE_BACKEND_HOST } from '@/assets/config'
 
 interface UserData {
     data: {
+        hashtag: string | null;
         username: string | null
         image: {
             uploadPath: string | null

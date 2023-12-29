@@ -13,8 +13,8 @@ import { badgesData } from '@/api/user'
 import SwiperCard from '@/components/meeting/mypage/SwiperCard'
 
 interface UserData {
+  hashtag: string | null // 추가된 부분
   username: string | null
-  hashtag: string
   image: {
     uploadPath: string | null
   }
@@ -132,10 +132,11 @@ export default function MyPage() {
   }
 
   //해시 데이터 가공
-  const tagArray = userData?.hashtag
+  const tagArray = (userData?.hashtag ?? '')
     .split(',')
     .filter(Boolean)
     .map((item) => `#${item}`)
+  console.log(tagArray)
 
   return (
     <>
