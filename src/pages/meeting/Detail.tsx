@@ -79,6 +79,7 @@ export default function Detail() {
             careerCategories={postDetail.careerCategories}
             eventId={eventId}
             likes={postDetail.likes}
+            hostId={postDetail.user.id}
           />
           <div className='mt-12'>
             <h3 className='text-xl font-semibold text-black-color'>

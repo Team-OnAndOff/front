@@ -27,6 +27,7 @@ interface MeetDetailProps {
   careerCategories: careerCategory[]
   eventId: number
   likes: any[]
+  hostId: number
 }
 
 const MySwal = withReactContent(Swal)
@@ -45,6 +46,7 @@ export default function MeetDetailInfo({
   careerCategories,
   eventId,
   likes,
+  hostId,
 }: MeetDetailProps) {
   const [isLike, setIsLike] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -67,7 +69,16 @@ export default function MeetDetailInfo({
         }
       })
     } else {
-      setIsModalOpen(true)
+      if (user?.id === hostId) {
+        Swal.fire({
+          icon: 'error',
+          text: '본인이 개설한 모임입니다!',
+          timer: 2000,
+          confirmButtonColor: '#ff5e2e',
+        })
+      } else {
+        setIsModalOpen(true)
+      }
     }
   }
   const closeModal = () => setIsModalOpen(false)
