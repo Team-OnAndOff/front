@@ -1,4 +1,3 @@
-// import useAuthStore from '@/store/userStore'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import useAuthStore from '@/store/userStore'
@@ -13,11 +12,10 @@ export default function PrivateRouter() {
   useEffect(() => {
     if (!user) {
       MySwal.fire({
-        title: '로그인이 필요한 기능입니다!',
+        title: '로그인이 필요합니다',
+        text: '로그인 후에 채팅방에 입장하실 수 있습니다.',
         icon: 'warning',
         iconColor: '#ff5e2e',
-        confirmButtonColor: '#ff5e2e',
-        cancelButtonColor: '#3a823f',
         footer: '로그인 페이지로 이동하시겠습니까?',
         confirmButtonText: '확인',
         showCancelButton: true,
@@ -27,7 +25,14 @@ export default function PrivateRouter() {
           MySwal.close()
           navigate(-1)
         } else if (result.isConfirmed) {
-          navigate('/login')
+          navigate(-1)
+        } else {
+          if (
+            window.location.pathname === '/chat' ||
+            window.location.pathname === '/userinfo'
+          ) {
+            navigate('/')
+          }
         }
       })
       return

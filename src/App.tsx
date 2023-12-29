@@ -19,7 +19,7 @@ export default function App() {
   // 새로고침 시, scroll to top
   ReloadScrollToTop()
   return (
-    <div className='bg-white  dark:bg-dark-main-color smooth-color'>
+    <div className='bg-white dark:bg-dark-main-color smooth-color'>
       <BrowserRouter>
         {/* 페이지 이동 시, scroll to top */}
         <NewPageScrollToTop />
@@ -31,8 +31,8 @@ export default function App() {
 
             <Route path='/meetup-lists/:categoryId' element={<MeetupList />} />
             <Route path='/details/:postId' element={<Detail />} />
+            <Route path='/userinfo/:userId' element={<MyPage />} />
             <Route element={<PrivateRouter />}>
-              <Route path='/userinfo/:userId' element={<MyPage />} />
               <Route path='/recruits-create' element={<RecruitsCreate />} />
               <Route path='/recruits-edit' element={<RecruitsEdit />} />
               <Route path='/want-join/:meetingId' element={<WantJoinList />} />
