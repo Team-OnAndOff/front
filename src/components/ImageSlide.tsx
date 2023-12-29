@@ -84,7 +84,8 @@ export default function ImageSlide() {
   // 페이지네이션 커스텀
   const pagination = {
     clickable: true,
-    renderBullet: function (index: number, className: string) {
+    renderBullet: function (_index: number, className: string) {
+      //인덱스 필요시 변경
       return `<span class="${className}"></span>`
     },
   }
