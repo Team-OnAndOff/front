@@ -145,10 +145,7 @@ export default function MyPage() {
       </div>
 
       {/* 프로필 카드 start */}
-      <section
-        className=' flex flex-row items-center h-[12.5rem] w-full rounded-big-radius
-      border border-solid border-light-gray-color mt-7 shadow-md justify-between'
-      >
+      <section className='flex flex-row items-center justify-between w-full h-auto border border-solid shadow-md rounded-big-radius border-light-gray-color mt-7'>
         {/* 이미지박스 */}
         <div className='p-3 flex relative items-center justify-center w-min-[100px] h-auto '>
           <div className='bg-aquamarine w-[150px] h-[150px] flex items-center justify-center rounded-full overflow-hidden'>
@@ -159,75 +156,78 @@ export default function MyPage() {
           </div>
         </div>
         {/* 소개박스 */}
-        <div className='flex gap-2 flex-col justify-between relative h-full w-[65%] '>
-          {/* 아래로 유저 데이터 넣어야함 */}
-          {userData ? (
-            <h4 className='mt-6 font-bold text-size-body'>
-              {userData?.username}
-            </h4>
-          ) : (
-            <h4 className='mt-6 font-bold text-size-body'>로딩중입니다.</h4>
-          )}
-          <p className='pl-1.5 whitespace-pre font-medium break-keep text-size-subbody'>
-            {userData?.introduction}
-          </p>
-          <ul className='flex gap-3 mb-6'>
-            {tagArray?.map((item) => (
-              <li
-                key={item}
-                className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit text-subbody text-black-color'
-              >
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-        {/* 온도박스\ 신고,프로필 설정 버튼 e */}
-        <div className='flex relative items-center justify-center w-[17.5%] h-full'>
-          {/* 프로필 설정 버튼 s */}
-          {userMe && (
-            <div className='absolute z-100 right-[10px] top-[10px]'>
-              <button onClick={() => openModal('profile')}>
-                <FaUserGear style={{ color: 'red' }} />
-              </button>
-              <Modal
-                isOpen={isModalOpen && modalType === 'profile'}
-                closeModal={closeModal}
-              >
-                <IntroModal
-                  closeModal={closeModal}
-                  userId={userId}
-                  myUserData={userData}
-                />
-              </Modal>
-            </div>
-          )}
-          {/* 프로필 설정 버튼 e */}
-
-          {/* 신고 s*/}
-          {!userMe && (
-            <div className='absolute z-100 right-[10px] top-[10px]'>
-              <button onClick={() => openModal('declaration')}>
-                <PiSiren />
-              </button>
-              <Modal
-                isOpen={isModalOpen && modalType === 'declaration'}
-                closeModal={closeModal}
-              >
-                <Declaration
-                  type='userReport'
-                  closeModal={closeModal}
-                  attendeeId={attendeeId}
-                />
-              </Modal>
-            </div>
-          )}
-          {/* 신고 e*/}
-          <div className='w-[68px] h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
-            <p className='mt-[4px] text-white'>
-              36.5
-              <span className='w-[3px] h-[3px] mt-1 ml-0.5 bor absolute rounded-small-radius border border-solid border-white'></span>
+        <div className='flex flex-row justify-between w-full'>
+          <div className='relative flex flex-col justify-between w-full h-full gap-2 '>
+            {/* 아래로 유저 데이터 넣어야함 */}
+            {userData ? (
+              <h4 className='mt-6 font-bold text-size-body'>
+                {userData?.username}
+              </h4>
+            ) : (
+              <h4 className='mt-6 font-bold text-size-body'>로딩중입니다.</h4>
+            )}
+            <p className='font-medium whitespace-pre break-keep text-size-subbody'>
+              {userData?.introduction}
             </p>
+            <ul className='flex gap-3 mb-6'>
+              {tagArray?.map((item) => (
+                <li
+                  key={item}
+                  className='whitespace-normal py-[0.3rem] px-[0.5rem] my-1 rounded-small-radius bg-main-light-color w-fit text-[0.75rem] text-black-color'
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* 온도박스\ 신고,프로필 설정 버튼 s */}
+          <div className='flex relative items-center justify-center w-[17.5%]'>
+            {/* 프로필 설정 버튼 s */}
+            {userMe && (
+              <div className='absolute z-100 right-[10px] top-[5px]'>
+                <button onClick={() => openModal('profile')}>
+                  <FaUserGear style={{ color: 'red' }} />
+                </button>
+                <Modal
+                  isOpen={isModalOpen && modalType === 'profile'}
+                  closeModal={closeModal}
+                >
+                  <IntroModal
+                    closeModal={closeModal}
+                    userId={userId}
+                    myUserData={userData}
+                  />
+                </Modal>
+              </div>
+            )}
+            {/* 프로필 설정 버튼 e */}
+
+            {/* 신고 s*/}
+            {!userMe && (
+              <div className='absolute z-100 right-[10px] top-[10px]'>
+                <button onClick={() => openModal('declaration')}>
+                  <PiSiren />
+                </button>
+                <Modal
+                  isOpen={isModalOpen && modalType === 'declaration'}
+                  closeModal={closeModal}
+                >
+                  <Declaration
+                    type='userReport'
+                    closeModal={closeModal}
+                    attendeeId={attendeeId}
+                  />
+                </Modal>
+              </div>
+            )}
+            {/* 신고 e*/}
+            {/* 온도 s */}
+            <div className='absolute right-[9rem] top-[1.5rem] w-[58px] h-[20px] sm:right-0 sm:top-0  sm:relative sm:w-[68px] sm:h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
+              <p className='mt-[4px] text-white'>
+                36.5
+                <span className='w-[3px] h-[3px] mt-1 ml-0.5 bor absolute rounded-small-radius border border-solid border-white'></span>
+              </p>
+            </div>
           </div>
         </div>
       </section>

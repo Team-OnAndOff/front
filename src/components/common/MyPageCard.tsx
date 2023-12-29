@@ -3,7 +3,6 @@ import { formatDate } from '@/utils'
 import { TiHeartOutline, TiHeartFullOutline } from 'react-icons/ti'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { FaEllipsisVertical } from 'react-icons/fa6'
 import { FaTimes } from 'react-icons/fa'
 import { Tag } from '@/components/common'
 import { fetchPutLikePosts } from '@/api/event'
@@ -132,11 +131,6 @@ export default function MyPageCard({ data }: MyPageCardProps) {
     setIsLike(userHasLiked)
   }, [])
 
-  const handleMenuClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.stopPropagation()
-    setIsMenuVisible(true)
-  }
-
   const handleCancelMenu: React.MouseEventHandler<HTMLButtonElement> = () => {
     setIsMenuVisible(false)
   }
@@ -250,14 +244,14 @@ export default function MyPageCard({ data }: MyPageCardProps) {
                               )}
                             </i>
                           </button>
-                          <button
+                          {/* <button
                             onClick={handleMenuClick}
                             className='p-3 -m-3'
                           >
                             <i className='text-size-body tablet:text-xl'>
                               <FaEllipsisVertical fill='black' />
                             </i>
-                          </button>
+                          </button> */}
                         </div>
                       )}
                     </div>

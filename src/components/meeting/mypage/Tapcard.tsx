@@ -16,9 +16,11 @@ const TapCard = ({ name, numData, isSelected, onClick }: TapButton) => {
         }`}
         onClick={onClick}
       >
-        <h4 className='text-[1rem] desktop:text-[1.5rem]'>{name}</h4>
-        <div className='w-[42px] h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
-          <p className='font-normal text-center text-white text-size-body'>
+        <h4 className='text-[1rem] desktop:text-[1.5rem] whitespace-normal'>
+          {name}
+        </h4>
+        <div className='w-[42px] h-[33px] bg-main-color rounded-button-radius flex items-center justify-center whitespace-normal'>
+          <p className='font-normal text-center text-white whitespace-normal text-size-body'>
             {numData}
           </p>
         </div>
