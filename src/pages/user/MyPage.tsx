@@ -166,7 +166,7 @@ export default function MyPage() {
             ) : (
               <h4 className='mt-6 font-bold text-size-body'>로딩중입니다.</h4>
             )}
-            <p className='font-medium whitespace-pre break-keep text-size-subbody'>
+            <p className='font-medium whitespace-pre-wrap text-size-subbody'>
               {userData?.introduction}
             </p>
             <ul className='flex gap-3 mb-6'>
@@ -222,7 +222,7 @@ export default function MyPage() {
             )}
             {/* 신고 e*/}
             {/* 온도 s */}
-            <div className='absolute right-[9rem] top-[1.5rem] w-[58px] h-[20px] sm:right-0 sm:top-0  sm:relative sm:w-[68px] sm:h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
+            <div className='absolute right-[4vw] top-[1.5rem] w-[58px] h-[20px] sm:right-0 sm:top-0  sm:relative sm:w-[68px] sm:h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
               <p className='mt-[4px] text-white'>
                 36.5
                 <span className='w-[3px] h-[3px] mt-1 ml-0.5 bor absolute rounded-small-radius border border-solid border-white'></span>
