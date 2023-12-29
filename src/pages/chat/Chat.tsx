@@ -135,9 +135,9 @@ export default function Chat() {
   return (
     <>
       {room && user && (
-        <div className='flex-col h-screen overflow-y-auto lg:h-full lg:flex lg:col-span-2 z-50 relative'>
+        <div className='flex-col lg:overflow-y-auto lg:h-full h-full lg:flex lg:col-span-2 relative w-full'>
           <ChatRoomTitle room={room} users={users} />
-          <div className='flex flex-1 overflow-auto gap-2 sm:p-4 flex-col-reverse h-full relative'>
+          <div className='flex flex-1 overflow-auto gap-2 lg:p-4 lg:mt-20 flex-col-reverse h-[calc(100vh-190px)] lg:h-full relative'>
             <div ref={messageEndRef}></div>
             {items.map((item, index, arr) => (
               <div key={index}>

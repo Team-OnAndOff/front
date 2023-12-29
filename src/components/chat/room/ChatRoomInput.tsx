@@ -18,7 +18,7 @@ export default function ChatRoomInput({
   setMessage,
 }: ChatRoomInputProps) {
   return (
-    <div className='border-neutral-200 pt-4 mb-2 sm:mb-0'>
+    <div className='border-neutral-200 pt-4 mb-0 lg:mb-2 lg:mx-1'>
       <form className='relative flex' onSubmit={sendMessage}>
         <input
           type='text'

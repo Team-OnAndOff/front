@@ -26,7 +26,7 @@ export default function ChatListCard({
 
   return (
     <div
-      className={`flex flex-row gap-2 py-4 px-2 justify-start items-center border-b-[1px]  cursor-pointer relative ${
+      className={`flex flex-row gap-2 py-4 px-2 justify-start items-center border-b-[1px] cursor-pointer relative ${
         selected ? 'bg-orange-200' : 'hover:bg-main-light-color'
       }`}
       onClick={() => onClick(item.room)}

@@ -58,18 +58,22 @@ export default function ChatLayout() {
   return (
     <div className='flex flex-col items-center'>
       <div className='flex-1 w-full lg:px-12 lg:my-8'>
-        <h1 className='hidden gap-2 mt-4 font-semibold tracking-wide text-size-title lg:inline-flex'>
+        <h1 className='text-size-title lg:inline-flex gap-2 mt-4 font-semibold tracking-wide hidden'>
           <BsChat size={26} />
           <span>채팅</span>
         </h1>
         {rooms.length === 0 && (
-          <div className='flex justify-center h-[calc(100vh-240px)] border-[1px] my-2 items-center'>
+          <div className='flex justify-center my-2 items-center'>
             참여중인 모임이 없습니다.
           </div>
         )}
         {rooms.length > 0 && (
-          <div className='grid grid-cols-1 lg:grid-cols-3 border-[1px] my-2 h-[calc(100vh-240px)]'>
-            <div className='flex flex-col w-full border-r-[1px] overflow-y-auto'>
+          <div className='grid grid-cols-1 lg:grid-cols-3 border-[1px] lg:h-[calc(100vh-190px)]'>
+            <div
+              className={`${
+                path.roomId ? 'hidden lg:flex' : 'flex'
+              } flex-col w-full border-r-[1px] lg:h-[calc(100vh-190px)] overflow-y-auto`}
+            >
               {rooms.map((room) => (
                 <ChatListCard
                   key={room._id}
