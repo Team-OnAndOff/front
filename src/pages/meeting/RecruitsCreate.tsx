@@ -433,6 +433,7 @@ export default function RecruitsCreate() {
             <RecruitsTitle>모집 제목 글</RecruitsTitle>
             <div className='flex flex-col w-3/4 desktop:w-1/2'>
               <Inputs
+                placeholder='ex) 🚀[TS+React] 매일매일 코딩 첼린지 모집합니다!'
                 width='w-full desktop:w-3/4'
                 register={register('title', {
                   required: REQUIRED_MESSAGE,
