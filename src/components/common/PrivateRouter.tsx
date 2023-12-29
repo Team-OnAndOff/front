@@ -22,8 +22,6 @@ export default function PrivateRouter() {
         confirmButtonText: '확인',
         showCancelButton: true,
         cancelButtonText: '취소',
-        confirmButtonColor: '#ff5e2e',
-        cancelButtonColor: '#26592a',
       }).then((result: SweetAlertResult) => {
         if (result.isDismissed) {
           MySwal.close()
