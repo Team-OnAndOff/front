@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { VITE_BACKEND_HOST } from '@/assets/config'
 import { User, Response } from '@/types'
+import Swal from 'sweetalert2'
 
 export interface UserAssessData {
   eventId: number
@@ -33,7 +34,12 @@ export const fetchUserAssess = async (evaluationData: UserAssessData) => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response?.status === 400) {
-        alert('이미 평가한 유저입니다!')
+        Swal.fire({
+          icon: 'error',
+          text: '이미 평가한 유저 입니다!',
+          timer: 2000,
+          confirmButtonColor: '#ff5e2e',
+        })
       }
     }
   }
@@ -47,4 +53,3 @@ export const badgesData = async (userId?: string) => {
     return null
   }
 }
-
