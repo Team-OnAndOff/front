@@ -3,6 +3,7 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   important: true,
+  darkMode: 'class',
   theme: {
     extend: {
       // text
@@ -31,8 +32,13 @@ export default {
         'main-hover-color': '#d94e25',
         'main-light-color': '#fff5f2',
 
+        // 다크모드 배경색
+        'dark-main-color': '#0f172a',
+        'dark-light-color': '#cbd5e1',
+
         // 서브컬러 초록색
         'sub-color': '#3a823f',
+        'sub-hover-color': '#26592a',
 
         'black-color': '#111111',
         'light-gray-color': '#f2efef',
@@ -56,6 +62,7 @@ export default {
 
       animation: {
         wiggle: 'wiggle 2s ease-in-out infinite',
+        spinSlow: 'spin 15s linear infinite',
       },
     },
   },

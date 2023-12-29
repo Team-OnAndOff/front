@@ -30,13 +30,13 @@ export default function MeetMeberCard({
     <>
       {member && (
         <>
-          <div className='flex mr-3 pointer flex-col p-1.5 border-2 border-dark-gray-color rounded w-full h-28'>
+          <div className='flex mr-3 pointer flex-col p-1.5 border-2 border-dark-gray-color rounded w-full h-28 max-w-[230px]'>
             <button
               onClick={handleClickUser}
               className='flex w-full white basis-3/4'
             >
               <div className='space-pre '>
-                <span className=' text-size-subbody line-clamp-3'>
+                <span className='text-size-subbody line-clamp-3'>
                   {member.user.introduction}
                 </span>
               </div>

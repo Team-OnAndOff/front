@@ -34,7 +34,7 @@ export default function Main() {
         <ImageSlide />
         <article className='flex flex-col gap-y-16'>
           <MainPosts
-            title='🔥 HOT! 금주의 가장 인기있는 모임!'
+            title='🔥 HOT! 가장 인기있는 모임 TOP3!'
             data={topData}
             isSlide={false}
           />

@@ -48,7 +48,7 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
 
   return (
     <section className='flex flex-col desktop:gap-y-7'>
-      <h2 className='mb-16 font-bold desktop:mb-8 desktop:m-0 text-size-title break-keep'>
+      <h2 className='mb-16 font-bold desktop:mb-8 desktop:m-0 text-size-title break-keep text-black-color dark:text-dark-light-color transition-smooth'>
         {title}
       </h2>
       {isSlide ? (
@@ -121,7 +121,7 @@ export default function MainPosts({ title, data, isSlide }: PostsProps) {
             </button>
           </div>
 
-          <div className='text-right text-size-subbody transition-all duration-[1000ms] ease-in-out'>
+          <div className='text-right text-size-subbody transition-smooth'>
             <Button
               fill='border'
               onClick={() =>

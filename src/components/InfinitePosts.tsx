@@ -11,7 +11,7 @@ export default function InfinitePosts({
 
   return (
     <section className='relative flex flex-col py-14 gap-y-7'>
-      <div className='grid desktop:grid-cols-3 desktop:gap-4 gap-y-20'>
+      <div className='grid desktop:grid-cols-3 desktop:gap-4 gap-y-20 transition-smooth'>
         {items?.map((item) => <Card key={item.id} data={item} />)}
       </div>
     </section>

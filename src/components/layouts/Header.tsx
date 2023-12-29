@@ -24,6 +24,7 @@ export default function Header() {
   const location = useLocation()
   const navigate = useNavigate()
   const store = useAuthStore()
+
   const generateClassName = (
     base: string,
     condition: boolean,
@@ -56,6 +57,8 @@ export default function Header() {
       text: '정말 로그아웃하시겠습니까?',
       icon: 'question',
       iconColor: '#ff5e2e',
+      confirmButtonColor: '#ff5e2e',
+      cancelButtonColor: '#3a823f',
       footer: '로그아웃 시, 서비스 이용에 제약이 걸릴 수 있습니다.',
       confirmButtonText: '확인',
       showCancelButton: true,
@@ -94,17 +97,16 @@ export default function Header() {
     fetchData()
   }, [])
 
+  if (location.pathname === '/login') return null
+
   return (
-    <nav className='w-full sticky top-0 z-[999] bg-white border-b shadow-sm py-2'>
-      <div className='relative z-[999] w-3/4 desktop:w-8/12 max-w-common-screen-width mx-auto bg-transparent transition-all duration-1000'>
+    <nav className='w-full sticky top-0 z-[999] dark:bg-dark-main-color bg-white border-b border-white dark:border-dark-main-color shadow-sm py-2 transition-smooth'>
+      <div className='relative z-[999] w-3/4 desktop:w-8/12 max-w-common-screen-width mx-auto bg-transparent transition-smooth'>
         <div className='flex justify-between'>
           <div className='flex space-x-4'>
             <Link
               to='/'
-              className={generateClassName(
-                'flex items-center text-gray-700',
-                true,
-              )}
+              className={generateClassName('flex items-center ', true)}
             >
               <img src={Logo} alt='Logo' />
             </Link>
@@ -117,7 +119,7 @@ export default function Header() {
                 to={item.to}
                 state={{ categoryId: item.state, path: location.pathname }}
                 className={({ isActive }) =>
-                  `min-w-[4rem] px-3 py-5 text-gray-600 hover:text-main-color font-light ${
+                  `min-w-[4rem] px-3 py-5 text-gray-600 transition-smooth dark:text-dark-light-color hover:text-main-color font-light ${
                     isActive && 'font-semibold text-main-color'
                   }`
                 }
@@ -128,14 +130,13 @@ export default function Header() {
             <Link
               to={store.user ? '#' : '/login'}
               className={generateClassName(
-                'py-5 px-3 hover:text-main-color font-light text-gray-600',
+                'py-5 px-3 hover:text-main-color font-light text-gray-600 transition-smooth dark:text-dark-light-color',
                 true,
               )}
               onClick={store.user ? handleLogout : undefined}
             >
               {store.user ? 'Logout' : 'Login'}
             </Link>
-
             {store.user ? (
               <Link
                 to={`/userinfo/${store.user?.id}`}
@@ -153,7 +154,10 @@ export default function Header() {
                 onClick={handleBasicInfoClick}
                 className={generateClassName('py-5 px-3', true)}
               >
-                <FaUserCircle size={24} />
+                 <i className='dark:fill-dark-light-color transition-smooth'>
+                <FaUserCircle size={24} fill='dark' />
+              </i>
+
               </Link>
             )}
           </div>
@@ -162,14 +166,20 @@ export default function Header() {
           <div className='flex items-center tablet:hidden'>
             <button
               onClick={() => setMenuToggle(!menuToggle)}
-              className={`transition-transform duration-500 ease-in-out focus:outline-none ${
+              className={`transition-smooth focus:outline-none ${
                 menuToggle ? 'transform rotate-90' : ''
               }`}
             >
               {menuToggle ? (
-                <FaTimes size={20} className='text-black-color' />
+                <FaTimes
+                  size={20}
+                  className='fill-black-color dark:fill-dark-light-color transition-smooth'
+                />
               ) : (
-                <FaBars size={20} className='text-black-color' />
+                <FaBars
+                  size={20}
+                  className='fill-black-color dark:fill-dark-light-color transition-smooth'
+                />
               )}
             </button>
           </div>
@@ -179,7 +189,7 @@ export default function Header() {
       {/* mobile list */}
       <div
         className={generateClassName(
-          'md:hidden absolute top-full left-0 overflow-hidden transition-all duration-500 ease-in-out bg-white/[.7] w-full',
+          'md:hidden absolute top-full left-0 overflow-hidden transition-smooth bg-white/[.7] dark:bg-dark-main-color/[.5] text-black-color dark:text-dark-light-color font-light w-full',
           true,
           menuToggle ? 'max-h-48' : 'max-h-0',
         )}
@@ -188,7 +198,7 @@ export default function Header() {
           <NavLink
             key={index}
             to={item.to}
-            className='block px-4 py-2 text-sm hover:bg-main-light-color'
+            className='block px-4 py-2 text-sm hover:bg-main-light-color hover:dark:text-white hover:dark:bg-dark-main-color/[.8]'
             onClick={closeMobileMenu}
           >
             {item.text}
@@ -197,7 +207,7 @@ export default function Header() {
 
         <NavLink
           to={store.user ? '#' : '/login'}
-          className='block px-4 py-2 text-sm hover:bg-main-light-color'
+          className='block px-4 py-2 text-sm hover:bg-main-light-color hover:dark:text-white hover:dark:bg-dark-main-color/[.8]'
           onClick={store.user ? handleLogout : closeMobileMenu}
         >
           {store.user ? 'Logout' : 'Login'}

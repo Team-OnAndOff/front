@@ -10,14 +10,14 @@ interface TagProps {
 export default function Tag({ options, parentId }: TagProps) {
   return (
     <>
-      <div className='flex gap-1 desktop:gap-3'>
+      <div className='flex flex-wrap w-full gap-1 desktop:flex-auto desktop:gap-3 transition-smooth'>
         {options
           ?.sort((a, b) => (a.hashtag > b.hashtag ? -1 : 1))
           .map((option, index) => (
             <Link
               to={`/meetup-lists/${parentId}?search=${option.hashtag}`}
               key={index}
-              className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color w-fit desktop:text-size-subbody text-[0.62rem] transition-all duration-1000 text-dark-gray-color break-keep'
+              className='overflow-y-hidden p-1 px-3 my-1 rounded-small-radius bg-main-light-color dark:bg-dark-gray-color w-fit desktop:text-size-subbody text-[0.6.2rem] transition-smooth dark:text-black-color text-dark-gray-color break-keep h-5'
             >{`#${option.hashtag}`}</Link>
           ))}
       </div>

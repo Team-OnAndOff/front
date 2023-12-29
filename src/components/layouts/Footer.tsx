@@ -1,16 +1,14 @@
 import { Logo } from '@/assets/images'
+import { useLocation } from 'react-router-dom'
 
 export default function Footer() {
-  // 로그인 페이지나 채팅페이지에서는 안보이도록
-  if (
-    window.location.pathname === '/login' ||
-    window.location.pathname === '/chat'
-  )
+  const location = useLocation()
+  if (location.pathname === '/login' || location.pathname === '/chat')
     return null
 
   return (
-    <footer className='bottom-0 flex justify-center w-full pt-8 pb-4 border-t border-light-gray-color bg-main-light-color'>
-      <div className='w-3/4 transition-all duration-1000 desktop:w-8/12 max-w-common-screen-width'>
+    <footer className='bottom-0 flex justify-center w-full pt-8 pb-4 border-t transition-smooth border-light-gray-color dark:border-dark-main-color bg-main-light-color dark:bg-dark-main-color'>
+      <div className='w-3/4 transition-smooth desktop:w-8/12 max-w-common-screen-width'>
         <ul className='flex flex-col pb-4 text-sm text-left border-b gap-y-1 border-light-gray-color'>
           <li>
             <img
@@ -19,12 +17,14 @@ export default function Footer() {
               alt='온앤오프 기업 대표 로고'
             />
           </li>
-          <li className='mt-6'>
+          <li className='mt-6 text-black-color dark:text-dark-light-color transition-smooth'>
             <a
               target='_blank'
               href='https://water-vulcanodon-65c.notion.site/73a58d0b9cac4d43a3ddba5cf7567c15?pvs=4'
             >
-              <strong>개인정보처리방침</strong>
+              <strong className='text-black-color dark:text-white transition-smooth'>
+                개인정보처리방침
+              </strong>
             </a>
             &nbsp; &#124; &nbsp;
             <a
@@ -35,26 +35,29 @@ export default function Footer() {
               이용약관
             </a>
           </li>
-          <li className='mt-3 text-sm text-gray-900'>
-            <small>(주) </small>온앤오프
+          <li className='mt-3 text-sm text-gray-900 dark:text-white transition-smooth'>
+            <small className='dark:text-white transition-smooth'>(주) </small>
+            온앤오프
           </li>
-          <li className='text-xs text-gray-800'>
+          <li className='text-xs text-gray-800 dark:text-dark-light-color transition-smooth'>
             대표자: 이준규 &nbsp;|&nbsp; 대표전화:
             <a href='tel:0904-1229' className='hover:underline'>
               0904-1229
             </a>
           </li>
-          <li className='text-xs text-gray-800'>
+          <li className='text-xs text-gray-800 dark:text-dark-light-color transition-smooth'>
             사업자등록번호:
-            <span>317-25-89091</span>
+            <span className='dark:text-dark-light-color transition-smooth'>
+              317-25-89091
+            </span>
           </li>
-          <li className='text-xs text-gray-800'>
+          <li className='text-xs text-gray-800 dark:text-dark-light-color transition-smooth'>
             이메일:
             <a href='mailto:onoffService@gmail.com' className='hover:underline'>
               onoffService@gmail.com
             </a>
           </li>
-          <li className='text-xs text-gray-800'>
+          <li className='text-xs text-gray-800 dark:text-dark-light-color transition-smooth'>
             찾아오시는 길: (06212)
             <a
               target='_blank'

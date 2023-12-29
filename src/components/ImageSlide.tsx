@@ -85,7 +85,6 @@ export default function ImageSlide() {
   const pagination = {
     clickable: true,
     renderBullet: function (index: number, className: string) {
-      console.log(index)
       return `<span class="${className}"></span>`
     },
   }
@@ -125,12 +124,12 @@ export default function ImageSlide() {
 
       {/* 이전, 다음 버튼 커스텀 */}
       <button className='absolute z-10 left-2 top-1/2' onClick={handlePrev}>
-        <i className='text-size-title tablet:text-[2.5rem] '>
+        <i className='text-size-title tablet:text-[2.5rem] transition-smooth'>
           <IoIosArrowBack fill='#111' />
         </i>
       </button>
       <button className='absolute z-10 right-2 top-1/2' onClick={handleNext}>
-        <i className='text-size-title tablet:text-[2.5rem]'>
+        <i className='text-size-title tablet:text-[2.5rem] transition-smooth'>
           <IoIosArrowBack className='rotate-180' fill='#111' />
         </i>
       </button>
