@@ -159,8 +159,8 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
   }
 
   return (
-    <div className='flex items-center justify-center w-fit'>
-      <div className='p-4 bg-white rounded-xl'>
+    <div className='flex items-center justify-center w-full'>
+      <div className='w-full p-4 bg-white rounded-xl'>
         <div className='flex items-start justify-between'>
           <p className='font-bold text-size-body'>자기 소개를 수정해주세요.</p>
         </div>
@@ -176,7 +176,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
               />
             </div>
             <textarea
-              className='p-4 pl-3 border-2 resize-none overflow-hidden text-size-body font-medium rounded-button-radius mt-[10px] border-solid border-light-gray-color focus-within:border-main-color focus:outline-none'
+              className='p-4 pl-3 border-2 w-full resize-none overflow-hidden text-size-body font-medium rounded-button-radius mt-[10px] border-solid border-light-gray-color focus-within:border-main-color focus:outline-none'
               {...register('introduction')}
               rows={7}
               cols={80}
@@ -239,7 +239,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
             </div>
             <InputHash
               placeholder='#태그입력'
-              width='w-80'
+              width='desktop:w-1/2 w-3/4'
               onEnter={(value) => handleEnter(value)}
               register={register('hashtag')}
             />
@@ -261,33 +261,30 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
                 ))}
               </ul>
             </div>
-            <div className='flex items-end justify-between mt-6'>
-              <div>
-                <button
-                  type='button'
-                  className='font-black text-main-light-color text-size-body'
-                  onClick={quit}
-                >
-                  탈퇴하기
-                </button>
-              </div>
-              <div>
-                <Button
-                  children='취소'
-                  width='w-[160px] h-[40px] mr-4'
-                  fill='border'
-                  onClick={closeModal}
-                />
-                <Button
-                  children='수정'
-                  width='w-[160px]'
-                  fill='activeFill'
-                  onClick={handleSubmit((data, event) => {
-                    onSubmit(data, event) //신고
-                    closeModal() //닫기
-                  })}
-                />
-              </div>
+
+            <button
+              type='button'
+              className='font-black text-main-light-color text-size-body relative desktop:top-[3rem] top-[6rem] flex'
+              onClick={quit}
+            >
+              탈퇴하기
+            </button>
+            <div className='flex flex-col items-center justify-center gap-4 desktop:flex-row'>
+              <Button
+                children='취소'
+                width='w-[160px] h-[40px]'
+                fill='border'
+                onClick={closeModal}
+              />
+              <Button
+                children='수정'
+                width='w-[160px]'
+                fill='activeFill'
+                onClick={handleSubmit((data, event) => {
+                  onSubmit(data, event) //신고
+                  closeModal() //닫기
+                })}
+              />
             </div>
           </form>
         </div>

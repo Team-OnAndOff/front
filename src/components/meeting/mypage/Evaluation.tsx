@@ -46,7 +46,7 @@ const Evaluation = ({ closeModal, eventId, attendeeId, username }: Props) => {
 
   return (
     <>
-      <div className='w-[40rem] relative'>
+      <div className='relative w-full'>
         <h4 className='flex items-start justify-center'>
           <p className='font-bold text-size-body'>
             {username}님을 평가해주세요!

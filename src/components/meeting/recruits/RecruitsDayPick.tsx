@@ -75,7 +75,7 @@ export default function RecruitsDayPick({
       }
       onDayClick={handleDayClick}
       disabled={
-        selectedStartDate ? { before: selectedStartDate } : { before: today }
+        selectedEndDate ? { before: selectedEndDate } : { before: today }
       }
       modifiers={modifiers}
       modifiersStyles={modifiersStyles}

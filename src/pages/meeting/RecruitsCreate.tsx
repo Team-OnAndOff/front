@@ -174,7 +174,10 @@ export default function RecruitsCreate() {
   const handleDateChange = (date: Date) => {
     setValue('challengeStartDate', date)
     setShowStartDayPick(false)
-    setValue('challengeEndDate', date)
+    if (watch('categoryId') === 2) {
+      setValue('challengeEndDate', date)
+    }
+
     setCurrentEndDate(dayjs(date).format('YYYY-MM-DD'))
   }
 
@@ -587,6 +590,7 @@ export default function RecruitsCreate() {
                 })}
               />
               <div className='mt-3 text-size-subbody text-sub-color'>
+                태그 작성 후 enter를 입력하면 태그가 등록됩니다. <br />
                 해시태그는 최대 3개까지 입력 가능합니다.
               </div>
               {flag === 1 && watch('hashTag').length === 0 && (

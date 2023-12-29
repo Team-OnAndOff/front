@@ -101,7 +101,7 @@ export default function RecruitsRegister() {
             </div>
 
             <div className='mt-6'>
-              <h3 className='text-size-title'>
+              <h3 className='text-xl font-bold desktop:text-size-title'>
                 모두가 즐거운 모임이 될 수 있도록 함께 지켜주세요
               </h3>
               <div className='mt-3 border-2 border-light-gray-color min-h-[200px] rounded-xl p-1.5'>
@@ -139,7 +139,7 @@ export default function RecruitsRegister() {
                   />
                   <label
                     htmlFor='agreecheck'
-                    className='font-bold text-size-title text-sub-color'
+                    className='text-xl font-bold desktop:text-size-title text-sub-color'
                   >
                     모임의 이용 규칙을 지키겠습니다!
                   </label>
