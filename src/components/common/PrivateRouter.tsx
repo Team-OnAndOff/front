@@ -13,7 +13,6 @@ export default function PrivateRouter() {
     if (!user) {
       MySwal.fire({
         title: '로그인이 필요합니다',
-        text: '로그인 후에 채팅방에 입장하실 수 있습니다.',
         icon: 'warning',
         iconColor: '#ff5e2e',
         footer: '로그인 페이지로 이동하시겠습니까?',
