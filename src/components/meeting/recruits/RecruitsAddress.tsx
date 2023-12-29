@@ -96,9 +96,9 @@ const RecruitsAddress = ({
         }}
       />
       <Modal isOpen={isModalOpen} closeModal={closeModal}>
-        <div className='w-[40rem]'>
+        <div className='desktop:w-[40rem] m-auto'>
           <DaumPostcode
-            className='postmodal h-[440px]'
+            className='postmodal desktop:h-[440px] h-[470px]'
             autoClose
             onComplete={complete}
           />
