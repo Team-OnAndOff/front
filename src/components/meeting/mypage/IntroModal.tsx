@@ -16,7 +16,7 @@ interface FormData {
   introduction: string
   image: File | null
   showImage: string | undefined
-  hashTags: string[]
+  hashtag: string[]
 }
 
 // 부모 컴포넌트로 전달되는 프롭스 타입 정의
@@ -66,6 +66,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
     const formData = new FormData()
     formData.append('username', data.username.toString())
     formData.append('introduction', data.introduction.toString())
+    formData.append('hashtag', data.hashtag.toString())
     // 이미지가 선택된 경우에만 추가
     if (data.image) {
       formData.append('image', data.image)
@@ -86,10 +87,10 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
   const handleEnter = (value: string) => {
     if (value.trim() !== '') {
       if (!dataArray.includes(value.trim())) {
-        if (dataArray.length < 10) {
+        if (dataArray.length < 3) {
           setDataArray((prevArray) => [...prevArray, value.trim()])
-          // hashTags 필드의 값을 setValue를 사용하여 업데이트
-          setValue('hashTags', [...dataArray, value.trim()])
+          // hashtag 필드의 값을 setValue를 사용하여 업데이트
+          setValue('hashtag', [...dataArray, value.trim()])
         } else {
           MySwal.fire({
             title: '태그는 3개까지만 입력할 수 있습니다.',
@@ -114,9 +115,9 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
   // 해시태그 삭제 로직
   const handleRemoveHash = (index: number) => {
     setDataArray((prevArray) => prevArray.filter((_, i) => i !== index))
-    // hashTags 필드의 값을 setValue를 사용하여 업데이트
+    // hashtag 필드의 값을 setValue를 사용하여 업데이트
     setValue(
-      'hashTags',
+      'hashtag',
       dataArray.filter((_, i) => i !== index),
     )
   }
@@ -238,7 +239,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
               placeholder='#태그입력'
               width='w-80'
               onEnter={(value) => handleEnter(value)}
-              register={register('hashTags')}
+              register={register('hashtag')}
             />
             <div>
               <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
