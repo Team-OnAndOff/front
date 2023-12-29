@@ -323,7 +323,7 @@ export default function RecruitsCreate() {
               <div className='flex gap-3'>
                 <div>
                   <div
-                    className='flex p-2.5 px-3 border-2 border-black-color dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-size-subbody'
+                    className='flex p-2.5 px-3 border-2 dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-[0.9rem]'
                     onClick={handleStartDayPickClick}
                   >
                     <CiCalendar className='fill-black-color dark:fill-dark-light-color transition-smooth' />
@@ -341,7 +341,7 @@ export default function RecruitsCreate() {
                 </p>
                 <div>
                   <div
-                    className='flex p-2.5 px-3 border-2 border-black-color dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-size-subbody'
+                    className='flex p-2.5 px-3 border-2 dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-[0.9rem]'
                     onClick={handleEndDayPickClick}
                   >
                     <CiCalendar className='fill-black-color dark:fill-dark-light-color transition-smooth' />
@@ -363,7 +363,7 @@ export default function RecruitsCreate() {
               <RecruitsTitle>모임 시작일</RecruitsTitle>
               <div>
                 <div
-                  className='flex p-2.5 px-3 border-2 border-black-color dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-size-subbody'
+                  className='flex p-2.5 px-3 border-2 dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-[0.9rem]'
                   onClick={handleStartDayPickClick}
                 >
                   <CiCalendar className='fill-black-color dark:fill-dark-light-color transition-smooth' />
@@ -410,7 +410,7 @@ export default function RecruitsCreate() {
               )}
             </div>
           </div>
-          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row transition-smooth'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>모집 대상</RecruitsTitle>
             <div className='flex flex-col'>
               <RecruitsCheckBox
@@ -423,7 +423,7 @@ export default function RecruitsCreate() {
               {flag === 1 &&
                 (!watch('careerCategoryId') ||
                   watch('careerCategoryId').length === 0) && (
-                  <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody transition-smooth'>
+                  <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody'>
                     *필수로 선택해주세요.
                   </p>
                 )}
@@ -441,9 +441,9 @@ export default function RecruitsCreate() {
               {getErrorMessage('title')}
             </div>
           </div>
-          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row transition-smooth'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row'>
             <RecruitsTitle>모집 내용 글</RecruitsTitle>
-            <div className='flex flex-col transition-smooth desktop:w-1/2'>
+            <div className='flex flex-col desktop:w-1/2'>
               <TextArea
                 placeholder='모집에 대한 설명을 작성해주세요'
                 width='w-full'
@@ -521,7 +521,7 @@ export default function RecruitsCreate() {
                   ref={(ref) => (fileInputRef.current = ref)}
                   id='picture'
                   type='file'
-                  className='hiddenh'
+                  className='hidden'
                   accept='image/png, image/jpeg, image/jpg'
                   onChange={(e) => {
                     handleFileChange(e)
