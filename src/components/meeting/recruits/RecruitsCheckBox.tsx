@@ -37,17 +37,17 @@ export default function RecruitsCheckBox({
 
   return (
     <div className='flex items-center'>
-      <div className='flex'>
+      <div className='flex gap-x-5'>
         {options.map((option) => (
-          <label key={option.text} className='flex items-center mr-5'>
+          <label key={option.text} className='flex items-center gap-x-1'>
             <input
-              className='w-4 h-4 mr-1 cursor-pointer accent-main-color'
+              className='w-4 h-4 mr-1 cursor-pointer accent-main-color dark:accent-dark-light-color transition-smooth'
               type='checkbox'
               value={option.value}
               checked={selectedValues.includes(option.value)}
               onChange={() => handleCheckBoxChange(option.value)}
             />
-            <span className='text-size-body mb-0.5 ml-2 cursor-pointer'>
+            <span className='cursor-pointer text-size-body text-black-color dark:text-dark-light-color transition-smooth'>
               {option.text}
             </span>
           </label>

@@ -20,13 +20,13 @@ const InputHash = ({ placeholder, width = 'w-80', onEnter }: InputsProps) => {
       }
     }
   }
-  //{...register} // 아래 벨류라 온체인지때문에 씹힌다..
+
   return (
     <div
-      className={`pt-4 pb-1 flex flex-col pl-3 border-b-2 ${width} border-light-gray-color focus-within:border-main-color`}
+      className={`pt-4 pb-1 flex flex-col pl-3 border-b-2 ${width} border-light-gray-color focus-within:border-main-color dark:focus-within:border-white`}
     >
       <input
-        className='w-full text-size-body text-black-color focus:outline-none'
+        className='w-full text-size-body text-black-color dark:text-dark-light-color focus:outline-none dark:bg-dark-main-color'
         type='text'
         placeholder={placeholder}
         value={inputValue}

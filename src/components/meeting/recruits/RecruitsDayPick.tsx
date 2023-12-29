@@ -65,7 +65,7 @@ export default function RecruitsDayPick({
 
   return (
     <DayPicker
-      className='absolute z-10 flex flex-col p-5 m-0 mt-1 border-2 bg-main-light-color rounded-small-radius'
+      className='absolute z-10 flex flex-col p-5 m-0 mt-1 border-2 bg-main-light-color dark:bg-dark-gray-color rounded-small-radius'
       mode='single'
       required
       showOutsideDays
