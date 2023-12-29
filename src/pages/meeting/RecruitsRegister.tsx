@@ -81,6 +81,7 @@ export default function RecruitsRegister() {
                 careerCategories={postDetail.careerCategories}
                 eventId={eventId}
                 likes={postDetail.likes}
+                hostId={postDetail.user.id}
               />
             </div>
 
