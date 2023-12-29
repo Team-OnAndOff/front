@@ -16,10 +16,15 @@ export interface DataProps {
 export default function RecruitsRegister() {
   const [postDetail, setPostDetail] = useState<EventDetailData | null>(null)
   const [isChecked, setIsChecked] = useState(false)
-  const { register, handleSubmit } = useForm<DataProps>()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<DataProps>()
   const { postId } = useParams()
   const eventId = Number(postId)
   const navigate = useNavigate()
+  const REQUIRED_MESSAGE = '*필수로 입력해주세요.'
 
   useEffect(() => {
     const fetchDetailData = async (eventId: number) => {
@@ -32,6 +37,13 @@ export default function RecruitsRegister() {
     }
     fetchDetailData(eventId)
   }, [eventId])
+  const getErrorMessage = <T extends keyof DataProps>(field: T) => {
+    return errors[field] ? (
+      <p className='block mt-2 text-red-500 text-size-subbody dark:text-main-hover-color smooth-color'>
+        {errors[field]?.message}
+      </p>
+    ) : null
+  }
 
   const handleCancelClick = () => {
     navigate(-1)
@@ -99,10 +111,13 @@ export default function RecruitsRegister() {
               </div>
               <div className='mt-3'>
                 <TextArea
-                  register={register('answer')}
+                  register={register('answer', {
+                    required: REQUIRED_MESSAGE,
+                  })}
                   width='w-full'
                   placeholder='방장님이 참고하는 질문이니 성실히 답변해주세요!'
                 />
+                {getErrorMessage('answer')}
               </div>
             </div>
 
