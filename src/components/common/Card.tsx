@@ -188,7 +188,7 @@ export default function Card({ data }: CardProps) {
       ) : (
         <div
           className={
-            'relative flex desktop:flex-col justify-between desktop:pb-2 flex-row rounded-button-radius desktop:gap-y-10 gap-y-0 tablet:gap-x-10 gap-x-6 w-full transition-smooth'
+            'relative flex desktop:flex-col justify-between desktop:pb-2 flex-row rounded-button-radius desktop:gap-y-10 gap-y-0 tablet:gap-x-10 gap-x-6 w-full smooth-color'
           }
           onMouseEnter={() => setIsKebabVisible(true)}
           onMouseLeave={() => {
@@ -197,11 +197,11 @@ export default function Card({ data }: CardProps) {
           }}
         >
           {isMenuVisible && (
-            <div className='absolute w-full desktop:h-full h-[120%] bg-white dark:bg-dark-main-color/[0.7] opacity-80 z-[997] transition-smooth' />
+            <div className='absolute w-full desktop:h-full h-[120%] bg-white dark:bg-dark-main-color/[0.7] opacity-80 z-[997] smooth-color' />
           )}
           {/* 이미지 영역 */}
-          <div className='relative flex justify-center hover:-translate-y-1 transition-smooth aspect-w-1 aspect-h-1 hover:drop-shadow-xl w-[14rem] desktop:max-w-[32rem] desktop:w-full mb-10 desktop:mb-0'>
-            <div className='w-full h-36 desktop:h-[14vw] transition-smooth'>
+          <div className='relative flex justify-center hover:-translate-y-1 smooth-color aspect-w-1 aspect-h-1 hover:drop-shadow-xl w-[14rem] desktop:max-w-[32rem] desktop:w-full mb-10 desktop:mb-0'>
+            <div className='w-full h-36 desktop:h-[14vw] smooth-color'>
               <Link to={`/details/${data.id}`}>
                 <img
                   src={image.uploadPath}
@@ -242,7 +242,7 @@ export default function Card({ data }: CardProps) {
               </Link>
               <div className='h-14'>
                 <Link to={`/details/${data.id}`}>
-                  <h2 className='w-full font-bold line-clamp-2 text-size-body text-black-color dark:text-dark-light-color transition-smooth'>
+                  <h2 className='w-full font-bold line-clamp-2 text-size-body text-black-color dark:text-dark-light-color smooth-color'>
                     {title}
                   </h2>
                 </Link>
@@ -257,11 +257,11 @@ export default function Card({ data }: CardProps) {
                 {/* 크루/챌린지스 */}
                 <Link
                   to={`/meetup-lists/${category.parentId?.id}`}
-                  className='font-light text-right text-main-color dark:text-sub-color dark:font-normal transition-smooth desktop:text-size-body text-size-subbody'
+                  className='font-light text-right text-main-color dark:text-sub-color dark:font-normal smooth-color desktop:text-size-body text-size-subbody'
                 >
                   {category.parentId?.name}
                 </Link>
-                <div className='flex items-center justify-between w-full h-6 font-bold text-size-subbody text-black-color dark:text-dark-light-color dark:font-light transition-smooth'>
+                <div className='flex items-center justify-between w-full h-6 font-bold text-size-subbody text-black-color dark:text-dark-light-color dark:font-light smooth-color'>
                   {challengeStartDate}
                   {challengeEndDate && ` ~ ${challengeEndDate}`}
                   {/* 호버시 보이는 영역 */}
@@ -273,14 +273,14 @@ export default function Card({ data }: CardProps) {
                           <div className='flex'>
                             <button
                               onClick={handleLikeClick}
-                              className='p-2 transition-transform transform transition-smooth active:scale-75 tablet:text-size-title hover:scale-105'
+                              className='p-2 transition-transform transform smooth-color active:scale-75 tablet:text-size-title hover:scale-105'
                             >
                               {isLike ? (
-                                <i className='text-size-body tablet:text-size-title transition-smooth'>
+                                <i className='text-size-body tablet:text-size-title smooth-color'>
                                   <TiHeartFullOutline fill='#ff5e2e' />
                                 </i>
                               ) : (
-                                <i className='text-size-body tablet:text-size-title transition-smooth dark:fill-dark-light-color'>
+                                <i className='text-size-body tablet:text-size-title smooth-color dark:fill-dark-light-color'>
                                   <TiHeartOutline fill='dark' />
                                 </i>
                               )}
@@ -289,7 +289,7 @@ export default function Card({ data }: CardProps) {
                               onClick={handleMenuClick}
                               className='p-3 -m-3'
                             >
-                              <i className='dark:fill-dark-light-color transition-smooth'>
+                              <i className='dark:fill-dark-light-color smooth-color'>
                                 <FaEllipsisVertical fill='dark' />
                               </i>
                             </button>
@@ -299,7 +299,7 @@ export default function Card({ data }: CardProps) {
                     )}
                     {/* Pop-up menu */}
                     {isMenuVisible && (
-                      <div className='absolute desktop:right-5 desktop:bottom-6 right-0.5 bottom-8 z-[998] transition-smooth'>
+                      <div className='absolute desktop:right-5 desktop:bottom-6 right-0.5 bottom-8 z-[998] smooth-color'>
                         <div className='bg-white dark:bg-light-gray-color rounded-small-radius shadow w-big-button z-[998] mb-4'>
                           <button
                             className='w-full p-2 px-4 cursor-pointer menuItems hover:text-main-color hover:dark:bg-sub-color hover:dark:text-dark-light-color hover:rounded-t-small-radius'
@@ -318,7 +318,7 @@ export default function Card({ data }: CardProps) {
                           onClick={handleCancelMenu}
                           className='absolute bottom-0 right-0 p-3 -m-3 desktop:bottom-0'
                         >
-                          <i className='dark:fill-dark-light-color transition-smooth'>
+                          <i className='dark:fill-dark-light-color smooth-color'>
                             <FaTimes fill='dark' size={16} />
                           </i>
                         </button>

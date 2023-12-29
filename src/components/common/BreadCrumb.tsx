@@ -16,30 +16,34 @@ export default function BreadCrumb({ category }: BreadCrumbProps) {
               to='/'
               className='transition duration-150 ease-in-out text-primary hover:font-semibold '
             >
-              <div className='flex flex-row items-center gap-2 text-black-color break-keep'>
+              <div className='flex flex-row items-center gap-2 font-light text-black-color break-keep dark:text-dark-light-color smooth-color'>
                 <i>
-                  <FaHome />
+                  <FaHome className='dark:fill-dark-light-color' />
                 </i>
                 Home
               </div>
             </Link>
           </li>
           <li>
-            <span className='mx-2 text-black-color'>/</span>
+            <span className='mx-2 font-light text-black-color dark:text-dark-light-color smooth-color'>
+              /
+            </span>
           </li>
           <li>
             <Link
               to={`/meetup-lists/${category?.parentId?.id}`}
-              className='transition duration-150 ease-in-out text-primary hover:font-semibold break-keep'
+              className='font-light transition duration-150 ease-in-out dark:text-dark-light-color smooth-color text-primary hover:font-semibold break-keep'
             >
               {category?.parentId?.name}
             </Link>
           </li>
           <li>
-            <span className='mx-2 text-black-color'>/</span>
+            <span className='mx-2 dark:text-dark-light-color smooth-color text-black-color'>
+              /
+            </span>
           </li>
 
-          <li className='text-dark-gray-color'>
+          <li className='text-dark-gray-color dark:text-dark-light-color smooth-color'>
             <Link
               to={`/meetup-lists/${category?.parentId?.id}?subCategoryId=${category?.id}`}
               className='transition duration-150 ease-in-out text-primary hover:font-semibold break-keep'

@@ -19,7 +19,7 @@ export default function RadioButtons({
         {data.map((item) => (
           <label key={item.text} className='flex items-center'>
             <input
-              className='w-4 h-4 mb-1 ml-2 cursor-pointer accent-main-color dark:accent-dark-light-color focus:ring-0 transition-smooth'
+              className='w-4 h-4 mb-1 ml-2 cursor-pointer accent-main-color dark:accent-dark-light-color focus:ring-0 smooth-color'
               type='radio'
               value={item.value}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +28,7 @@ export default function RadioButtons({
               }}
               checked={selectedValue === item.value}
             />
-            <span className='dark:text-dark-light-color cursor-pointer transition-smooth text-black-color text-size-body mb-0.5 ml-2'>
+            <span className='dark:text-dark-light-color cursor-pointer smooth-color text-black-color text-size-body mb-0.5 ml-2'>
               {item.text}
             </span>
           </label>

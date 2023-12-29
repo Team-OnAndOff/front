@@ -10,9 +10,9 @@ export default function ChatRoomSendButton({
   return (
     <button
       type='submit'
-      className='inline-flex items-center justify-center gap-1 rounded-lg px-4 py-3 bg-main-color hover:bg-main-hover-color'
+      className='inline-flex items-center justify-center gap-1 px-4 py-3 rounded-lg bg-main-color hover:bg-main-hover-color dark:bg-main-hover-color/[0.8] hover:dark:bg-main-hover-color'
     >
-      <span className='font-bold hidden sm:flex text-main-light-color'>
+      <span className='hidden font-bold sm:flex text-main-light-color'>
         Send
       </span>
       <Icon className='fill-main-light-color' size={18} />

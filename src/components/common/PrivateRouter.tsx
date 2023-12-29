@@ -16,6 +16,8 @@ export default function PrivateRouter() {
         title: '로그인이 필요한 기능입니다!',
         icon: 'warning',
         iconColor: '#ff5e2e',
+        confirmButtonColor: '#ff5e2e',
+        cancelButtonColor: '#3a823f',
         footer: '로그인 페이지로 이동하시겠습니까?',
         confirmButtonText: '확인',
         showCancelButton: true,

@@ -19,7 +19,7 @@ export default function App() {
   // 새로고침 시, scroll to top
   ReloadScrollToTop()
   return (
-    <div className='bg-white dark:bg-dark-main-color transition-smooth'>
+    <div className='bg-white  dark:bg-dark-main-color smooth-color'>
       <BrowserRouter>
         {/* 페이지 이동 시, scroll to top */}
         <NewPageScrollToTop />

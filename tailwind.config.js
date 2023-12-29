@@ -48,6 +48,8 @@ export default {
       screens: {
         tablet: '768px',
         // => @media (min-width: 768px)
+        'chat-screen': '1024px',
+        // => @media (min-width: 768px)
         desktop: '1120px',
         // => @media (min-width: 1120px)
       },

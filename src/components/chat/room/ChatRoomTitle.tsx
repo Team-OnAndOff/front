@@ -18,12 +18,12 @@ export default function ChatRoomTitle({ room, users }: ChatRoomTitleProps) {
   }, [room])
 
   return (
-    <div className='lg:absolute top-0 w-full sticky items-center border-b-2 border-neutral-200 py-2'>
-      <div className='flex relative items-center'>
-        <Link to={`/chat`} className='inline-block h-11 items-center'>
+    <div className='sticky top-0 items-center w-full py-2 border-b-2 lg:absolute border-neutral-200'>
+      <div className='relative flex items-center'>
+        <Link to={`/chat`} className='items-center inline-block h-11'>
           <ChatRoomIcon icon={HiOutlineChevronLeft} className='absolute' />
         </Link>
-        <div className='text-neutral-700 font-semibold text-sm sm:text-base md:text-lg w-full px-10 md:px-14 truncate'>
+        <div className='w-full px-10 text-sm font-semibold truncate text-black-color dark:text-dark-light-color sm:text-base md:text-lg md:px-14'>
           {room.name}
         </div>
         <div className='relative'>

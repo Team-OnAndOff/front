@@ -59,6 +59,8 @@ export default function MeetDetailInfo({
         text: '로그인 후에 모임 신고를 하실 수 있습니다.',
         icon: 'warning',
         iconColor: '#ff5e2e',
+        confirmButtonColor: '#ff5e2e',
+        cancelButtonColor: '#3a823f',
         footer: '로그인 페이지로 이동하시겠습니까?',
         confirmButtonText: '확인',
         showCancelButton: true,
@@ -102,6 +104,8 @@ export default function MeetDetailInfo({
         text: '로그인 후에 좋아요를 누르실 수 있습니다.',
         icon: 'warning',
         iconColor: '#ff5e2e',
+        confirmButtonColor: '#ff5e2e',
+        cancelButtonColor: '#3a823f',
         footer: '로그인 페이지로 이동하시겠습니까?',
         confirmButtonText: '확인',
         showCancelButton: true,
@@ -127,7 +131,7 @@ export default function MeetDetailInfo({
           <i className='-mt-1 -ml-1'>
             <FaRegLightbulb fill='#ff5e2e' size={24} />
           </i>
-          <h3 className='font-bold text-size-title break-keep text-black-color'>
+          <h3 className='font-bold text-size-title break-keep text-black-color smooth-transition dark:text-dark-light-color'>
             {title}
           </h3>
         </div>
@@ -136,7 +140,7 @@ export default function MeetDetailInfo({
           {/* 좋아요 상태에 따라 하트 색상 다르게 */}
           <button
             onClick={handleLikeClick}
-            className='transition-transform transform active:scale-75 tablet:text-size-title'
+            className='transform smooth-transition active:scale-75 tablet:text-size-title'
           >
             <i className='text-size-title'>
               {isLike ? (
@@ -145,7 +149,7 @@ export default function MeetDetailInfo({
                   className='transition-all duration-1000 hover:scale-105'
                 />
               ) : (
-                <TiHeartOutline className='transition-all duration-1000 hover:scale-105' />
+                <TiHeartOutline className='transition-all duration-1000 hover:scale-105 dark:fill-dark-light-color' />
               )}
             </i>
           </button>
@@ -153,7 +157,7 @@ export default function MeetDetailInfo({
             <i>
               <LuSiren
                 size={24}
-                className='transition-all duration-300 hover:scale-105 hover:stroke-main-color'
+                className='smooth-color smooth-transition dark:stroke-dark-light-color hover:scale-105 hover:stroke-main-color hover:dark:stroke-main-hover-color'
               />
             </i>
           </button>
@@ -172,21 +176,31 @@ export default function MeetDetailInfo({
       )}
 
       {/* 모임 장소, 시간, 인원, 해시태그 관련 내용 */}
-      <div className='flex flex-col gap-y-3'>
-        <h3 className='text-xl font-semibold text-black-color'>
+      <div className='flex flex-col mt-5 gap-y-3'>
+        <h3 className='text-xl font-semibold text-black-color dark:text-dark-light-color smooth-color'>
           👉 모임을 소개합니다!
         </h3>
         <div className='flex items-center justify-between'>
           <div className='flex -ml-1 gap-x-2'>
-            <MdPlace size={26} />
-            <span className='tracking-wider text-black-color text-size-body'>
-              <span className='font-bold '>장소 </span>
-              <span className='text-dark-gray-color'>|</span>{' '}
+            <MdPlace
+              size={26}
+              className='smooth-color dark:fill-dark-light-color'
+            />
+            <span className='tracking-wider text-black-color smooth-transition dark:text-dark-light-color text-size-body'>
+              <span className='font-bold smooth-transition dark:text-dark-light-color'>
+                장소{' '}
+              </span>
+              <span className='text-dark-gray-color smooth-transition dark:text-dark-light-color'>
+                |
+              </span>{' '}
               {online === 1 ? '온라인' : `${place}`}
             </span>
           </div>
           <div className='flex items-center gap-x-1'>
-            <FaUserCircle size={20} />
+            <FaUserCircle
+              size={20}
+              className='smooth-color dark:fill-dark-light-color'
+            />
             <ul className='flex items-center gap-3'>
               {careerCategories?.map((career) => (
                 <li
@@ -200,32 +214,55 @@ export default function MeetDetailInfo({
           </div>
         </div>
         <div className='flex gap-x-2'>
-          <MdAccessTimeFilled size={21} />
+          <MdAccessTimeFilled
+            size={21}
+            className='smooth-color dark:fill-dark-light-color'
+          />
           {endDate ? (
-            <span className='tracking-wider text-black-color text-size-body'>
-              <span className='font-bold '> 기간 </span>{' '}
-              <span className='text-dark-gray-color'>|</span> {startDate} ~{' '}
-              {endDate}
+            <span className='tracking-wider smooth-transition dark:text-dark-light-color text-black-color text-size-body'>
+              <span className='font-bold smooth-transition dark:text-dark-light-color'>
+                {' '}
+                기간{' '}
+              </span>{' '}
+              <span className='text-dark-gray-color smooth-transition dark:text-dark-light-color'>
+                |
+              </span>{' '}
+              {startDate} ~ {endDate}
             </span>
           ) : (
-            <span className='tracking-wider text-black-color text-size-body'>
-              <span className='font-bold '>개설일 </span>
-              <span className='text-dark-gray-color'>|</span> {startDate}
+            <span className='tracking-wider smooth-transition dark:text-dark-light-color text-black-color text-size-body'>
+              <span className='font-bold smooth-transition dark:text-dark-light-color'>
+                개설일{' '}
+              </span>
+              <span className='text-dark-gray-color smooth-transition dark:text-dark-light-color'>
+                |
+              </span>{' '}
+              {startDate}
             </span>
           )}
         </div>
         <div className='flex gap-x-2'>
-          <FaUser size={18} />
-          <span className='tracking-wider text-black-color text-size-body'>
-            <span className='font-bold '>모집인원 </span>
-            <span className='text-dark-gray-color'>|</span> {memNum}명
+          <FaUser
+            size={18}
+            className='smooth-color dark:fill-dark-light-color'
+          />
+          <span className='tracking-wider text-black-color text-size-body smooth-transition dark:text-dark-light-color'>
+            <span className='font-bold smooth-transition dark:text-dark-light-color'>
+              모집인원{' '}
+            </span>
+            <span className='text-dark-gray-color smooth-transition dark:text-dark-light-color'>
+              |
+            </span>{' '}
+            {memNum}명
           </span>
         </div>
       </div>
 
       {/* 태그 */}
-      <div className='flex flex-col gap-y-2'>
-        <span className='font-size-body text-black-color'>관련 태그</span>
+      <div className='flex flex-col my-10 gap-y-2'>
+        <span className='font-size-body text-black-color smooth-transition dark:text-dark-light-color'>
+          관련 태그
+        </span>
         <Tag options={hashTags} parentId={parentId} />
       </div>
 
@@ -239,7 +276,7 @@ export default function MeetDetailInfo({
           />
         </div>
         <div className='overflow-y-auto border-2 border-sub-color basis-2/3 tablet:h-[280px] tablet:w-[280px] w-full rounded-big-radius transition-all duration-1000'>
-          <p className='p-4 h-[200px] transition-all duration-1000 whitespace-pre-wrap'>
+          <p className='p-4 h-[200px] transition-all duration-1000 whitespace-pre-wrap smooth-transition dark:text-dark-light-color'>
             {content}
           </p>
         </div>

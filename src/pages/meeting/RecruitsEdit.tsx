@@ -219,7 +219,7 @@ export default function RecruitsEdit() {
 
   const getErrorMessage = <T extends keyof FormData>(field: T) => {
     return errors[field] ? (
-      <p className='block mt-2 text-red-500 text-size-subbody dark:text-main-hover-color transition-smooth'>
+      <p className='block mt-2 text-red-500 text-size-subbody dark:text-main-hover-color smooth-color'>
         {errors[field]?.message}
       </p>
     ) : null
@@ -341,7 +341,7 @@ export default function RecruitsEdit() {
   return (
     <>
       <div className='w-3/4 mx-auto my-20 desktop:w-full'>
-        <div className='flex justify-center mx-auto font-bold text-size-title dark:text-dark-light-color transition-smooth'>
+        <div className='flex justify-center mx-auto font-bold text-size-title dark:text-dark-light-color smooth-color'>
           모임 수정하기
         </div>
         <form className='flex flex-col gap-16 my-20'>
@@ -355,7 +355,7 @@ export default function RecruitsEdit() {
                 selectedValue={selectedCategory}
                 disabled={!!selectedCategory}
               />
-              <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody transition-smooth'>
+              <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody smooth-color'>
                 *카테고리는 수정이 불가능합니다.
               </p>
               {getErrorMessage('categoryId')}
@@ -367,10 +367,10 @@ export default function RecruitsEdit() {
               <div className='flex gap-3'>
                 <div>
                   <div
-                    className='flex p-2.5 px-3 border-2 dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-[0.9rem]'
+                    className='flex p-2.5 px-3 border-2 dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color smooth-color text-black-color items-center gap-x-1 text-[0.9rem]'
                     onClick={handleStartDayPickClick}
                   >
-                    <CiCalendar className='fill-black-color dark:fill-dark-light-color transition-smooth' />
+                    <CiCalendar className='fill-black-color dark:fill-dark-light-color smooth-color' />
                     {currentStartDate}
                   </div>
                   {showStartDayPick && (
@@ -383,10 +383,10 @@ export default function RecruitsEdit() {
                 <p className='pt-2 font-bold'>~</p>
                 <div>
                   <div
-                    className='flex p-2.5 px-3 border-2 dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-[0.9rem]'
+                    className='flex p-2.5 px-3 border-2 dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color smooth-color text-black-color items-center gap-x-1 text-[0.9rem]'
                     onClick={handleEndDayPickClick}
                   >
-                    <CiCalendar className='fill-black-color dark:fill-dark-light-color transition-smooth' />
+                    <CiCalendar className='fill-black-color dark:fill-dark-light-color smooth-color' />
                     {endDateShow}
                   </div>
                   {showEndDayPick && (
@@ -405,10 +405,10 @@ export default function RecruitsEdit() {
               <RecruitsTitle>모임 시작일</RecruitsTitle>
               <div>
                 <div
-                  className='flex p-2.5 px-3 w-fit border-2 dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color transition-smooth text-black-color items-center gap-x-1 text-[0.9rem]'
+                  className='flex p-2.5 px-3 w-fit border-2 dark:border-dark-light-color rounded-small-radius cursor-pointer dark:text-dark-light-color smooth-color text-black-color items-center gap-x-1 text-[0.9rem]'
                   onClick={handleStartDayPickClick}
                 >
-                  <CiCalendar className='fill-black-color dark:fill-dark-light-color transition-smooth' />
+                  <CiCalendar className='fill-black-color dark:fill-dark-light-color smooth-color' />
                   {currentStartDate}
                 </div>
                 {showStartDayPick && (
@@ -461,7 +461,7 @@ export default function RecruitsEdit() {
               {flag === 1 &&
                 (!watch('careerCategoryId') ||
                   watch('careerCategoryId').length === 0) && (
-                  <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody transition-smooth'>
+                  <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody smooth-color'>
                     *필수로 선택해주세요.
                   </p>
                 )}
@@ -479,7 +479,7 @@ export default function RecruitsEdit() {
               {getErrorMessage('title')}
             </div>
           </div>
-          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row transition-smooth'>
+          <div className='flex flex-col gap-4 desktop:gap-0 desktop:flex-row smooth-color'>
             <RecruitsTitle>모집 내용 글</RecruitsTitle>
             <div className='flex flex-col desktop:w-1/2'>
               <TextArea
@@ -522,7 +522,7 @@ export default function RecruitsEdit() {
                 selectedValue={selectedOnLine}
                 disabled={!!selectedOnLine}
               />
-              <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody transition-smooth'>
+              <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody smooth-color'>
                 *만남 유형은 변경이 불가능합니다.
               </p>
             </div>
@@ -538,7 +538,7 @@ export default function RecruitsEdit() {
                     address={watch('address')}
                   />
                   {flag === 1 && watch('online') === 0 && !watch('address') && (
-                    <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody transition-smooth'>
+                    <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody smooth-color'>
                       *오프라인 선택시 주소는 필수로 입력해주세요.
                     </p>
                   )}
@@ -546,7 +546,7 @@ export default function RecruitsEdit() {
                     watch('online') === 0 &&
                     watch('address.detail1') &&
                     !watch('address.detail2') && (
-                      <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody transition-smooth'>
+                      <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody smooth-color'>
                         *상세 주소는 필수로 입력해주세요.
                       </p>
                     )}
@@ -604,13 +604,13 @@ export default function RecruitsEdit() {
                       className='absolute top-[-7px] right-[-7px] z-10 cursor-pointer'
                       onClick={onImageDelete}
                     >
-                      <IoClose className='w-6 h-6 bg-white border-2 rounded-full fill-main-color dark:fill-dark-gray-color dark:border-dark-gray-color transition-smooth border-main-color' />
+                      <IoClose className='w-6 h-6 bg-white border-2 rounded-full fill-main-color dark:fill-dark-gray-color dark:border-dark-gray-color smooth-color border-main-color' />
                     </div>
                   </div>
                 ) : null}
               </div>
               {flag === 1 && !watch('image') && !watch('showImage') && (
-                <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody transition-smooth'>
+                <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody smooth-color'>
                   *이미지는 필수로 등록해주세요.
                 </p>
               )}
@@ -636,7 +636,7 @@ export default function RecruitsEdit() {
                 <br /> 해시태그는 최대 3개까지 입력 가능합니다.
               </div>
               {flag === 1 && watch('hashTag').length === 0 && (
-                <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody transition-smooth'>
+                <p className='block mt-2 text-red-500 dark:text-main-hover-color text-size-subbody smooth-color'>
                   *해시태그는 필수로 등록해주세요.
                 </p>
               )}
@@ -644,7 +644,7 @@ export default function RecruitsEdit() {
                 <ul className='flex max-w-[550px] w-full flex-wrap gap-3 mt-3'>
                   {dataArray.map((item, index) => (
                     <li
-                      className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color dark:bg-dark-light-color w-fit text-subbody text-black-color transition-smooth'
+                      className='p-1 px-3 my-1 rounded-small-radius bg-main-light-color dark:bg-dark-light-color w-fit text-subbody text-black-color smooth-color'
                       key={index}
                     >
                       #{item}

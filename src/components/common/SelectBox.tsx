@@ -28,7 +28,7 @@ export default function SelectBox({
   const selectBoxRef = useRef<HTMLDivElement>(null)
 
   const selectStyle = (bgColor: string, textSize: string) => {
-    return `bg-${bgColor} flex justify-between border-2 cursor-pointer focus:bg-main-light-color text-black-color text-${textSize} rounded-button-radius focus:border-main-color block tablet:w-80 desktop:w-80 p-2.5 px-4 items-center transition-smooth dark:bg-dark-light-color`
+    return `bg-${bgColor} flex justify-between border-2 cursor-pointer focus:bg-main-light-color text-black-color text-${textSize} rounded-button-radius focus:border-main-color block tablet:w-80 desktop:w-80 p-2.5 px-4 items-center smooth-color dark:bg-dark-light-color`
   }
 
   const handleSelect = (value: number) => {

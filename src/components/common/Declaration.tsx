@@ -83,7 +83,7 @@ const Declaration = ({
           신고 사유
         </p>
         <textarea
-          className='w-full p-4 mb-4 overflow-hidden font-medium border-2 border-solid resize-none text-size-body rounded-button-radius focus:border-main-color border-dark-gray-color h-60 focus:outline-none'
+          className='w-full p-4 mb-4 overflow-hidden font-medium border-2 border-solid resize-none text-size-body rounded-button-radius focus:border-main-color focus:dark:border-sub-color border-dark-gray-color h-60 focus:outline-none dark:bg-dark-light-color smooth-transition'
           {...register('description')}
           maxLength={200}
           placeholder={

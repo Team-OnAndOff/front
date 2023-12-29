@@ -6,7 +6,7 @@ import {
   ChatRoomMessage,
   ChatRoomTitle,
 } from '@/components/chat'
-import { CHAT, ChatMessage, ChatResponse, ChatRoom, ChatUser } from '@/types'
+import { CHAT, ChatMessage, ChatRoom, ChatUser } from '@/types'
 import useChatStore from '@/hooks/useChatStore'
 import socket from '@/utils/socket'
 import { useIntersectionObserver } from '@/hooks'
@@ -36,15 +36,10 @@ export default function Chat() {
         if (response) {
           setRoom(response)
           setUsers(convertArrayToMap(response.users))
-          socket.emit(
-            CHAT.ROOM_JOIN,
-            { roomId: response?._id },
-            (response: ChatResponse) => {
-              console.log('ROOM_JOIN', response)
-              setIsNext(true)
-              setIsScrollToBottom(true)
-            },
-          )
+          socket.emit(CHAT.ROOM_JOIN, { roomId: response?._id }, () => {
+            setIsNext(true)
+            setIsScrollToBottom(true)
+          })
         }
       }
     }
@@ -99,9 +94,7 @@ export default function Chat() {
       socket.emit(
         CHAT.SEND_MESSAGE,
         { userId: user._id, roomId: room._id, message },
-        (response: ChatResponse) => {
-          console.log('send message: ', response)
-        },
+        () => {},
       )
     }
   }
@@ -135,9 +128,16 @@ export default function Chat() {
   return (
     <>
       {room && user && (
-        <div className='flex-col lg:overflow-y-auto lg:h-full h-full lg:flex lg:col-span-2 relative w-full'>
+        <div className='relative flex-col w-full h-[82vh] chat-screen:overflow-y-auto  chat-screen:flex chat-screen:col-span-2 smooth-transition'>
+          <div className='absolute w-full h-full opacity-10'>
+            <img
+              className='object-cover w-full h-full rounded-big-radius'
+              src={room.image}
+              alt={room.name}
+            />
+          </div>
           <ChatRoomTitle room={room} users={users} />
-          <div className='flex flex-1 overflow-auto gap-2 lg:p-4 lg:mt-20 flex-col-reverse h-[calc(100vh-190px)] lg:h-full relative'>
+          <div className='relative flex flex-col-reverse h-[74vh] gap-2 overflow-auto chat-screen:p-4 chat-screen:mt-20 smooth-transition'>
             <div ref={messageEndRef}></div>
             {items.map((item, index, arr) => (
               <div key={index}>
@@ -163,7 +163,7 @@ export default function Chat() {
             ))}
             <div ref={setTarget} className='flex h-[60px] flex-shrink-0'>
               {isLoading && (
-                <span className='block w-full text-center text-sm text-neutral-500'>
+                <span className='block w-full text-sm text-center text-neutral-500'>
                   Loading.....
                 </span>
               )}

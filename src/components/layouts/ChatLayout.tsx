@@ -56,37 +56,40 @@ export default function ChatLayout() {
   }
 
   return (
-    <div className='flex flex-col items-center'>
-      <div className='flex-1 w-full lg:px-12 lg:my-8'>
-        <h1 className='text-size-title lg:inline-flex gap-2 mt-4 font-semibold tracking-wide hidden'>
-          <BsChat size={26} />
-          <span>채팅</span>
-        </h1>
-        {rooms.length === 0 && (
-          <div className='flex justify-center my-2 items-center'>
-            참여중인 모임이 없습니다.
+    <div className='w-full h-full py-10 smooth-color'>
+      <h1 className='hidden gap-2 font-bold tracking-wide text-size-title chat-screen:inline-flex smooth-color smooth-transition'>
+        <BsChat
+          size={26}
+          className='dark:fill-dark-light-color smooth-color fill-black-color'
+        />
+        <span className='text-black-color smooth-color dark:text-dark-light-color'>
+          채팅
+        </span>
+      </h1>
+      {rooms.length === 0 && (
+        <div className='flex items-center justify-center my-2 text-black-color dark:text-dark-light-color'>
+          참여중인 모임이 없습니다.
+        </div>
+      )}
+      {rooms.length > 0 && (
+        <div className='grid mt-5 rounded-big-radius grid-cols-1 chat-screen:grid-cols-3 border-[1px] chat-screen:h-[82vh] smooth-transition'>
+          <div
+            className={`${
+              path.roomId ? 'hidden chat-screen:flex' : 'flex'
+            } flex-col w-full border-r-[1px] overflow-y-auto smooth-transition`}
+          >
+            {rooms.map((room) => (
+              <ChatListCard
+                key={room._id}
+                room={room}
+                selected={room.room === Number(path.roomId)}
+                onClick={handleSelectRoom}
+              />
+            ))}
           </div>
-        )}
-        {rooms.length > 0 && (
-          <div className='grid grid-cols-1 lg:grid-cols-3 border-[1px] lg:h-[calc(100vh-190px)]'>
-            <div
-              className={`${
-                path.roomId ? 'hidden lg:flex' : 'flex'
-              } flex-col w-full border-r-[1px] lg:h-[calc(100vh-190px)] overflow-y-auto`}
-            >
-              {rooms.map((room) => (
-                <ChatListCard
-                  key={room._id}
-                  room={room}
-                  selected={room.room === Number(path.roomId)}
-                  onClick={handleSelectRoom}
-                />
-              ))}
-            </div>
-            <Outlet />
-          </div>
-        )}
-      </div>
+          <Outlet />
+        </div>
+      )}
     </div>
   )
 }

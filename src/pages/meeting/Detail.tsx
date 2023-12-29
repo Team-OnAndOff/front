@@ -82,7 +82,7 @@ export default function Detail() {
             hostId={postDetail.user.id}
           />
           <div className='mt-12'>
-            <h3 className='text-xl font-semibold text-black-color'>
+            <h3 className='text-xl font-semibold text-black-color dark:text-dark-light-color smooth-color'>
               👉 방장님을 소개합니다!
             </h3>
             <MeetHostInfo
@@ -94,7 +94,7 @@ export default function Detail() {
           </div>
 
           <div className='mt-12'>
-            <h3 className='text-xl font-semibold text-black-color'>
+            <h3 className='text-xl font-semibold text-black-color dark:text-dark-light-color smooth-color'>
               👉 우리 멤버를 소개합니다!
             </h3>
             {postDetail.eventApplies.length === 0 ? (

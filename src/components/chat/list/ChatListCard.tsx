@@ -27,7 +27,9 @@ export default function ChatListCard({
   return (
     <div
       className={`flex flex-row gap-2 py-4 px-2 justify-start items-center border-b-[1px] cursor-pointer relative ${
-        selected ? 'bg-orange-200' : 'hover:bg-main-light-color'
+        selected
+          ? 'bg-orange-200 dark:bg-dark-main-color/[0.1]'
+          : 'hover:bg-main-light-color hover:dark:bg-dark-light-color/[0.1] dark:text-dark-main-color smooth-color'
       }`}
       onClick={() => onClick(item.room)}
     >
@@ -44,14 +46,14 @@ export default function ChatListCard({
         )}
       </div>
       <div className='flex flex-col w-[70%]'>
-        <span className='text-sm sm:text-size-body font-semibold truncate '>
+        <span className='text-sm font-semibold truncate smooth-color dark:text-dark-light-color dark:font-light text-black-color tablet:text-size-body '>
           {item.name}
         </span>
-        <span className='text-neutral-500 text-sm font-semibold truncate'>
+        <span className='mt-2 ml-3 text-sm font-semibold truncate smooth-color text-black-color dark:text-dark-light-color'>
           {item.lastMessage}
         </span>
       </div>
-      <div className='absolute top-2 right-2 inline-block text-xs text-neutral-500'>
+      <div className='absolute inline-block text-xs top-2 right-2 text-neutral-500'>
         {item.users.length}명 참여중
       </div>
       {/* <ChatMessageCount count={1000} /> */}

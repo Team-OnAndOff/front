@@ -18,11 +18,6 @@ import {
   Main7,
   Main8,
   Main9,
-  Main10,
-  Main11,
-  Main12,
-  Main13,
-  Main14,
 } from '@/assets/images'
 
 export default function ImageSlide() {
@@ -55,21 +50,6 @@ export default function ImageSlide() {
     },
     {
       src: Main9,
-    },
-    {
-      src: Main10,
-    },
-    {
-      src: Main11,
-    },
-    {
-      src: Main12,
-    },
-    {
-      src: Main13,
-    },
-    {
-      src: Main14,
     },
   ]
 
@@ -114,7 +94,7 @@ export default function ImageSlide() {
         {images.map((image, index) => (
           <SwiperSlide key={index}>
             <img
-              className='object-cover w-full h-[400px] select-none'
+              className='object-cover w-full h-[580px] select-none rounded-image-radius'
               src={image.src}
               alt={`배너 대표이미지 ${index + 1}`}
             />
@@ -125,12 +105,12 @@ export default function ImageSlide() {
 
       {/* 이전, 다음 버튼 커스텀 */}
       <button className='absolute z-10 left-2 top-1/2' onClick={handlePrev}>
-        <i className='text-size-title tablet:text-[2.5rem] transition-smooth'>
+        <i className='text-size-title tablet:text-[2.5rem] smooth-color'>
           <IoIosArrowBack fill='#111' />
         </i>
       </button>
       <button className='absolute z-10 right-2 top-1/2' onClick={handleNext}>
-        <i className='text-size-title tablet:text-[2.5rem] transition-smooth'>
+        <i className='text-size-title tablet:text-[2.5rem] smooth-color'>
           <IoIosArrowBack className='rotate-180' fill='#111' />
         </i>
       </button>

@@ -70,7 +70,10 @@
 }
 
 @layer components {
-  .transition-smooth {
-    @apply transition-all duration-1000 ease-in-out;
+  .smooth-color {
+    @apply transition-colors duration-1000 ease-in-out;
+  }
+  .smooth-transition {
+    @apply transition-transform duration-1000 ease-in-out;
   }
 }

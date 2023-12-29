@@ -16,15 +16,15 @@ export default function ChatRoomMessage({
   const user = users.get(item.user._id) ?? item.user
   return (
     <div className='chat-message'>
-      <div className={`flex items-end ${isSelf && 'justify-end'}`}>
-        <div className='flex flex-col space-y-1 text-xs max-w-xs mx-2 items-start order-2'>
+      <div className={`flex items-end ${isSelf && 'justify-end'} h-full`}>
+        <div className='flex flex-col items-start order-2 max-w-xs mx-2 space-y-1 text-xs'>
           {!isSelf && <span>{user.username}</span>}
-          <div className='flex gap-1 items-end'>
+          <div className='flex items-end gap-1'>
             <div
               className={`px-4 py-2 rounded-lg inline-block ${
                 isSelf
-                  ? 'bg-main-color text-main-light-color order-3'
-                  : 'bg-neutral-100 text-neutral-600 order-1'
+                  ? 'bg-main-color dark:bg-sub-hover-color text-main-light-color order-3'
+                  : 'bg-main-light-color dark:bg-dark-light-color dark:text-dark-main-color dark:font-semibold text-dark-main-color order-1'
               }`}
             >
               {item.message}

@@ -61,17 +61,19 @@ const UserCard = () => {
     <>
       {userData.length === 0 && (
         <div>
-          <h4 className='mt-5 text-size-title'>신청자가 없습니다....</h4>
+          <h4 className='mt-5 font-bold text-size-title'>
+            신청자가 없습니다...
+          </h4>
         </div>
       )}
       {userData.map((item, index) => (
         <section
           key={index}
-          className='flex flex-row items-center min-h-[10rem] w-full rounded-big-radius
-      my-7 shadow-md bg-light-gray-color '
+          className='flex flex-row items-center h-[10rem] w-full rounded-big-radius
+      my-7 shadow-md bg-light-gray-color justify-between dark:bg-dark-light-color dark:justify-evenly'
         >
-          <div className='p-3 flex relative items-center flex-col justify-center w-[20.5%] h-auto '>
-            <div className='self-start'>
+          <div className='relative flex flex-col items-center justify-center w-1/6 h-auto p-3'>
+            <div className='self-center break-keep'>
               <p className='ml-2'>참여대기</p>
             </div>
             <div className='bg-aquamarine w-[5rem] h-[5rem] flex items-center justify-center rounded-full overflow-hidden'>
@@ -82,26 +84,13 @@ const UserCard = () => {
             </div>
           </div>
 
-          <div className='flex gap-2 flex-col justify-center relative h-full w-[60%] py-4 '>
-            <p className='font-light text-left break-keep text-size-body'>
-              {item.answer}
-            </p>
-            <ul className='flex flex-row gap-3'>
-              {item.user.hashtag
-                .split(',')
-                .filter(Boolean)
-                .map((item) => (
-                  <li className='whitespace-normal py-[0.3rem] px-[0.5rem] my-1 rounded-small-radius bg-main-color w-fit text-[0.75rem] text-white'>
-                    #{item}
-                  </li>
-                ))}
-            </ul>
+          <div className='relative h-full p-5 text-left whitespace-pre-wrap tablet:w-2/3 text-size-body'>
+            {item.answer}
           </div>
-
-          <div className='flex relative items-center justify-evenly w-[17.5%] h-full flex-col gap-3'>
+          <div className='relative flex flex-col items-center h-full px-1 justify-evenly gap-x-3 tablet:px-16'>
             <Button
               children='거절'
-              width='w-[70%] h-[40px]'
+              width='w-big-button'
               fill='border'
               onClick={() => {
                 if (meetingId) {
@@ -113,7 +102,7 @@ const UserCard = () => {
             />
             <Button
               children='수락'
-              width='w-[70%]'
+              width='w-big-button'
               fill='activeFill'
               onClick={() => {
                 if (meetingId) {
@@ -134,7 +123,7 @@ const WantJoinList = () => {
   return (
     <>
       <div className='text-center min-h-[33rem]'>
-        <h4 className='font-bold mt-14 text-size-title'>
+        <h4 className='font-bold mt-14 text-size-title text-black-color dark:text-dark-light-color'>
           Crew / Challenge 신청자 관리
         </h4>
         <UserCard />

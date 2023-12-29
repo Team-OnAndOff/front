@@ -34,7 +34,7 @@ export default function SearchInput({
         onChange={(e) => setSearchInput(e.target.value)}
         type='search'
         id='default-search'
-        className='w-full p-4 text-sm border-2 h-9 rounded-xl text-black-color border-dark-gray-color ps-10 focus:border-main-color focus:outline-none focus:dark:border-sub-color dark:bg-light-gray-color transition-smooth'
+        className='w-full p-4 text-sm border-2 h-9 rounded-xl text-black-color border-dark-gray-color ps-10 focus:border-main-color focus:outline-none focus:dark:border-sub-color dark:bg-dark-light-color smooth-color'
         placeholder='제목이나 태그를 입력해주세요.'
         onKeyDown={handleKeyPress}
         value={searchInput}

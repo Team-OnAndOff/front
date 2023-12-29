@@ -21,13 +21,8 @@ import Main4 from '@/assets/images/main_bg4.png'
 import Main5 from '@/assets/images/main_bg5.png'
 import Main6 from '@/assets/images/main_bg6.png'
 import Main7 from '@/assets/images/main_bg7.png'
-import Main8 from '@/assets/images/main_bg8.png'
-import Main9 from '@/assets/images/main_bg9.png'
-import Main10 from '@/assets/images/main_bg10.png'
-import Main11 from '@/assets/images/main_bg11.png'
-import Main12 from '@/assets/images/main_bg12.png'
-import Main13 from '@/assets/images/main_bg13.png'
-import Main14 from '@/assets/images/main_bg14.png'
+import Main8 from '@/assets/images/main_bg8.jpg'
+import Main9 from '@/assets/images/main_bg9.jpg'
 
 import KakaoLoginBtn from '@/assets/images/kakao_login_btn.png'
 import GoogleLoginBtn from '@/assets/images/google_login_btn.png'
@@ -57,11 +52,6 @@ export {
   Main7,
   Main8,
   Main9,
-  Main10,
-  Main11,
-  Main12,
-  Main13,
-  Main14,
   KakaoLoginBtn,
   GoogleLoginBtn,
 }
