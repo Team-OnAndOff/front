@@ -11,11 +11,11 @@ interface ButtonProps {
 const getButtonStyle = (fill: ButtonProps['fill']) => {
   switch (fill) {
     case 'activeFill':
-      return 'bg-main-color text-white hover:bg-main-hover-color'
+      return 'bg-main-color dark:bg-sub-color hover:dark:bg-sub-hover-color text-white hover:bg-main-hover-color'
     case 'inactiveFill':
-      return 'bg-light-gray-color text-black-color'
+      return 'bg-light-gray-color dark:bg-dark-gray-color text-black-color'
     case 'border':
-      return 'border border-main-color bg-white hover:bg-main-light-color'
+      return 'border border-main-color dark:border-sub-color dark:bg-dark-light-color text-black-color bg-white hover:bg-main-light-color hover:dark:font-semibold hover:dark:bg-light-gray-color'
     default:
       return ''
   }

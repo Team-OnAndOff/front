@@ -13,6 +13,7 @@ import SearchInput from '@/components/common/SearchInput'
 import Declaration from '@/components/common/Declaration'
 import PrivateRouter from '@/components/common/PrivateRouter'
 import BreadCrumb from '@/components/common/BreadCrumb'
+import ColorSwitcher from '@/components/common/ColorSwitcher'
 
 export {
   Button,
@@ -30,4 +31,5 @@ export {
   Declaration,
   PrivateRouter,
   BreadCrumb,
+  ColorSwitcher,
 }

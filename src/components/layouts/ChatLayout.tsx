@@ -5,7 +5,7 @@ import socket from '@/utils/socket'
 import { CHAT, ChatRoom } from '@/types'
 import { fetchGetChatRooms, fetchGetChatUser } from '@/api/chat'
 import { ChatListCard } from '@/components/chat'
-import useChatStore from '@/hooks/useChatStore'
+import { useChatStore } from '@/hooks'
 
 export default function ChatLayout() {
   const path = useParams()
@@ -58,7 +58,7 @@ export default function ChatLayout() {
   return (
     <div className='flex flex-col items-center'>
       <div className='flex-1 w-full lg:px-12 lg:my-8'>
-        <h1 className='text-size-title lg:inline-flex gap-2 mt-4 font-semibold tracking-wide hidden'>
+        <h1 className='hidden gap-2 mt-4 font-semibold tracking-wide text-size-title lg:inline-flex'>
           <BsChat size={26} />
           <span>채팅</span>
         </h1>

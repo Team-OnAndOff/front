@@ -1,6 +1,10 @@
 import { Outlet } from 'react-router-dom'
 import { Header, Footer } from '@/components/layouts'
-import { FloatingButton, ScrollToTopButton } from '@/components/common'
+import {
+  FloatingButton,
+  ScrollToTopButton,
+  ColorSwitcher,
+} from '@/components/common'
 import { useEffect } from 'react'
 import { fetchLoginUser } from '@/api/user'
 import useAuthStore from '@/store/userStore'
@@ -22,21 +26,16 @@ export default function Layout() {
     fetchData()
   }, [setLoginUser])
 
-  const withoutFooter = window.location.pathname === '/login' || '/chat'
-
   return (
-    <div className='flex flex-col items-center h-screen'>
+    <div className={'flex flex-col items-center h-auto'}>
       <Header />
       <div className='flex-1 w-3/4 transition-all duration-1000 desktop:w-8/12 max-w-common-screen-width justify-self-center'>
         <Outlet />
       </div>
       <FloatingButton />
       <ScrollToTopButton />
-      {withoutFooter ? null : (
-        <>
-          <Footer />
-        </>
-      )}
+      <ColorSwitcher />
+      <Footer />
     </div>
   )
 }

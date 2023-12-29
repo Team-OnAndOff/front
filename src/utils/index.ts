@@ -1,10 +1,15 @@
 import NewPageScrollToTop from '@/utils/NewPageScrollToTop'
 import ReloadScrollToTop from '@/utils/ReloadScrollToTop'
-import LazyImage from '@/utils/LazyImage'
+import CardSkeleton from '@/utils/CardSkeleton'
 import HandleSearchParams from '@/utils/HandleSearchParams'
 import { ChatUser } from '@/types'
 
-export { NewPageScrollToTop, ReloadScrollToTop, LazyImage, HandleSearchParams }
+export {
+  NewPageScrollToTop,
+  ReloadScrollToTop,
+  CardSkeleton,
+  HandleSearchParams,
+}
 
 export type CategoryType = {
   categoryId: number

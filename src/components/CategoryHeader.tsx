@@ -1,22 +1,20 @@
 interface CategoryHeaderProps {
   title: string
   content: string
-  bgColor?: string
-  textColor?: string
 }
 
 export default function CategoryHeader({
   title,
   content,
-  bgColor = 'bg-sub-color',
-  textColor = 'text-white',
 }: CategoryHeaderProps) {
   return (
-    <header
-      className={`${bgColor} flex flex-col items-center w-full gap-8 py-3`}
-    >
-      <span className={`font-bold text-size-title ${textColor}`}>{title}</span>
-      <span className='text-white'>{content}</span>
+    <header className='flex flex-col items-center w-full gap-8 py-3 bg-sub-color dark:bg-sub-hover-color transition-smooth'>
+      <span className='font-bold text-white dark:text-dark-light-color text-size-title transition-smooth'>
+        {title}
+      </span>
+      <span className='text-white dark:text-dark-light-color transition-smooth'>
+        {content}
+      </span>
     </header>
   )
 }

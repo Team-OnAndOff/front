@@ -23,6 +23,8 @@ export default function FloatingButton() {
         footer: '비회원인 유저는 로그인 페이지로 이동합니다.',
         icon: 'question',
         iconColor: '#ff5e2e',
+        confirmButtonColor: '#ff5e2e',
+        cancelButtonColor: '#3a823f',
       }).then((result: SweetAlertResult) => {
         if (result.isConfirmed) {
           navigate('/login')
@@ -42,7 +44,7 @@ export default function FloatingButton() {
     <>
       <button
         onClick={handleClick}
-        className='group bottom-[40px] right-[40px] w-[30px] h-[30px] bg-white fixed rounded-full drop-shadow-xl hover:drop-shadow-2xl'
+        className='group bottom-[70px] right-[40px] w-[30px] h-[30px] bg-white fixed rounded-full drop-shadow-xl hover:drop-shadow-2xl'
       >
         <div className='animate-wiggle'>
           <FaCirclePlus fill='#3a823f' size={30} />

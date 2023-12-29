@@ -29,6 +29,9 @@ import Main12 from '@/assets/images/main_bg12.png'
 import Main13 from '@/assets/images/main_bg13.png'
 import Main14 from '@/assets/images/main_bg14.png'
 
+import KakaoLoginBtn from '@/assets/images/kakao_login_btn.png'
+import GoogleLoginBtn from '@/assets/images/google_login_btn.png'
+
 export {
   Logo,
   tree_1,
@@ -59,4 +62,6 @@ export {
   Main12,
   Main13,
   Main14,
+  KakaoLoginBtn,
+  GoogleLoginBtn,
 }
