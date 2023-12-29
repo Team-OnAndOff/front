@@ -14,12 +14,14 @@ interface StateNumber {
   selectedTab: number
   swiperData: CardData[] | undefined
   userId: number | string | undefined
+  userMe: boolean | undefined
   setNewLoad: Dispatch<SetStateAction<boolean>>
 }
 
 export default function SwiperCard({
   selectedTab,
   swiperData,
+  userMe,
   userId,
   setNewLoad,
 }: StateNumber) {
@@ -54,23 +56,34 @@ export default function SwiperCard({
         </div>
       )}
       <div className='relative'>
-        <button className='absolute top-1/2 -left-[50px]' onClick={handlePrev}>
-          <i className='text-size-title tablet:text-[2rem] text-black-color'>
-            <IoIosArrowBack />
-          </i>
-        </button>
-        <button className='absolute top-1/2 -right-[50px]' onClick={handleNext}>
-          <i className='text-size-title tablet:text-[2rem] text-black-color'>
-            <IoIosArrowBack className='rotate-180' />
-          </i>
-        </button>
+        {data && data.length > 2 && (
+          <>
+            <button
+              className='absolute top-1/2 -left-[50px]'
+              onClick={handlePrev}
+            >
+              <i className='text-size-title tablet:text-[2rem] text-black-color'>
+                <IoIosArrowBack />
+              </i>
+            </button>
+            <button
+              className='absolute top-1/2 -right-[50px]'
+              onClick={handleNext}
+            >
+              <i className='text-size-title tablet:text-[2rem] text-black-color'>
+                <IoIosArrowBack className='rotate-180' />
+              </i>
+            </button>
+          </>
+        )}
 
         <Swiper
           spaceBetween={20}
           freeMode={true}
-          loop={true}
+          loop={false}
           speed={2000}
           slideToClickedSlide={true}
+          slidesOffsetBefore={0}
           // loopedSlides={2}
           slidesPerView={1}
           onSwiper={(e) => {
@@ -102,6 +115,7 @@ export default function SwiperCard({
                 selectedTab={selectedTab}
                 data={item}
                 userId={userId}
+                userMe={userMe}
                 setNewLoad={setNewLoad}
               />
             </SwiperSlide>
