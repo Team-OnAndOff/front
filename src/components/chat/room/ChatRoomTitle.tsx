@@ -3,13 +3,14 @@ import { ChatRoomIcon, DropDownItems } from '@/components/chat'
 import { Link } from 'react-router-dom'
 import { FaEllipsisVertical } from 'react-icons/fa6'
 import { useEffect, useState } from 'react'
-import { ChatRoom } from '@/types'
+import { ChatRoom, ChatUser } from '@/types'
 
 interface ChatRoomTitleProps {
   room: ChatRoom
+  users: Map<string, ChatUser>
 }
 
-export default function ChatRoomTitle({ room }: ChatRoomTitleProps) {
+export default function ChatRoomTitle({ room, users }: ChatRoomTitleProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function ChatRoomTitle({ room }: ChatRoomTitleProps) {
           icon={FaEllipsisVertical}
           onClick={() => setIsOpen((prev) => !prev)}
         />
-        <DropDownItems isOpen={isOpen} room={room} />
+        <DropDownItems isOpen={isOpen} users={users} />
       </div>
     </div>
   )

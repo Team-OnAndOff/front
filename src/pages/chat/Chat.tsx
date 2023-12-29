@@ -6,12 +6,12 @@ import {
   ChatRoomMessage,
   ChatRoomTitle,
 } from '@/components/chat'
-import { CHAT, ChatMessage, ChatResponse, ChatRoom } from '@/types'
+import { CHAT, ChatMessage, ChatResponse, ChatRoom, ChatUser } from '@/types'
 import useChatStore from '@/hooks/useChatStore'
 import socket from '@/utils/socket'
 import { useIntersectionObserver } from '@/hooks'
 import { fetchGetChatPrevMessages, fetchGetChatRoom } from '@/api/chat'
-import { formatDate } from '@/utils'
+import { convertArrayToMap, formatDate } from '@/utils'
 import { useParams } from 'react-router-dom'
 
 export default function Chat() {
@@ -20,6 +20,7 @@ export default function Chat() {
   const [message, setMessage] = useState('')
   const [items, setItems] = useState<ChatMessage[]>([])
   const [room, setRoom] = useState<ChatRoom | null>(null)
+  const [users, setUsers] = useState<Map<string, ChatUser>>(new Map())
 
   const { user } = useChatStore()
   const [isLoading, setIsLoading] = useState(false)
@@ -34,6 +35,7 @@ export default function Chat() {
         const response = await fetchGetChatRoom(path.roomId)
         if (response) {
           setRoom(response)
+          setUsers(convertArrayToMap(response.users))
           socket.emit(
             CHAT.ROOM_JOIN,
             { roomId: response?._id },
@@ -64,6 +66,23 @@ export default function Chat() {
 
     socket.on(CHAT.USER_JOIN, ({ message }: { message: ChatMessage }) => {
       setItems((prev) => [message, ...prev])
+    })
+
+    socket.on(CHAT.USER_INFO, (response: ChatUser) => {
+      if (response) {
+        setUsers((prevUsers) => {
+          const { _id, ...rest } = response
+          const newUsers = new Map(prevUsers)
+          const existingData = newUsers.get(_id)!
+          if (newUsers.has(_id) && existingData) {
+            Object.assign(existingData, rest)
+          } else {
+            newUsers.set(_id, response)
+          }
+
+          return newUsers
+        })
+      }
     })
   }, [])
 
@@ -117,7 +136,7 @@ export default function Chat() {
     <>
       {room && user && (
         <div className='flex-col h-screen overflow-y-auto lg:h-full lg:flex lg:col-span-2 z-50 relative'>
-          <ChatRoomTitle room={room} />
+          <ChatRoomTitle room={room} users={users} />
           <div className='flex flex-1 overflow-auto gap-2 sm:p-4 flex-col-reverse h-full relative'>
             <div ref={messageEndRef}></div>
             {items.map((item, index, arr) => (
@@ -135,6 +154,7 @@ export default function Chat() {
                   <ChatBadge text={item.message} />
                 ) : (
                   <ChatRoomMessage
+                    users={users}
                     item={item}
                     isSelf={item.user?._id === user?._id}
                   />

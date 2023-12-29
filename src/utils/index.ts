@@ -2,6 +2,7 @@ import NewPageScrollToTop from '@/utils/NewPageScrollToTop'
 import ReloadScrollToTop from '@/utils/ReloadScrollToTop'
 import LazyImage from '@/utils/LazyImage'
 import HandleSearchParams from '@/utils/HandleSearchParams'
+import { ChatUser } from '@/types'
 
 export { NewPageScrollToTop, ReloadScrollToTop, LazyImage, HandleSearchParams }
 
@@ -27,4 +28,15 @@ export const formatDateTime = (inputDate: Date) => {
   const minutes = date.getMinutes().toString().padStart(2, '0')
 
   return `${hours}:${minutes}`
+}
+
+// 채팅 유저정보 map으로 변환
+export const convertArrayToMap = (users: ChatUser[]) => {
+  const resultMap = new Map()
+  users.forEach((user) => {
+    const { _id, ...rest } = user
+    resultMap.set(_id, rest)
+  })
+
+  return resultMap
 }
