@@ -9,6 +9,7 @@ import { userEdit } from '@/api/userEdit'
 import { userEsc } from '@/api/userEsx'
 import { IoClose } from 'react-icons/io5'
 import useAuthStore from '@/store/userStore'
+import { fetchLogout } from '@/api/logout'
 
 // 폼 데이터 타입 정의
 interface FormData {
@@ -151,6 +152,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
         })
         setTimeout(() => {
           setUserLogout()
+          fetchLogout()
           window.location.href = '/'
           MySwal.close()
         }, 2000)

@@ -144,7 +144,7 @@ export default function MyPage() {
       </div>
 
       {/* 프로필 카드 start */}
-      <section className='flex flex-row items-center justify-between w-full h-auto border border-solid shadow-md rounded-big-radius border-light-gray-color mt-7'>
+      <section className='relative flex flex-row items-center justify-between w-full h-auto border border-solid shadow-md rounded-big-radius border-light-gray-color mt-7'>
         {/* 이미지박스 */}
         <div className='p-3 flex relative items-center justify-center w-min-[100px] h-auto '>
           <div className='bg-aquamarine w-[150px] h-[150px] flex items-center justify-center rounded-full overflow-hidden'>
@@ -180,10 +180,10 @@ export default function MyPage() {
             </ul>
           </div>
           {/* 온도박스\ 신고,프로필 설정 버튼 s */}
-          <div className='flex relative items-center justify-center w-[17.5%]'>
+          <div className='flex items-center justify-center w-[17.5%]'>
             {/* 프로필 설정 버튼 s */}
             {userMe && (
-              <div className='absolute z-100 right-[10px] top-[0px]'>
+              <div className='absolute z-100 right-[10px] top-[10px]'>
                 <button onClick={() => openModal('profile')}>
                   <FaUserGear style={{ color: 'red' }} />
                 </button>
