@@ -49,7 +49,8 @@ export default function MeetDetailInfo({
   const [isLike, setIsLike] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { user } = useAuthStore((state) => state)
-  const openModal = () => {
+  const openModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     if (!user) {
       MySwal.fire({
         title: '로그인이 필요합니다',
