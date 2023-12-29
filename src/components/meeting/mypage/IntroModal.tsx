@@ -66,7 +66,9 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
     const formData = new FormData()
     formData.append('username', data.username.toString())
     formData.append('introduction', data.introduction.toString())
-    formData.append('hashtag', data.hashtag.toString())
+    if (data.hashtag) {
+      formData.append('hashtag', data.hashtag.toString())
+    }
     // 이미지가 선택된 경우에만 추가
     if (data.image) {
       formData.append('image', data.image)

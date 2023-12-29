@@ -132,8 +132,8 @@ export default function MyPage() {
   }
 
   //해시 데이터 가공
-  const tagArray = (userData?.hashtag ?? '')
-    .split(',')
+  const tagArray = userData?.hashtag
+    ?.split(',')
     .filter(Boolean)
     .map((item) => `#${item}`)
   console.log(tagArray)
