@@ -1,10 +1,5 @@
-import {
-  MdAttachFile,
-  MdOutlineCameraAlt,
-  MdInsertEmoticon,
-  MdOutlineSend,
-} from 'react-icons/md'
-import { ChatRoomIcon, ChatRoomSendButton } from '@/components/chat'
+import { MdOutlineSend } from 'react-icons/md'
+import { ChatRoomSendButton } from '@/components/chat'
 
 interface ChatRoomInputProps {
   message: string
@@ -28,11 +23,6 @@ export default function ChatRoomInput({
           onChange={(e) => setMessage(e.target.value)}
         />
         <div className='absolute right-0 items-center inset-y-0 flex'>
-          <div className='hidden sm:flex'>
-            <ChatRoomIcon icon={MdAttachFile} onClick={() => {}} />
-            <ChatRoomIcon icon={MdOutlineCameraAlt} onClick={() => {}} />
-            <ChatRoomIcon icon={MdInsertEmoticon} onClick={() => {}} />
-          </div>
           <ChatRoomSendButton icon={MdOutlineSend} />
         </div>
       </form>

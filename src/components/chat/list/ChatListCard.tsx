@@ -31,10 +31,10 @@ export default function ChatListCard({
       }`}
       onClick={() => onClick(item.room)}
     >
-      <div className='relative'>
+      <div className='relative h-[52px] w-[52px]'>
         <img
           src={item.image}
-          className='object-cover h-12 w-12 rounded-full'
+          className='object-cover h-[52px] w-[52px] rounded-full'
           alt='image'
         />
         {item.category && (
@@ -43,10 +43,10 @@ export default function ChatListCard({
           </span>
         )}
       </div>
-      <div className='flex flex-col max-w-xs w-full'>
-        <div className='text-sm sm:text-size-body font-semibold truncate'>
-          <div>{item.name}</div>
-        </div>
+      <div className='flex flex-col w-[70%]'>
+        <span className='text-sm sm:text-size-body font-semibold truncate '>
+          {item.name}
+        </span>
         <span className='text-neutral-500 text-sm font-semibold truncate'>
           {item.lastMessage}
         </span>
