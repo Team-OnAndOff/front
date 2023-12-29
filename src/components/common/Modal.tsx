@@ -15,7 +15,7 @@ export default function Modal({ isOpen, closeModal, children }: ModalProps) {
         className='absolute inset-0 opacity-50 bg-dark-gray-color dark:bg-dark-main-color'
         onClick={closeModal}
       ></div>
-      <div className='z-50 p-5 bg-white dark:bg-dark-light-color desktop:w-[760px] w-[420px] transition-all duration-500 rounded-big-radius'>
+      <div className='z-50 p-1 bg-white dark:bg-dark-light-color desktop:w-[760px] w-[420px] transition-all duration-500 rounded-big-radius'>
         {children}
       </div>
     </div>

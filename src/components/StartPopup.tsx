@@ -38,7 +38,7 @@ const TypewriterEffect = () => {
   }, [i, j, isDeleting, currentWord])
 
   return (
-    <div className='h-8 font-bold animate-typing whitespace-nowrap text-black-color'>
+    <div className='h-8 font-bold animate-typing whitespace-nowrap text-black-color dark:text-main-hover-color'>
       {currentWord.substring(0, j)}
     </div>
   )
@@ -61,9 +61,9 @@ export default function StartPopup({
 
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black-color bg-opacity-40 backdrop-blur-sm z-[9999] flex-col'>
-      <div className='max-w-[500px] w-4/5 h-auto rounded-small-radius flex flex-col gap-y-20 justify-between bg-white relative px-8 pt-10 pb-4'>
+      <div className='max-w-[500px] w-4/5 h-auto rounded-small-radius flex flex-col gap-y-20 justify-between dark:bg-dark-main-color bg-white relative px-8 pt-10 pb-4'>
         <div className='flex items-start justify-between w-full'>
-          <div className='text-size-title'>
+          <div className='text-size-title dark:text-dark-light-color'>
             <TypewriterEffect />에 오신 것을 환영합니다!
           </div>
           <Button
@@ -75,21 +75,25 @@ export default function StartPopup({
           </Button>
         </div>
         <ul className='font-semibold text-black-color text-size-body'>
-          <li className='mb-12 break-keep'>
+          <li className='mb-12 break-keep dark:text-dark-light-color'>
             👉 온앤오프가 처음이신가요⁉️
             <br />
-            <span className='font-light'>
+            <span className='font-light dark:text-dark-light-color'>
               New 크루원과 챌린저를 위한 온앤오프{' '}
-              <a href='#' className='underline hover:text-main-color'>
+              <a
+                href='https://www.notion.so/49fad4b8b1414749a51499b3b9f3f6ff'
+                className='underline hover:text-main-color '
+                target='_blank'
+              >
                 이용 가이드
               </a>
               를 참고해주세요!
             </span>
           </li>
-          <li className='break-keep'>
+          <li className='dark:text-dark-light-color break-keep'>
             👉 온앤오프에 원하는 모임이 없나요⁉️
             <br />
-            <span className='font-light'>
+            <span className='font-light dark:text-dark-light-color'>
               방장이 되어 직접 원하는 Crew나 Challenge를 만들어보세요!
             </span>
           </li>

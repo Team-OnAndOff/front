@@ -7,6 +7,7 @@ interface ButtonProps {
   fill: 'activeFill' | 'border' | 'inactiveFill'
   width?: string
   fontSize?: string
+  target?: string
 }
 
 const getButtonStyle = (fill: ButtonProps['fill']) => {

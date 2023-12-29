@@ -140,11 +140,13 @@ export default function MyPage() {
   return (
     <>
       <div className='relative h-auto w-1220 backdrop-blur-0'>
-        <h4 className='font-bold mt-14 text-size-title'>프로필 정보</h4>
+        <h4 className='font-bold mt-14 text-size-title dark:text-dark-light-color smooth-color'>
+          프로필 정보
+        </h4>
       </div>
 
       {/* 프로필 카드 start */}
-      <section className='relative flex flex-row items-center justify-between w-full h-auto border border-solid shadow-md rounded-big-radius border-light-gray-color mt-7'>
+      <section className='relative flex flex-row items-center justify-between w-full h-auto border border-solid shadow-md rounded-big-radius border-light-gray-color dark:border-dark-light-color mt-7'>
         {/* 이미지박스 */}
         <div className='p-3 flex relative items-center justify-center w-min-[100px] h-auto '>
           <div className='bg-aquamarine w-[150px] h-[150px] flex items-center justify-center rounded-full overflow-hidden'>
@@ -159,11 +161,13 @@ export default function MyPage() {
           <div className='relative flex flex-col justify-between w-full h-full gap-2 '>
             {/* 아래로 유저 데이터 넣어야함 */}
             {userData ? (
-              <h4 className='mt-6 font-bold text-size-body'>
+              <h4 className='mt-6 font-bold text-size-body dark:text-dark-light-color smooth-color'>
                 {userData?.username}
               </h4>
             ) : (
-              <h4 className='mt-6 font-bold text-size-body'>로딩중입니다.</h4>
+              <h4 className='mt-6 font-bold text-size-body dark:text-dark-light-color smooth-color'>
+                로딩중입니다.
+              </h4>
             )}
             <p className='font-medium whitespace-pre-wrap text-size-subbody'>
               {userData?.introduction}
@@ -185,7 +189,7 @@ export default function MyPage() {
             {userMe && (
               <div className='absolute z-100 right-[10px] top-[10px]'>
                 <button onClick={() => openModal('profile')}>
-                  <FaUserGear style={{ color: 'red' }} />
+                  <FaUserGear className='black-color dark:fill-dark-light-color smooth-color' />
                 </button>
                 <Modal
                   isOpen={isModalOpen && modalType === 'profile'}
@@ -234,7 +238,7 @@ export default function MyPage() {
 
       {/* 모임 텝  start*/}
       <section>
-        <div className='flex border-b-2 border-solid border-main-light-color'>
+        <div className='flex border-b-2 border-solid border-main-light-color smooth-color dark:border-sub-color'>
           {userMe && (
             <>
               <TapCard
@@ -299,7 +303,9 @@ export default function MyPage() {
       </section>
       {/* 모임 개설 탭 end */}
       <div className='relative h-auto w-1220 backdrop-blur-0'>
-        <h4 className='font-bold mt-14 text-size-title'>획득한 배지</h4>
+        <h4 className='font-bold mt-14 text-size-title dark:text-dark-light-color'>
+          획득한 배지
+        </h4>
       </div>
       <section className='pb-10'>
         <Betsy

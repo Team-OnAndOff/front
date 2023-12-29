@@ -45,11 +45,11 @@ export default function SwiperCard({
     <>
       {Array.isArray(data) && data.length === 0 && (
         <div className='p-[15%] text-center'>
-          <p className='mb-5 font-bold text-size-body'>
+          <p className='mb-5 font-bold text-size-body smooth-color dark:text-dark-light-color'>
             참여중인 모임이 없어요.
           </p>
           <Link to='/meetup-lists/1'>
-            <p className='text-white bg-main-color py-[3%] rounded-button-radius w-[50%] mx-auto'>
+            <p className='text-white bg-main-color dark:bg-sub-color smooth-color hover:dark:bg-sub-hover-color py-[3%] rounded-button-radius w-[50%] mx-auto'>
               모임 구경하기
             </p>
           </Link>
@@ -63,7 +63,7 @@ export default function SwiperCard({
               onClick={handlePrev}
             >
               <i className='text-size-title tablet:text-[2rem] text-black-color'>
-                <IoIosArrowBack />
+                <IoIosArrowBack className='dark:fill-dark-light-color smooth-color' />
               </i>
             </button>
             <button
@@ -71,7 +71,7 @@ export default function SwiperCard({
               onClick={handleNext}
             >
               <i className='text-size-title tablet:text-[2rem] text-black-color'>
-                <IoIosArrowBack className='rotate-180' />
+                <IoIosArrowBack className='rotate-180 dark:fill-dark-light-color smooth-color' />
               </i>
             </button>
           </>

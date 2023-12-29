@@ -162,15 +162,17 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
 
   return (
     <div className='flex items-center justify-center w-full'>
-      <div className='w-full p-4 bg-white rounded-xl'>
+      <div className='w-full p-4 bg-white rounded-xl dark:bg-dark-main-color'>
         <div className='flex items-start justify-between'>
-          <p className='font-bold text-size-body'>자기 소개를 수정해주세요.</p>
+          <p className='font-bold text-size-body dark:text-dark-light-color'>
+            자기 소개를 수정해주세요.
+          </p>
         </div>
         <div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className='flex flex-col w-40 pt-4 pb-1 pl-3 mb-2 border-b-2 border-light-gray-color focus-within:border-main-color'>
+            <div className='flex flex-col w-40 pt-4 pb-1 pl-3 mb-2 border-b-2 border-light-gray-color focus-within:border-main-color focus-within:dark:border-sub-color smooth-color'>
               <input
-                className='w-full text-size-body text-black-color focus:outline-none'
+                className='w-full text-size-body text-black-color focus:outline-none dark:text-dark-light-color dark:bg-dark-main-color'
                 type='text'
                 placeholder='닉네임'
                 defaultValue={myUserData?.username as string | undefined}
@@ -178,7 +180,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
               />
             </div>
             <textarea
-              className='p-4 pl-3 border-2 w-full resize-none overflow-hidden text-size-body font-medium rounded-button-radius mt-[10px] border-solid border-light-gray-color focus-within:border-main-color focus:outline-none'
+              className='p-4 pl-3 border-2 w-full resize-none overflow-hidden text-size-body font-medium rounded-button-radius mt-[10px] border-solid border-light-gray-color focus-within:border-main-color dark:bg-dark-main-color focus:outline-none focus-within:dark:border-sub-color smooth-color'
               {...register('introduction')}
               rows={7}
               cols={80}
@@ -189,7 +191,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
             <div className='flex items-start justify-between mt-3 mb-2'>
               <p className='font-bold text-size-body'>프로필 사진 변경</p>
             </div>
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 '>
               <div className='flex gap-2'>
                 <label className='relative flex flex-row items-center cursor-pointer'>
                   <input
@@ -204,9 +206,9 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
                       register('image', { value: file })
                     }}
                   />
-                  <div className='relative flex items-center justify-center p-6 border-2 border-solid border-main-color rounded-button-radius'>
-                    <div className='absolute w-px h-[20px] bg-main-color'></div>
-                    <div className='absolute h-px  w-[20px]  bg-main-color'></div>
+                  <div className='relative flex items-center justify-center p-6 border-2 border-solid border-main-color dark:border-sub-color rounded-button-radius'>
+                    <div className='absolute w-px h-[20px] bg-main-color dark:bg-sub-color'></div>
+                    <div className='absolute h-px  w-[20px] bg-main-color dark:bg-sub-color'></div>
                   </div>
                 </label>
                 {myImage && (
@@ -221,7 +223,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
                       className='absolute top-[-4px] right-[-4px] z-10 cursor-pointer'
                       onClick={onImageDelete}
                     >
-                      <IoClose className='w-4 h-4 bg-white border-2 rounded-full fill-main-color border-main-color' />
+                      <IoClose className='w-4 h-4 bg-white border-2 rounded-full fill-main-color border-main-color dark:fill-sub-color dark:border-sub-color' />
                     </div>
                   </div>
                 )}
@@ -257,7 +259,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
                       onClick={() => handleRemoveHash(index)}
                       className='cursor-pointer'
                     >
-                      ⤫
+                      &nbsp; &#215;
                     </span>
                   </li>
                 ))}
@@ -266,7 +268,7 @@ export default function IntroModal({ closeModal, myUserData, userId }: Props) {
 
             <button
               type='button'
-              className='font-black text-main-light-color text-size-body relative desktop:top-[3rem] top-[6rem] flex'
+              className='font-black font-light text-main-light-color dark:text-dark-gray-color text-size-body relative desktop:top-[3rem] top-[6rem] flex'
               onClick={quit}
             >
               탈퇴하기

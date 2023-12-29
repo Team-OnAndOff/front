@@ -129,7 +129,10 @@ export default function MeetDetailInfo({
       <div className='flex items-center justify-between w-full py-3'>
         <div className='flex items-center gap-x-2'>
           <i className='-mt-1 -ml-1'>
-            <FaRegLightbulb fill='#ff5e2e' size={24} />
+            <FaRegLightbulb
+              className='fill-main-color dark:fill-sub-color'
+              size={24}
+            />
           </i>
           <h3 className='font-bold text-size-title break-keep text-black-color smooth-transition dark:text-dark-light-color'>
             {title}
@@ -146,7 +149,7 @@ export default function MeetDetailInfo({
               {isLike ? (
                 <TiHeartFullOutline
                   fill='#ff5e2e'
-                  className='transition-all duration-1000 hover:scale-105'
+                  className='transition-all duration-1000 hover:scale-105 fill-main-color dark:fill-sub-color'
                 />
               ) : (
                 <TiHeartOutline className='transition-all duration-1000 hover:scale-105 dark:fill-dark-light-color' />

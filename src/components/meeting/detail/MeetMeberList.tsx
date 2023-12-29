@@ -88,6 +88,7 @@ export default function MeetMemberList({
         )}
         {participatedMem && participatedMem.length > 4 ? (
           <Swiper
+            observer={true}
             loop={participatedMem.length >= 1}
             speed={2000}
             slideToClickedSlide={true}
@@ -153,7 +154,7 @@ export default function MeetMemberList({
               onClick={handlePrev}
             >
               <i className='text-size-title desktop:text-[2rem] text-black-color'>
-                <IoIosArrowBack />
+                <IoIosArrowBack className='dark:fill-dark-light-color smooth-color' />
               </i>
             </button>
             <button
@@ -161,7 +162,7 @@ export default function MeetMemberList({
               onClick={handleNext}
             >
               <i className='text-size-title desktop:text-[2rem] text-black-color'>
-                <IoIosArrowBack className='rotate-180' />
+                <IoIosArrowBack className='rotate-180 dark:fill-dark-light-color smooth-color' />
               </i>
             </button>
           </>
