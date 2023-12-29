@@ -18,6 +18,8 @@ interface MeetMemberListProps {
 }
 
 import swipercore from 'swiper'
+import useAuthStore from '@/store/userStore'
+import Swal from 'sweetalert2'
 swipercore.use([Autoplay])
 
 export default function MeetMemberList({
@@ -48,9 +50,21 @@ export default function MeetMemberList({
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [attendeeId, setAttendeeId] = useState(0)
   const [username, setUserName] = useState('')
-  const openModal = () => setIsModalOpen(true)
+  const { user } = useAuthStore((state) => state)
+  const openModal = () => {
+    const isParticipated = participatedMem.some((mem) => mem.id === user?.id)
+    if (!isParticipated) {
+      Swal.fire({
+        icon: 'error',
+        text: '모임에 참여해야만 멤버를 평가할 수 있습니다!',
+        timer: 2000,
+        confirmButtonColor: '#ff5e2e',
+      })
+    } else {
+      setIsModalOpen(true)
+    }
+  }
   const closeModal = () => setIsModalOpen(false)
-
   return (
     <>
       <div

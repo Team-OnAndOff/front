@@ -1,6 +1,8 @@
 import { EventAppliesUser } from '@/types'
 import { useNavigate } from 'react-router-dom'
 import { FaRegSmile } from 'react-icons/fa'
+import useAuthStore from '@/store/userStore'
+import Swal from 'sweetalert2'
 
 interface MemberCardProps {
   member: EventAppliesUser
@@ -15,10 +17,22 @@ export default function MeetMeberCard({
   findAttendeeId,
   findUserName,
 }: MemberCardProps) {
-  const handleIconClick = () => {
-    openModal()
-    findAttendeeId(member.user.id)
-    findUserName(member.user.username)
+  const { user } = useAuthStore((state) => state)
+
+  const handleIconClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    if (user?.id === member.user.id) {
+      Swal.fire({
+        icon: 'error',
+        text: '본인은 평가할 수 없습니다!',
+        timer: 2000,
+        confirmButtonColor: '#ff5e2e',
+      })
+    } else {
+      openModal()
+      findAttendeeId(member.user.id)
+      findUserName(member.user.username)
+    }
   }
   const navigate = useNavigate()
 
