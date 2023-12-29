@@ -145,7 +145,7 @@ export default function Header() {
                 <img
                   alt='프로필 사진'
                   className='w-[24px] h-[24px] rounded-full'
-                  src={store.user.image.uploadPath}
+                  src={store.user.image?.uploadPath}
                 />
               </Link>
             ) : (
@@ -154,10 +154,9 @@ export default function Header() {
                 onClick={handleBasicInfoClick}
                 className={generateClassName('py-5 px-3', true)}
               >
-                 <i className='dark:fill-dark-light-color transition-smooth'>
-                <FaUserCircle size={24} fill='dark' />
-              </i>
-
+                <i className='dark:fill-dark-light-color transition-smooth'>
+                  <FaUserCircle size={24} fill='dark' />
+                </i>
               </Link>
             )}
           </div>

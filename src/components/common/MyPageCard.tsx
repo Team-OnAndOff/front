@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 import { FaEllipsisVertical } from 'react-icons/fa6'
 import { FaTimes } from 'react-icons/fa'
 import { Tag } from '@/components/common'
-import { LazyImage } from '@/utils'
 import { fetchPutLikePosts } from '@/api/event'
 import useAuthStore from '@/store/userStore'
 import { DefaultProfile } from '@/assets/images'
@@ -169,7 +168,7 @@ export default function MyPageCard({ data }: MyPageCardProps) {
         <div className='relative flex justify-center hover:-translate-y-1 hover:transition-all aspect-w-1 aspect-h-1 hover:drop-shadow-xl w-[14rem] desktop:max-w-[32rem] desktop:w-full mb-10 desktop:mb-0'>
           <div className='w-full h-36 desktop:h-[14vw]'>
             <Link to={`/details/${data.id}`}>
-              <LazyImage
+              <img
                 key={image.uploadPath} // 이미지 URL이 변경될 때마다 key를 업데이트
                 src={image.uploadPath}
                 alt={title}
@@ -184,7 +183,7 @@ export default function MyPageCard({ data }: MyPageCardProps) {
               to={`/userInfo/${user.id}`}
               className='absolute bg-white rounded-full cursor-pointer -bottom-6 drop-shadow-xl right-2 desktop:-bottom-6 desktop:right-5'
             >
-              <LazyImage
+              <img
                 key={user.image.uploadPath || 'default'} // key 속성 추가
                 src={user.image.uploadPath || DefaultProfile}
                 alt={user.username}
