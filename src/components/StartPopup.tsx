@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router'
 import { Button } from '@/components/common'
 
 interface StartPopupProps {
@@ -48,31 +47,16 @@ export default function StartPopup({
   setModal,
   handleClickTodayClose,
 }: StartPopupProps) {
-  const navigate = useNavigate()
   // 닫기
   const handleClickClose = () => {
     setModal(false)
   }
 
-  // 모집글 등록페이지로 이동
-  const handleClickCreate = () => {
-    navigate('/recruits-create')
-  }
-
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black-color bg-opacity-40 backdrop-blur-sm z-[9999] flex-col'>
       <div className='max-w-[500px] w-4/5 h-auto rounded-small-radius flex flex-col gap-y-20 justify-between dark:bg-dark-main-color bg-white relative px-8 pt-10 pb-4'>
-        <div className='flex items-start justify-between w-full'>
-          <div className='text-size-title dark:text-dark-light-color'>
-            <TypewriterEffect />에 오신 것을 환영합니다!
-          </div>
-          <Button
-            onClick={handleClickClose}
-            fill='border'
-            fontSize='text-size-subbody'
-          >
-            닫기
-          </Button>
+        <div className='text-size-title dark:text-dark-light-color'>
+          <TypewriterEffect />에 오신 것을 환영합니다!
         </div>
         <ul className='font-semibold text-black-color text-size-body'>
           <li className='mb-12 break-keep dark:text-dark-light-color'>
@@ -108,12 +92,11 @@ export default function StartPopup({
             오늘 하루동안 보지 않기
           </Button>
           <Button
-            onClick={handleClickCreate}
-            fill='activeFill'
-            width='w-big-button'
+            onClick={handleClickClose}
+            fill='border'
             fontSize='text-size-subbody'
           >
-            모집글 등록페이지 가기
+            닫기
           </Button>
         </div>
       </div>
