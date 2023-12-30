@@ -114,7 +114,7 @@ export default function Detail() {
 
           {!postDetail.online && (
             <div className='mt-6'>
-              <h3 className='text-xl font-semibold text-black-color'>
+              <h3 className='text-xl font-semibold text-black-color dark:text-dark-light-color smooth-color'>
                 👉 모임 장소
               </h3>
               <MeetPlace address={postDetail.address.detail1} />

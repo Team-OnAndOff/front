@@ -53,7 +53,9 @@ const Evaluation = ({ closeModal, eventId, attendeeId, username }: Props) => {
           </p>
         </h4>
         <button className='absolute top-0 right-0' onClick={closeModal}>
-          <FaTimes fill='#666' />
+          <i className='text-size-body tablet:text-size-title smooth-color dark:stroke-dark-light-color'>
+            <FaTimes fill='dark' />
+          </i>
         </button>
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col'>
           <ul className='flex justify-around p-2'>
@@ -63,7 +65,11 @@ const Evaluation = ({ closeModal, eventId, attendeeId, username }: Props) => {
               } hover:opacity-100 flex flex-col items-center`}
               onClick={() => setValue('score', -0.1)}
             >
-              <CiFaceFrown size={100} />
+              <CiFaceFrown
+                size={100}
+                className='smooth-color dark:fill-dark-main-color'
+              />
+
               <p className='font-bold'>불만</p>
             </li>
             <li
@@ -81,7 +87,10 @@ const Evaluation = ({ closeModal, eventId, attendeeId, username }: Props) => {
               } hover:opacity-100 flex flex-col items-center`}
               onClick={() => setValue('score', 0.1)}
             >
-              <CiFaceSmile size={100} />
+              <CiFaceSmile
+                size={100}
+                className='smooth-color dark:fill-dark-main-color'
+              />
               <p className='font-bold'>좋아요</p>
             </li>
           </ul>

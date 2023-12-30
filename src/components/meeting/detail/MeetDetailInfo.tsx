@@ -145,16 +145,15 @@ export default function MeetDetailInfo({
             onClick={handleLikeClick}
             className='transform smooth-transition active:scale-75 tablet:text-size-title'
           >
-            <i className='text-size-title'>
-              {isLike ? (
-                <TiHeartFullOutline
-                  fill='#ff5e2e'
-                  className='transition-all duration-1000 hover:scale-105 fill-main-color dark:fill-sub-color'
-                />
-              ) : (
-                <TiHeartOutline className='transition-all duration-1000 hover:scale-105 dark:fill-dark-light-color' />
-              )}
-            </i>
+            {isLike ? (
+              <i className='text-size-body tablet:text-size-title smooth-color'>
+                <TiHeartFullOutline fill='#ff5e2e' />
+              </i>
+            ) : (
+              <i className='text-size-body tablet:text-size-title smooth-color dark:fill-dark-light-color'>
+                <TiHeartOutline fill='dark' />
+              </i>
+            )}
           </button>
           <button onClick={openModal} className='-mt-1'>
             <i>

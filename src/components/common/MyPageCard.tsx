@@ -192,14 +192,14 @@ export default function MyPageCard({ data }: MyPageCardProps) {
               />
             </Link>
             {/* TODO: 이름이 있을 경우에만 ToolTip이 보여지도록 */}
-            <span className='absolute px-2 py-1 text-xs font-light transition-opacity rounded shadow opacity-0 pointer-events-none bg-dark-gray-color -bottom-6 -right-10 desktop:right-3 desktop:-bottom-14 w-max text-light-gray-color group-hover:opacity-100'>
+            <span className='absolute px-2 py-1 text-xs font-light transition-opacity rounded shadow opacity-0 pointer-events-none bg-dark-gray-color -bottom-6 -right-10 desktop:right-3 desktop:-bottom-14 w-max text-light-gray-color group-hover:opacity-100 dark:text-dark-main-color smooth-color dark:bg-dark-light-color dark:font-normal'>
               {user.username}
             </span>
           </div>
         </div>
         {/* 텍스트 영역 */}
         <div className='flex flex-col justify-between flex-1 desktop:px-3 desktop:-mt-5 desktop:gap-y-3'>
-          <div className='text-[0.6rem] text-dark-gray-color tablet:text-size-subbody desktop:text-left'>
+          <div className='text-[0.6rem] text-dark-gray-color tablet:text-size-subbody desktop:text-left '>
             <Link
               to={`/meetup-lists/${category.parentId?.id}?subCategoryId=${category.id}`}
             >
@@ -209,7 +209,7 @@ export default function MyPageCard({ data }: MyPageCardProps) {
             </Link>
             <div className='h-14'>
               <Link to={`/details/${data.id}`}>
-                <h2 className='w-full font-bold line-clamp-2 text-size-body'>
+                <h2 className='w-full font-bold line-clamp-2 text-size-body text-black-color dark:text-dark-light-color smooth-color'>
                   {title}
                 </h2>
               </Link>
@@ -224,11 +224,11 @@ export default function MyPageCard({ data }: MyPageCardProps) {
               {/* 크루/챌린지스 */}
               <Link
                 to={`/meetup-lists/${category.parentId?.id}`}
-                className='font-light text-right text-main-color desktop:text-size-body text-size-subbody'
+                className='font-light text-right text-main-color dark:text-sub-color dark:font-normal smooth-color desktop:text-size-body text-size-subbody'
               >
                 {category.parentId?.name}
               </Link>
-              <div className='flex items-center justify-between w-full h-6 font-bold text-size-subbody'>
+              <div className='flex items-center justify-between w-full h-6 font-bold text-size-subbody text-black-color dark:text-dark-light-color dark:font-light smooth-color'>
                 {challengeStartDate}
                 {challengeEndDate && ` ~ ${challengeEndDate}`}
                 {/* 호버시 보이는 영역 */}
@@ -242,13 +242,15 @@ export default function MyPageCard({ data }: MyPageCardProps) {
                             onClick={handleLikeClick}
                             className='p-2 transition-transform transform active:scale-75 tablet:text-size-title hover:scale-105'
                           >
-                            <i className='text-size-body tablet:text-size-title'>
-                              {isLike ? (
+                            {isLike ? (
+                              <i className='text-size-body tablet:text-size-title smooth-color'>
                                 <TiHeartFullOutline fill='#ff5e2e' />
-                              ) : (
-                                <TiHeartOutline />
-                              )}
-                            </i>
+                              </i>
+                            ) : (
+                              <i className='text-size-body tablet:text-size-title smooth-color dark:fill-dark-light-color'>
+                                <TiHeartOutline fill='dark' />
+                              </i>
+                            )}
                           </button>
                           {/* <button
                             onClick={handleMenuClick}
