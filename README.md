@@ -1,6 +1,6 @@
 # 스터디 매칭 서비스 - 온앤오프 (ON&OFF)
 
-Image
+<img width="984" alt="스크린샷 2024-01-04 오후 4 24 40" src="https://github.com/Team-OnAndOff/front/assets/126145519/1a61da18-753c-47ff-afcc-29420f71cf35">
 
 <br />
 
