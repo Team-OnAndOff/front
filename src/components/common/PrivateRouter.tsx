@@ -19,19 +19,14 @@ export default function PrivateRouter() {
         confirmButtonText: '확인',
         showCancelButton: true,
         cancelButtonText: '취소',
+        confirmButtonColor: '#ff5e2e',
+        cancelButtonColor: '#3a823f',
       }).then((result: SweetAlertResult) => {
         if (result.isDismissed) {
           MySwal.close()
           navigate(-1)
         } else if (result.isConfirmed) {
-          navigate(-1)
-        } else {
-          if (
-            window.location.pathname === '/chat' ||
-            window.location.pathname === '/userinfo'
-          ) {
-            navigate('/')
-          }
+          navigate('/login')
         }
       })
       return
