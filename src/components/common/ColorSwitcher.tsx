@@ -15,7 +15,7 @@ export default function Switcher() {
 
   return (
     <>
-      <div className='fixed bottom-[115px] right-[36px]'>
+      <div className='fixed bottom-[115px] right-2 sm:right-[40px]'>
         <DarkModeSwitch
           checked={darkSide}
           onChange={toggleDarkMode}

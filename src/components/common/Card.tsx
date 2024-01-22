@@ -188,7 +188,7 @@ export default function Card({ data }: CardProps) {
       ) : (
         <div
           className={
-            'relative flex desktop:flex-col justify-between desktop:pb-2 flex-row rounded-button-radius desktop:gap-y-10 gap-y-0 tablet:gap-x-10 gap-x-6 w-full smooth-color'
+            'relative flex desktop:flex-col justify-between desktop:pb-2 sm:flex-row flex-col rounded-button-radius desktop:gap-y-10 gap-y-0 tablet:gap-x-10 gap-x-6 w-full smooth-color'
           }
           onMouseEnter={() => setIsKebabVisible(true)}
           onMouseLeave={() => {

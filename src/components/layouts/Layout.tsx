@@ -29,7 +29,7 @@ export default function Layout() {
   return (
     <div className={'flex flex-col items-center min-h-screen'}>
       <Header />
-      <div className='flex-1 w-3/4 h-full transition-all duration-1000 desktop:w-8/12 max-w-common-screen-width justify-self-center'>
+      <div className='flex-1 w-[95dvw] sm:w-3/4 h-full transition-all duration-1000 desktop:w-8/12 max-w-common-screen-width justify-self-center'>
         <Outlet />
       </div>
       <FloatingButton />

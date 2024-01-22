@@ -71,7 +71,7 @@ export default function ImageSlide() {
   }
 
   return (
-    <div className='relative'>
+    <div className='relative '>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -94,7 +94,7 @@ export default function ImageSlide() {
         {images.map((image, index) => (
           <SwiperSlide key={index}>
             <img
-              className='object-cover w-full h-[580px] select-none rounded-image-radius'
+              className='object-cover w-full sm:h-[580px] h-[200px] select-none rounded-image-radius'
               src={image.src}
               alt={`배너 대표이미지 ${index + 1}`}
             />

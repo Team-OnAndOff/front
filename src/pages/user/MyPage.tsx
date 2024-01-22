@@ -84,8 +84,6 @@ export default function MyPage() {
     badges()
   }, [navigate, userId]) // userData가 변경될 때마다 useEffect 다시 실행
 
-  console.log(userData)
-
   //슬라이드 모임 데이터 가져오기 이펙트
   useEffect(() => {
     const fetchData = async () => {
@@ -149,7 +147,7 @@ export default function MyPage() {
       <section className='relative flex flex-row items-center justify-between w-full h-auto border border-solid shadow-md rounded-big-radius border-light-gray-color dark:border-dark-light-color mt-7'>
         {/* 이미지박스 */}
         <div className='p-3 flex relative items-center justify-center w-min-[100px] h-auto '>
-          <div className='bg-aquamarine w-[150px] h-[150px] flex items-center justify-center rounded-full overflow-hidden'>
+          <div className='bg-aquamarine sm:w-[150px] sm:h-[150px] w-[60px] h-[60px] flex items-center justify-center rounded-full overflow-hidden'>
             <img
               src={userData?.image?.uploadPath || 'none.jpg'}
               alt='프로필사진'
@@ -207,7 +205,7 @@ export default function MyPage() {
 
             {/* 신고 s*/}
             {!userMe && (
-              <div className='absolute z-100 right-[10px] top-[0px]'>
+              <div className='absolute z-100 right-[10px] top-[10px]'>
                 <button onClick={() => openModal('declaration')}>
                   <PiSiren />
                 </button>
@@ -225,7 +223,7 @@ export default function MyPage() {
             )}
             {/* 신고 e*/}
             {/* 온도 s */}
-            <div className='absolute right-[4vw] top-[1.5rem] w-[58px] h-[20px] sm:right-5 sm:top-0  sm:relative sm:w-[68px] sm:h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
+            <div className='absolute right-[8vw] sm:right-[4vw] top-[1.5rem] w-[58px] h-[20px] sm:right-5 sm:top-0  sm:relative sm:w-[68px] sm:h-[33px] bg-main-color rounded-button-radius flex items-center justify-center'>
               <p className='mt-[4px] text-white'>
                 36.5
                 <span className='w-[3px] h-[3px] mt-1 ml-0.5 bor absolute rounded-small-radius border border-solid border-white'></span>
