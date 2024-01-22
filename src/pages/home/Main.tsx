@@ -68,7 +68,7 @@ export default function Main() {
 
   return (
     <>
-      <main className='flex flex-col py-16 gap-y-16'>
+      <main className='flex flex-col py-5 overflow-hidden sm:overflow-visible sm:py-16 gap-y-16'>
         <ImageSlide />
         <article className='flex flex-col gap-y-16'>
           <MainPosts

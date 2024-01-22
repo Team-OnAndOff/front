@@ -44,7 +44,7 @@ export default function FloatingButton() {
     <>
       <button
         onClick={handleClick}
-        className='group bottom-[70px] right-[40px] w-[30px] h-[30px] bg-white fixed rounded-full drop-shadow-xl hover:drop-shadow-2xl'
+        className='group bottom-[70px] right-3 sm:right-[40px] w-[30px] h-[30px] bg-white fixed rounded-full drop-shadow-xl hover:drop-shadow-2xl'
       >
         <div className='animate-wiggle'>
           <FaCirclePlus fill='#3a823f' size={30} />
